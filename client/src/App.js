@@ -1,13 +1,28 @@
 
 import './App.css';
-import SearchAll from './components/searchall/searchall';
+
+
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+
+//import SearchAll from './components/searchall';
+import HomePage from './components/homepage/Homepage.jsx';
+import AboutPage from './components/about/About.jsx';
+import LoginPage from './components/login/Login.jsx';
+
+//<SearchAll/>
 
 function App() {
   return (
-    <div className="App">
-      <h1>Kete Hauora</h1>
-      <SearchAll/>
-    </div>
+
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
+    </Router>
+    
   );
 }
 
