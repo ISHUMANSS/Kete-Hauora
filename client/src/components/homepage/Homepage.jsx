@@ -9,7 +9,7 @@ function HomePage() {
   const [searchTrigger, setSearchTrigger] = useState(0);
 
   const handleSearchClick = () => {
-    setSearchTrigger(prev => prev + 1);//tells Search component to re run
+    setSearchTrigger(prev => prev + 1);//tells search component to re run
   };
 
   return (

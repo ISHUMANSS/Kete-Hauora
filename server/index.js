@@ -36,6 +36,7 @@ app.get("/services/:name", async (req, res) => {
             [`${name}%`]//matches names starting with name so partial matchs will turn up
         );
 
+        //check if there are any services in the result
         if (service.rows.length === 0) {
             return res.status(404).json({ error: "Service not found" });
         }
@@ -62,5 +63,5 @@ app.get("/services/:name", async (req, res) => {
 app.listen(5000, () =>{
     console.log("server started on port 5000");
 });
-//to start the server use node index 
+//to start the server use nodemon index
 

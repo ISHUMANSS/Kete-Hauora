@@ -12,6 +12,7 @@ const SearchAll = () => {
 
             const jsonData = await response.json();
 
+            //set the array of the services to the response when sucessful
             setServices(jsonData);
             
         } catch (err) {

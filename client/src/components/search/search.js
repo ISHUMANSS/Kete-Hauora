@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 
 const Search = ({ serviceName, triggerSearch }) => {
-    const [serviceResult, setServiceResult] = useState([]);
-    const [error, setError] = useState(null);
+    const [serviceResult, setServiceResult] = useState(null);//shows the search table
+    const [error, setError] = useState(null);//the error which tells the user what went wrong with thier serach like if there wasn't any results
     const [services, setServices] = useState([]);//list of all the services given in the response
 
     useEffect(() => {
         const handleSearch = async () => {
+            //if its missisng the data it needs retun and don't search
             if (!triggerSearch || !serviceName) return;
 
             try {
@@ -30,12 +31,12 @@ const Search = ({ serviceName, triggerSearch }) => {
             } catch (err) {
                 console.error(err.message);
                 setServiceResult(null);
-                setError("No service found with that ID.");
+                setError("No service found with that name.");
             }
         };
 
         handleSearch();
-    }, [triggerSearch, serviceName]);
+    }, [triggerSearch, serviceName]); //run each time the service name given changes or when ever the search button is clicked
 
     return (
         <div className="Search">
@@ -44,6 +45,7 @@ const Search = ({ serviceName, triggerSearch }) => {
             {error && <p style={{ color: "red" }}>{error}</p>}
 
             {serviceResult && (
+                //if the service result exist show the table
                 <table className="table">
                     <thead>
                         <tr>
