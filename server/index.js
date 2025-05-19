@@ -28,20 +28,26 @@ app.get("/services", async(req,res) =>{
 
 
 //search for a specific listing
-app.get("/services:id", async (req,res) =>{
-    //search for a listing by id
-    //uses _GET
+app.get("/services/:name", async (req, res) => {
     try {
-        const {id} = req.params;//set the id as the one in the url
+        const { name } = req.params;
+        const service = await pool.query(
+            "SELECT * FROM service WHERE company_name ILIKE $1",
+            [`${name}%`]//matches names starting with name so partial matchs will turn up
+        );
 
-        //serach for the service where it matches the id given
-        const service = await pool.query("SELECT * FROM services WHERE service_id = $1", [id]);
-        
-        res.json(service.row[0]);
+        if (service.rows.length === 0) {
+            return res.status(404).json({ error: "Service not found" });
+        }
+
+        res.json(service.rows);//get all the services that match
+        //had an error where it just got one
     } catch (err) {
         console.error(err.message);
+        res.status(500).send("Server error");
     }
 });
+
 
 
 //update a listing

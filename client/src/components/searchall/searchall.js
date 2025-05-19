@@ -40,12 +40,12 @@ const SearchAll = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {services.map(service =>(
-                    <tr>
-                        <td>{service.service_id}</td>
-                        <td>{service.company_name}</td>
-                    </tr>
-                ))}
+                    {services.map(service =>(
+                        <tr>
+                            <td>{service.service_id}</td>
+                            <td>{service.company_name}</td>
+                        </tr>
+                    ))}
 
                 </tbody>
             </table>
