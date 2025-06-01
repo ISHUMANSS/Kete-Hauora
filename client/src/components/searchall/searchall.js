@@ -1,56 +1,76 @@
-import React, {useEffect, useState} from "react";
-
+import React, { useEffect, useState } from "react";
+import supabase from "../../config/supabaseClient";
 
 const SearchAll = () => {
-
     const [services, setServices] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const getSessions = async() => {
+    const getServices = async () => {
         try {
-            //make the request
-            const response = await fetch("http://localhost:5000/services");
+            const { data, error } = await supabase
+                .from('services')
+                .select('*');
 
-            const jsonData = await response.json();
+            if (error) throw error;
 
-            //set the array of the services to the response when sucessful
-            setServices(jsonData);
-            
+            setServices(data);
         } catch (err) {
-            console.error(err.message);
+            console.error("Error fetching services:", err.message);
+        } finally {
+            setLoading(false);
         }
-    }
+    };
 
     useEffect(() => {
-        //run to fetch the data each time the page is rendered
-        getSessions();
-    },[]);
+        getServices();
+    }, []);
 
-
-
-
-    return(
+    return (
         <div className="SearchAll">
+            <h1>Search for all the services:</h1>
 
-            <h1>Search for all the services: </h1>
-            <table className="table">
-                <thead>
-                <tr>
-                    <th>id</th>
-                    <th>Company name</th>
-                    
-                </tr>
-                </thead>
-                <tbody>
-                    {services.map(service =>(
+            {loading ? (
+                <p>Loading services...</p>
+            ) : (
+                <table className="table">
+                    <thead>
                         <tr>
-                            <td>{service.service_id}</td>
-                            <td>{service.company_name}</td>
+                            <th>Company Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Website</th>
+                            <th>Physical Address</th>
+                            <th>Hours</th>
+                            <th>Sites</th>
+                            <th>Languages</th>
+                            <th>Cost</th>
+                            <th>Services Offered</th>
+                            <th>Referral</th>
+                            <th>Other Notes</th>
                         </tr>
-                    ))}
-
-                </tbody>
-            </table>
-            
+                    </thead>
+                    <tbody>
+                        {services.map((service) => (
+                                <tr key={service.id || service.company_name}>
+                                    <td>{service.company_name}</td>
+                                    <td>{service.phone}</td>
+                                    <td>{service.email}</td>
+                                    <td>
+                                        {service.website}
+                                    </td>
+                                    <td>{service.physical_address}</td>
+                                    <td>{service.hours}</td>
+                                    <td>{service.sites}</td>
+                                    <td>{service.languages}</td>
+                                    <td>{service.cost}</td>
+                                    <td>{service.services_offered}</td>
+                                    <td>{service.referral}</td>
+                                    <td>{service.other_notes}</td>
+                                </tr>
+                            ))}
+                    </tbody>
+                </table>
+            )}
         </div>
     );
 };

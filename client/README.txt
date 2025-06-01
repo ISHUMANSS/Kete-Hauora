@@ -10,3 +10,4 @@ to start
 
 needed dependencys: (please add to this list when ever you add any more dependencys)
 - react-router-dom = npm i react-router-dom
+- supabase = npm i @supabase/supabase-js

@@ -1,6 +1,8 @@
 
 import './App.css';
 
+import supabase from './config/supabaseClient.js';
+
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
