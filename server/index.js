@@ -2,66 +2,21 @@ const express = require("express");//make sure express is installed
 const app = express();//run express
 const cors = require("cors");//make sure cors is needed
 const pool = require("./db");//allows us to make postgres querys
+const path = require("path")
 
 //middleware
 app.use(cors());//run cors
 app.use(express.json());//gives us access to request the data
-//use req.body to be able to access the info from the client side
 
-//routes
-//all of the actions that we will have
-//req is the request
-//res is the response
+app.use(express.static("public")); // serve static files like style.css
 
-//use app.post along with async functions to post a service
-
-//get all listings
-app.get("/services", async(req,res) =>{
-    //uses _GET
-    try {
-        const allServices = await pool.query("SELECT * FROM service;");
-        res.json(allServices.rows);
-    } catch (err) {
-        console.error(err.message);
-    }
+app.get("/", (_, res) => {
+    res.sendFile(path.join(__dirname, "homepage.html", "public")) // route for homepage
 });
-
-
-//search for a specific listing
-app.get("/services/:name", async (req, res) => {
-    try {
-        const { name } = req.params;
-        const service = await pool.query(
-            "SELECT * FROM service WHERE company_name ILIKE $1",
-            [`${name}%`]//matches names starting with name so partial matchs will turn up
-        );
-
-        //check if there are any services in the result
-        if (service.rows.length === 0) {
-            return res.status(404).json({ error: "Service not found" });
-        }
-
-        res.json(service.rows);//get all the services that match
-        //had an error where it just got one
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server error");
-    }
-});
-
-
-
-//update a listing
-//use app.put
-
-//delete a listing?
-//use app.delete
-
-
 
 //listen to the port to start the server
-app.listen(5000, () =>{
-    console.log("server started on port 5000");
+app.listen(3000, () => {
+    console.log("server started on port 3000");
 });
-//to start the server use nodemon index
+//to start the server use node index 
 
