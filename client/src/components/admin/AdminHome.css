@@ -1,0 +1,36 @@
+.admin-home-container {
+  text-align: center;
+  padding: 60px 20px;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 36px;
+  margin-bottom: 40px;
+  color: #333;
+}
+
+.admin-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.admin-actions button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 14px 28px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 250px;
+}
+
+.admin-actions button:hover {
+  background-color: #0056b3;
+}
