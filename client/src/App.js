@@ -7,12 +7,13 @@ import supabase from './config/supabaseClient.js';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
-//import SearchAll from './components/searchall';
 import HomePage from './components/homepage/Homepage.jsx';
 import AboutPage from './components/about/About.jsx';
 import LoginPage from './components/login/Login.jsx';
+import AdminPage from './components/admin/Admin.jsx';
+import RegisterPage from './components/login/Register.jsx';
 
-//<SearchAll/>
+
 
 function App() {
   return (
@@ -22,6 +23,10 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+
+        <Route path="/admin" element={<AdminPage />}/>{/*make it so that users have to be loged in to be able to use this with protected routes*/}
+
       </Routes>
     </Router>
     
