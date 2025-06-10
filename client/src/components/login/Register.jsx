@@ -19,7 +19,7 @@ function RegisterPage() {
     setError('');
 
     //register the user
-    const { error: signUpError } = await supabase.auth.signUp({
+    const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
     });
@@ -30,6 +30,20 @@ function RegisterPage() {
       return;
     }
 
+
+    const userId = signUpData.user.id;
+
+    // Assign default role "company" (or let user select role via dropdown)
+    const { error: profileError } = await supabase
+      .from('profiles')
+      .insert([{ id: userId, role: 'company' }]);
+
+    if (profileError) {
+      setError(profileError.message);
+      return;
+    }
+
+
     //log in the newly created user
     const { error: signInError } = await supabase.auth.signInWithPassword({
       email,
@@ -39,43 +53,32 @@ function RegisterPage() {
     if (signInError) {
       setError(signInError.message);
     } else {
-      //go to the admin page
-      navigate('/admin');
+      navigate('/');
     }
   };
 
 
-
-
-
   //ADD A BETTER PASSWORD CHECKING FUNCTION IN JS AND THEN ALSO UPDATE THE SUPABASE REQUIRMENTS FOR A PASSWORD
-  function checkPassword(){
+  function checkPassword() {
     //add like patterns and such
   }
 
 
-
   return (
     <div className="login">
-
-
-    
-    <nav className="navbar">
+      <nav className="navbar">
         <Link to="/">LOGO</Link>
         <ul className="nav-links">
-        <li><Link to="/about">About</Link></li>
-        <li>
+          <li><Link to="/about">About</Link></li>
+          <li>
             <span className="login-icon material-symbols-outlined">person</span>
             <Link to="/login">Login</Link>
-        </li>
+          </li>
         </ul>
-    </nav>
+      </nav>
 
 
       <div className="wrapper">
-
-
-
         <form onSubmit={handleRegister}>
           <h1>Register</h1>
           {error && <p style={{ color: 'red' }}>{error}</p>}

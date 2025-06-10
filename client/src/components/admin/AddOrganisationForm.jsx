@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import { supabase } from '../../config/supabaseClient'
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 
 function AddOrganisationForm() {
+    const { user, loading } = useAuth();
     const navigate = useNavigate();
+
     const [orgData, setOrgData] = useState({
         name: '',
         phone: '',
@@ -21,6 +24,19 @@ function AddOrganisationForm() {
         //categories: '',
         //keywords: '',
     })
+
+
+    if (loading) return <p>Loading...</p>;
+    if (user.role !== 'admin') {
+        return (
+            <>
+                <p>You must be logged in with the right permissions to add an organisation.</p>
+                <Link to="/login">Go to login</Link><br />
+                <Link to="/">Go to homepage</Link>
+            </>
+        );
+    }
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target

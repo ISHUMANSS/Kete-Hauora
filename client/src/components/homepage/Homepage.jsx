@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './HomePage.css';
 import SearchAll from '../searchall/searchall';
 import Search from '../search/search';
+import supabase from "../../config/supabaseClient";
 
 function HomePage() {
   const [searchInput, setSearchInput] = useState("");
@@ -22,7 +23,7 @@ function HomePage() {
             <span className="login-icon material-symbols-outlined">person</span>
             <Link to="/login">Login</Link>
           </li>
-          <li><Link to="/admin">temp admin for testing</Link></li>
+          <li><Link to="/admin">Admin Page</Link></li>
         </ul>
       </div>
       
@@ -50,3 +51,30 @@ function HomePage() {
 }
 
 export default HomePage;
+
+export const useUserRole = () => {
+  const [role, setRole] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  React.useEffect(() => {
+    const fetchRole = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (user) {
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', user.id)
+          .single();
+
+        if (!error) setRole(data.role);
+      }
+
+      setLoading(false);
+    };
+
+    fetchRole();
+  }, []);
+
+  return { role, loading };
+};

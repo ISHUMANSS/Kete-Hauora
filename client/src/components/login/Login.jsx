@@ -4,10 +4,11 @@ import './LoginPage.css';
 import { useNavigate, Link } from 'react-router-dom';
 import supabase from "../../config/supabaseClient";
 import './LoginPage.css'
+import { useAuth } from '../../hooks/useAuth';
 
 
 function LoginPage() {
-
+  const { user, loading } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -26,20 +27,14 @@ function LoginPage() {
     //if the login worked go to the admin page
     if (error) {
       setError(error.message);
-    } else {
-      navigate('/admin');
+    }else{
+      navigate('/');
     }
   };
 
 
-
-
-
-
   return (
-    <div className="login">
-
-     
+    <div className="login">     
         <nav className="navbar">
           <Link to="/">LOGO</Link>
           <ul className="nav-links">
@@ -50,8 +45,6 @@ function LoginPage() {
             </li>
           </ul>
         </nav>
-
-
 
         <div className="wrapper">
           <form onSubmit={handleLogin}>
