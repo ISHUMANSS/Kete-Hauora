@@ -1,21 +1,22 @@
 import { useState } from 'react'
 import { supabase } from '../../config/supabaseClient'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function AddOrganisationForm() {
+    const navigate = useNavigate();
     const [orgData, setOrgData] = useState({
         name: '',
         phone: '',
         email: '',
         website: '',
-        address: '',
+        physical_address: '',
         hours: '',
         sites: '',
         languages: '',
         cost: '',
-        services: '',
+        services_offered: '',
         referral: '',
-        notes: '',
+        other_notes: '',
 
         //categories: '',
         //keywords: '',
@@ -35,14 +36,14 @@ function AddOrganisationForm() {
                 phone: orgData.phone,
                 email: orgData.email,
                 website: orgData.website,
-                physical_address: orgData.address,
+                physical_address: orgData.physical_address,
                 hours: orgData.hours,
                 sites: orgData.sites,
                 languages: orgData.languages,
                 cost: orgData.cost,
-                services_offered: orgData.services,
+                services_offered: orgData.services_offered,
                 referral: orgData.referral,
-                other_notes: orgData.notes,
+                other_notes: orgData.other_notes,
 
                 //categories: orgData.categories,
                 //keywords: orgData.keywords,
@@ -53,6 +54,7 @@ function AddOrganisationForm() {
             console.error('Insert failed:', error.message)
         } else {
             alert('Organisation created!')
+            navigate('/admin')
         }
     }
 
@@ -84,9 +86,9 @@ function AddOrganisationForm() {
                 <input name="sites" placeholder="Sites of Service" onChange={handleInputChange} />
                 <input name="languages" placeholder="Languages" onChange={handleInputChange} />
                 <input name="cost" placeholder="Cost" onChange={handleInputChange} />
-                <input name="services" placeholder="Services Offered" onChange={handleInputChange} />
+                <input name="services_offered" placeholder="Services Offered" onChange={handleInputChange} />
                 <input name="referral" placeholder="Referral" onChange={handleInputChange} />
-                <input name="notes" placeholder="Other Notes" onChange={handleInputChange} />
+                <input name="other_notes" placeholder="Other Notes" onChange={handleInputChange} />
 
                 {/*<input name="categories" placeholder="Categories" onChange={handleInputChange} />
                 <input name="keywords" placeholder="Keywords" onChange={handleInputChange} />*/}

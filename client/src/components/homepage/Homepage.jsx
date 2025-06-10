@@ -22,6 +22,7 @@ function HomePage() {
             <span className="login-icon material-symbols-outlined">person</span>
             <Link to="/login">Login</Link>
           </li>
+          <li><Link to="/admin">temp admin for testing</Link></li>
         </ul>
       </div>
       

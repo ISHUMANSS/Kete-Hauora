@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import supabase from "../../config/supabaseClient";
+import { Link } from "react-router-dom";
+
 
 const Search = ({ serviceName, triggerSearch }) => {
     const [serviceResult, setServiceResult] = useState(null); // shows the search table
@@ -67,13 +69,11 @@ const Search = ({ serviceName, triggerSearch }) => {
                     </thead>
                     <tbody>
                         {services.map((service) => (
-                                <tr key={service.id || service.company_name}>
+                                <tr key={service.company_name}>
                                     <td>{service.company_name}</td>
                                     <td>{service.phone}</td>
                                     <td>{service.email}</td>
-                                    <td>
-                                        {service.website}
-                                    </td>
+                                    <td>{service.website}</td>
                                     <td>{service.physical_address}</td>
                                     <td>{service.hours}</td>
                                     <td>{service.sites}</td>
@@ -82,6 +82,12 @@ const Search = ({ serviceName, triggerSearch }) => {
                                     <td>{service.services_offered}</td>
                                     <td>{service.referral}</td>
                                     <td>{service.other_notes}</td>
+                                    {/*Edit Button column*/}
+                                    <td>
+                                        <Link to={`/editOrg/${encodeURIComponent(service.company_name)}`}>
+                                        <button>Edit</button>
+                                        </Link>
+                                    </td>
                                 </tr>
                             ))}
                     </tbody>

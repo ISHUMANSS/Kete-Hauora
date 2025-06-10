@@ -23,9 +23,11 @@ function AdminPage() {
       
       <div className="about-content">
         <h1>ADMIN PAGE</h1>
-        {/* Add more content here as needed */
-        <li><Link to="/addOrg">Add Organisation</Link></li>
-        }
+        {/* Add more content here as needed */}
+        <ul>
+          <li><Link to="/addOrg">Add Organisation</Link></li>
+          {/*<li><Link to="/EditOrg">Edit Organisation</Link></li>*/}
+        </ul>
       </div>
     </div>
   );
