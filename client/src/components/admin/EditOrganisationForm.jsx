@@ -98,7 +98,11 @@ function EditOrganisationForm() {
                 </ul>
             </nav>
 
+            
+
             <br /><br /><br /><br />
+
+            <h1>Edit organisation: {orgData.company_name} </h1>
             <form onSubmit={handleUpdate}>
                 <input name="company_name" value={orgData.company_name} onChange={handleChange} placeholder="Organisation Name" />
                 <input name="phone" value={orgData.phone} onChange={handleChange} placeholder="Phone" />

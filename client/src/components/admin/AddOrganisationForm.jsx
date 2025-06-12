@@ -86,11 +86,14 @@ function AddOrganisationForm() {
                     </li>
                 </ul>
             </nav>
+            
 
             <br />
             <br />
             <br />
             <br />
+
+            <h1>Add organisation:</h1>
 
             <form onSubmit={handleSubmit}>
                 <input name="name" placeholder="Organisation Name" onChange={handleInputChange} />
