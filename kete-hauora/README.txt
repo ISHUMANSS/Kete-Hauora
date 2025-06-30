@@ -7,7 +7,7 @@ starting this server
 MAKE SURE YOUR .env FILE IS SET UP WITH THE API KEY AND THE URL FROM THE SUPABASE PROJECT!!!
 
 to start
-- cd to client
+- cd to kete-hauora
 - run: npm start
 
 

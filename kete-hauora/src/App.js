@@ -27,6 +27,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
 
+        
+
         <Route path="/admin" element={<AdminPage />}/>{/*make it so that users have to be loged in to be able to use this with protected routes*/}
         <Route path="/addOrg" element={<AddOrganisationForm />} />
         <Route path="/editOrg/:companyName" element={<EditOrganisationForm />} />
