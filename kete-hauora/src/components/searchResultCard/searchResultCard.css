@@ -1,0 +1,17 @@
+/*update the css to be able to change the look and add details to the cards*/
+.search-result-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 10px 0;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.search-result-card h3 {
+  margin: 0 0 8px;
+}
+
+.search-result-card p {
+  margin: 4px 0;
+}

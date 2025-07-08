@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import supabase from "../../config/supabaseClient";
 import { Link } from "react-router-dom";
+import SearchResultCard from "../searchResultCard/searchResultCard";
 
 
 const Search = ({ serviceName, triggerSearch }) => {
@@ -44,42 +45,17 @@ const Search = ({ serviceName, triggerSearch }) => {
 
     return (
         <div className="Search">
-            <h2>Search Result</h2>
+            <h2>Search Result:</h2>
 
             {error && <p style={{ color: "red" }}>{error}</p>}
 
             {serviceResult && (
                 // if the service result exists, show the table
-                <table className="table">
-                   <thead>
-                        <tr>
-                            <th>Company Name</th>
-
-                            <th>Website</th>
-                            <th>Physical Address</th>
-                            <th>Cost</th>
-                            <th>Services Offered</th>
-                            
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {services.map((service) => (
-                                <tr key={service.company_name}>
-                                    <td>{service.company_name}</td>
-                                    <td>{service.website}</td>
-                                    <td>{service.physical_address}</td>
-                                    <td>{service.cost}</td>
-                                    <td>{service.services_offered}</td>
-                                    {/*Edit Button column*/}
-                                    <td>
-                                        <Link to={`/editOrg/${encodeURIComponent(service.company_name)}`}>
-                                        <button>Edit</button>
-                                        </Link>
-                                    </td>
-                                </tr>
-                            ))}
-                    </tbody>
-                </table>
+                <div className="result-container">
+                    {services.map((service) => (
+                        <SearchResultCard key={service.company_name} service={service}/>
+                    ))}
+                </div>
             )}
         </div>
     );
