@@ -10,13 +10,28 @@ const SearchResultCard = ({ service }) => {
   return (
     <div className="search-result-card">
         <h3>{service.company_name}</h3>
-        <p><strong>Website:</strong> {service.website}</p>
+        {/*makes the links clickable 
+        has some issues with the links being incorrect or there being more then one link per link???
+        some of the links also just don't work*/}
+        <p><strong>Website:</strong> <a href={service.website} target="_blank" rel="noreferrer">{service.website}</a></p>
+
         <p><strong>Address:</strong> {service.physical_address}</p>
         <p><strong>Cost:</strong> {service.cost}</p>
-        <p><strong>Services:</strong> {service.services_offered}</p>
-        <Link to={`/editOrg/${encodeURIComponent(service.company_name)}`}>
-        <button>Edit</button>
+        <p><strong>Services:</strong> {/*service.services_offered*/}</p>
+        <div className='filters'>
+            <p><strong>Filters: </strong></p>
+            <button>filter</button>
+        </div>
+
+        <Link to={`/organisation/${encodeURIComponent(service.company_name)}`}>
+            <button>More info</button>
         </Link>
+
+        {/*should be only visible to the admins and i'm also not sure if it should be done in the basic search but it is currently the only way to edit services so its being left for now*/}
+        <Link to={`/editOrg/${encodeURIComponent(service.company_name)}`}>
+            <button>Edit</button>
+        </Link>
+        
     </div>
   );
 };

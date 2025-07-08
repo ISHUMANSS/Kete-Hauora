@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './AdminPage.css';
 import { useAuth } from '../../hooks/useAuth';
+import Navbar from '../navbar/navbar';
 
 function AdminPage() {
 
@@ -19,16 +20,7 @@ function AdminPage() {
 
   return (
     <div className="about">
-      <nav className="navbar">
-        <Link to="/">LOGO</Link>
-        <ul className="nav-links">
-          <li><Link to="/about">About</Link></li>
-          <li>
-            <span className="login-icon material-symbols-outlined">person</span>
-            <Link to="/login">Login</Link>
-          </li>
-        </ul>
-      </nav>
+      <Navbar />
 
       <div className="about-content">
         <h1>ADMIN PAGE</h1>

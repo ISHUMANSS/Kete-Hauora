@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { supabase } from '../../config/supabaseClient'
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import Navbar from '../navbar/navbar';
 
 function EditOrganisationForm() {
 
@@ -87,16 +88,7 @@ function EditOrganisationForm() {
 
     return (
         <>
-            <nav className="navbar">
-                <Link to="/">LOGO</Link>
-                <ul className="nav-links">
-                    <li><Link to="/about">About</Link></li>
-                    <li>
-                        <span className="login-icon material-symbols-outlined">person</span>
-                        <Link to="/login">Login</Link>
-                    </li>
-                </ul>
-            </nav>
+            <Navbar />
 
             
 

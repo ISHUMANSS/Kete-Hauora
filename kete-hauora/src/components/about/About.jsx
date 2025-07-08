@@ -1,20 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './AboutPage.css';
+import Navbar from '../navbar/navbar';
 
 function AboutPage() {
   return (
     <div className="about">
-      <nav className="navbar">
-        <Link to="/">LOGO</Link>
-        <ul className="nav-links">
-          <li><Link to="/about">About</Link></li>
-          <li>
-            <span className="login-icon material-symbols-outlined">person</span>
-            <Link to="/login">Login</Link>
-          </li>
-        </ul>
-      </nav>
+      <Navbar />
       
       <div className="about-content">
         <h1>WELCOME</h1>

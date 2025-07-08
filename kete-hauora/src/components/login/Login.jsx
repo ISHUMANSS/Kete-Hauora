@@ -5,6 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import supabase from "../../config/supabaseClient";
 import './LoginPage.css'
 import { useAuth } from '../../hooks/useAuth';
+import Navbar from "../navbar/navbar";
 
 
 function LoginPage() {
@@ -35,16 +36,7 @@ function LoginPage() {
 
   return (
     <div className="login">     
-        <nav className="navbar">
-          <Link to="/">LOGO</Link>
-          <ul className="nav-links">
-            <li><Link to="/about">About</Link></li>
-            <li>
-              <span className="login-icon material-symbols-outlined">person</span>
-              <Link to="/login">Login</Link>
-            </li>
-          </ul>
-        </nav>
+        <Navbar />
 
         <div className="wrapper">
           <form onSubmit={handleLogin}>

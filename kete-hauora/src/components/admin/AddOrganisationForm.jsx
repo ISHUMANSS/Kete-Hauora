@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { supabase } from '../../config/supabaseClient'
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import Navbar from '../navbar/navbar';
 
 function AddOrganisationForm() {
     const { user, loading } = useAuth();
@@ -76,16 +77,7 @@ function AddOrganisationForm() {
 
     return (
         <>
-            <nav className="navbar">
-                <Link to="/">LOGO</Link>
-                <ul className="nav-links">
-                    <li><Link to="/about">About</Link></li>
-                    <li>
-                        <span className="login-icon material-symbols-outlined">person</span>
-                        <Link to="/login">Login</Link>
-                    </li>
-                </ul>
-            </nav>
+            <Navbar />
             
 
             <br />

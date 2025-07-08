@@ -4,6 +4,7 @@ import './HomePage.css';
 import SearchAll from '../searchall/searchall';
 import Search from '../search/search';
 import supabase from "../../config/supabaseClient";
+import Navbar from '../navbar/navbar';
 
 function HomePage() {
   const [searchInput, setSearchInput] = useState("");
@@ -15,17 +16,7 @@ function HomePage() {
 
   return (
     <div className="home">
-      <div className="navbar">
-        <Link to="/">LOGO</Link>
-        <ul className="nav-links">
-          <li><Link to="/about">About</Link></li>
-          <li>
-            <span className="login-icon material-symbols-outlined">person</span>
-            <Link to="/login">Login</Link>
-          </li>
-          <li><Link to="/admin">Admin Page</Link></li>
-        </ul>
-      </div>
+      <Navbar />
       
       <div className="center-container">
         <h1>Kete Hauora</h1>

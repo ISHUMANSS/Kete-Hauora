@@ -1,0 +1,62 @@
+.organisation-page {
+  display: flex;
+  font-family: sans-serif;
+}
+
+.organisation-content {
+  flex: 1;
+  padding: 2rem;
+}
+
+.organisation-header {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 1rem;
+}
+
+.organisation-logo {
+  width: 80px;
+  height: auto;
+  margin-right: 1rem;
+}
+
+.organisation-header h1 {
+  flex-grow: 1;
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.category {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.organisation-details {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.contact-info, .extra-info {
+  width: 48%;
+}
+
+.contact-info p, .extra-info p {
+  margin: 0.3rem 0;
+}
+
+.services-offered {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.services-offered h2 {
+  margin-top: 0;
+}
+
+.services-list p {
+  margin: 0.4rem 0;
+}
