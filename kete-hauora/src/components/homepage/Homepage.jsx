@@ -19,7 +19,7 @@ function HomePage() {
       <Navbar />
       
       <div className="center-container">
-        <h1>Kete Hauora</h1>
+        <h1 className='title'>Kete Hauora</h1>
         <div className="search">
           <span className="search-icon material-symbols-outlined">search</span>
           <input
@@ -43,6 +43,8 @@ function HomePage() {
 
 export default HomePage;
 
+
+//I think this must be where the users role is being checked??
 export const useUserRole = () => {
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
