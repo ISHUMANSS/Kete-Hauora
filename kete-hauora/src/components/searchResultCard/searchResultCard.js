@@ -20,7 +20,7 @@ const SearchResultCard = ({ service }) => {
         <p><strong>Services:</strong> {/*service.services_offered*/}</p>
         <div className='filters'>
             <p><strong>Filters: </strong></p>
-            <button>filter</button>
+            <p>catorgory it fits into</p>
         </div>
 
         <Link to={`/organisation/${encodeURIComponent(service.company_name)}`}>

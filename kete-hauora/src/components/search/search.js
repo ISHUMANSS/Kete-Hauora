@@ -14,23 +14,42 @@ const Search = ({ serviceName, triggerSearch }) => {
             if (!triggerSearch || !serviceName) return;
 
             try {
-                // query the services table from Supabase where company_name matches the serviceName
-                const { data, error } = await supabase
+                let query = supabase
                     .from('services')
-                    .select('*')
-                    .ilike('company_name', `%${serviceName}%`); // case-insensitive match, partial search
+                    .select('*');
+
+                    //get the query ready to run
+                    //the start of the query has to match the 
+                    query = query.ilike('company_name', `${serviceName}%`);
+
+
+                    //check for if any filters have been pased through so it should only display searches that fit into that filter
+                /*
+                    if (filters) {
+                        if (filters.category) {
+                            query = query.eq('category', filters.category);
+                        }
+                        if (filters.city) {
+                            query = query.eq('city', filters.city);
+                        }
+                        //add more filters as needed
+                    }
+                */
+                //actually run the query which might now have filters
+                const { data, error } = await query;
 
                 if (error) throw error;
 
-                // check if data came back and is not empty
+
+                //check if data came back and is not empty
                 if (data && data.length > 0) {
-                    setServices(data); // if it's an array of results, set it
-                    setServiceResult(true); // show the results table
-                    setError(null); // clear any previous errors
+                    setServices(data); //if an array of results set it
+                    setServiceResult(true); //show the results table
+                    setError(null); //clear any previous errors
                 } else {
-                    setServices([]); // no results found
+                    setServices([]); //no results found
                     setServiceResult(null);
-                    setError("No service found with that name."); // show error message to user
+                    setError("No service found with that name."); //show error message to user
                 }
             } catch (err) {
                 console.error(err.message);
@@ -40,7 +59,7 @@ const Search = ({ serviceName, triggerSearch }) => {
         };
 
         handleSearch();
-    }, [triggerSearch, serviceName]); // run each time the service name changes or when the search button is clicked
+    }, [triggerSearch, serviceName]); //run each time the service name changes or when the search button is clicked
 
     return (
         <div className="Search">

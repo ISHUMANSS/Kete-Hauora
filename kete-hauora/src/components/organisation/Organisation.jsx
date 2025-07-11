@@ -50,34 +50,35 @@ function Organisation() {
                 </header>
 
                 <section className="organisation-details">
-                <div className="contact-info">
-                    <p><strong>Phone:</strong> {service.phone || 'N/A'}</p>
-                    <p><strong>Email:</strong> {service.email || 'N/A'}</p>
-                    {/*makes the links clickable 
-                    has some issues with the links being incorrect or there being more then one link per link???
-                    some of the links also just don't work*/}
-                    <p><strong>Website:</strong> <a href={service.website} target="_blank" rel="noreferrer">{service.website}</a></p>
+                    <div className="contact-info">
+                        <p><strong>Phone:</strong> {service.phone || 'N/A'}</p>
+                        <p><strong>Email:</strong> {service.email || 'N/A'}</p>
+                        
+                        {/*makes the links clickable 
+                        has some issues with the links being incorrect or there being more then one link per link???
+                        some of the links also just don't work*/}
+                        <p><strong>Website:</strong> <a href={service.website} target="_blank" rel="noreferrer">{service.website}</a></p>
 
-                    <p><strong>Physical Address:</strong> {service.physical_address}</p>
-                    <p><strong>Languages:</strong> {service.languages}</p>
-                </div>
-                <div className="extra-info">
-                    <p><strong>Operating Hours:</strong> {service.hours}</p>
-                    <p><strong>Cost:</strong> {service.cost}</p>
-                    <p><strong>Referral:</strong> {service.referral}</p>
-                    <p><strong>Other Notes:</strong> {service.other_notes}</p>
-                </div>
+                        <p><strong>Physical Address:</strong> {service.physical_address}</p>
+                        <p><strong>Languages:</strong> {service.languages}</p>
+                    </div>
+                    <div className="extra-info">
+                        <p><strong>Operating Hours:</strong> {service.hours}</p>
+                        <p><strong>Cost:</strong> {service.cost}</p>
+                        <p><strong>Referral:</strong> {service.referral}</p>
+                        <p><strong>Other Notes:</strong> {service.other_notes}</p>
+                    </div>
                 </section>
 
                 <section className="services-offered">
-                <h2>Services Offered:</h2>
-                <div className="services-list">
-                    {service.services_offered
-                    ? service.services_offered.split('\n').map((item, idx) => (
-                        <p key={idx}>• {item.trim()}</p>
-                        ))
-                    : <p>No services listed.</p>}
-                </div>
+                    <h2>Services Offered:</h2>
+                    <div className="services-list">
+                        {service.services_offered
+                        ? service.services_offered.split('\n').map((item, idx) => (
+                            <p key={idx}>• {item.trim()}</p>
+                            ))
+                        : <p>No services listed.</p>}
+                    </div>
                 </section>
             </main>
             </div>

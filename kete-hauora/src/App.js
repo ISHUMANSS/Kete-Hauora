@@ -16,6 +16,7 @@ import AddOrganisationForm from './components/admin/AddOrganisationForm.jsx';
 import EditOrganisationForm from './components/admin/EditOrganisationForm.jsx';
 import Organisation from './components/organisation/Organisation.jsx';
 import Navbar from './components/navbar/navbar.js';
+import NotFound from './components/notfound/NotFound.jsx';
 
 
 
@@ -37,6 +38,10 @@ function App() {
           <Route path="/editOrg/:companyName" element={<EditOrganisationForm />} />
 
           <Route path="/organisation/:companyName" element={<Organisation />}/>
+
+
+          {/*catch all route for any thing that doesn't exist*/}
+          <Route path="*" element={<NotFound />} />
 
         </Routes>
       </div>

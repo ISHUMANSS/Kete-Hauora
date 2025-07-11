@@ -5,13 +5,14 @@ import SearchAll from '../searchall/searchall';
 import Search from '../search/search';
 import supabase from "../../config/supabaseClient";
 import Navbar from '../navbar/navbar';
+import SearchBar from '../searchBar/searchBar';
 
 function HomePage() {
   const [searchInput, setSearchInput] = useState("");
   const [searchTrigger, setSearchTrigger] = useState(0);
 
   const handleSearchClick = () => {
-    setSearchTrigger(prev => prev + 1);//tells search component to re run
+    setSearchTrigger(prev => prev + 1); // tells search component to re run
   };
 
   return (
@@ -20,17 +21,11 @@ function HomePage() {
       
       <div className="center-container">
         <h1 className='title'>Kete Hauora</h1>
-        <div className="search">
-          <span className="search-icon material-symbols-outlined">search</span>
-          <input
-            className="search-input"
-            type="search"
-            placeholder="Enter service ID"
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-          />
-          <button onClick={handleSearchClick}>Search</button>
-        </div>
+        <SearchBar
+          searchInput={searchInput}
+          setSearchInput={setSearchInput}
+          onSearch={handleSearchClick}
+        />
       </div>
 
       <div className="search-results">

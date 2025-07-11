@@ -24,26 +24,6 @@
     align-items: center;
 }
 
-.search {
-    width: 600px;
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    border-radius: 40px;
-    background: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    margin: 0 auto;
-}
-
-.search-input {
-    font-size: 18px;
-    color: #333333;
-    margin-left: 20px;
-    outline: none;
-    border: none;
-    background: transparent;
-    width: 600px;
-}
 
 .search-results {
   padding: 20px;
@@ -63,17 +43,20 @@
   margin-bottom: 10px;
 }
 
-.SearchAll table {
-  width: 100%;
-  border-collapse: collapse;
+
+
+/*changes how all the buttons look on this page applys to all the buttons on home as of right now if you want to change specific ones add a class or id to it*/
+button {
+  margin-left: 8px;
+  padding: 8px 12px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.SearchAll th, .SearchAll td {
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: left;
-}
-
-.SearchAll th {
-  background-color: #f5f5f5;
+button:hover {
+  background-color: #45a049;
 }

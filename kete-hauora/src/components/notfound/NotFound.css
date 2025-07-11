@@ -1,0 +1,40 @@
+/* NotFound.css */
+.notfound-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh; /* adjust so navbar stays visible */
+  text-align: center;
+  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.notfound-title {
+  font-size: 6rem;
+  font-weight: bold;
+  margin: 0;
+  color: #e74c3c;
+}
+
+.notfound-message {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+.notfound-button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.notfound-button:hover {
+  background-color: #2980b9;
+}
