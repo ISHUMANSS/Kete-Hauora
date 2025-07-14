@@ -3,7 +3,7 @@ import supabase from "../../config/supabaseClient";
 import SearchResultCard from "../searchResultCard/searchResultCard";
 
 
-const Search = ({ serviceName, triggerSearch }) => {
+const Search = ({ serviceName, triggerSearch, filters  }) => {
     const [serviceResult, setServiceResult] = useState(null); // shows the search table
     const [error, setError] = useState(null); // the error which tells the user what went wrong with their search, like if there weren't any results
     const [services, setServices] = useState([]); // list of all the services given in the response
@@ -24,17 +24,20 @@ const Search = ({ serviceName, triggerSearch }) => {
 
 
                     //check for if any filters have been pased through so it should only display searches that fit into that filter
-                /*
+                    //currently most things aren't catorgorised into actual filters so like most of these will not get results for actual data
+
                     if (filters) {
                         if (filters.category) {
                             query = query.eq('category', filters.category);
                         }
-                        if (filters.city) {
-                            query = query.eq('city', filters.city);
+
+                        if (filters.cost) {
+                            query = query.eq('cost', filters.cost);
                         }
+                        
                         //add more filters as needed
                     }
-                */
+                ;
                 //actually run the query which might now have filters
                 const { data, error } = await query;
 
@@ -59,7 +62,7 @@ const Search = ({ serviceName, triggerSearch }) => {
         };
 
         handleSearch();
-    }, [triggerSearch, serviceName]); //run each time the service name changes or when the search button is clicked
+    }, [triggerSearch, serviceName,filters]); //run each time the service name changes or when the search button is clicked
 
     return (
         <div className="Search">
@@ -71,7 +74,7 @@ const Search = ({ serviceName, triggerSearch }) => {
                 // if the service result exists, show the table
                 <div className="result-container">
                     {services.map((service) => (
-                        <SearchResultCard key={service.company_name} service={service}/>
+                        <SearchResultCard key={service.company_name} service={service} filters={filters}/>
                     ))}
                 </div>
             )}

@@ -15,3 +15,14 @@
 .search-result-card p {
   margin: 4px 0;
 }
+
+
+.filter-badge {
+  display: inline-block;
+  background-color: #e0f2f1;   /* soft teal, adjust to your theme */
+  color: #00796b;              /* darker teal text */
+  padding: 4px 8px;
+  margin: 2px;
+  border-radius: 12px;
+  font-size: 0.85em;
+}

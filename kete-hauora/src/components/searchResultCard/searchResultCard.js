@@ -5,7 +5,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './searchResultCard.css';
 
-const SearchResultCard = ({ service }) => {
+const SearchResultCard = ({ service, filters }) => {
     //takes in a service from the search and then gets the info from that
   return (
     <div className="search-result-card">
@@ -20,7 +20,14 @@ const SearchResultCard = ({ service }) => {
         <p><strong>Services:</strong> {/*service.services_offered*/}</p>
         <div className='filters'>
             <p><strong>Filters: </strong></p>
-            <p>catorgory it fits into</p>
+            {/*if there are filters display them nicely*/}
+            {filters?.category  && (
+                <span className="filter-badge">{/*service.category*/}</span>
+            )}
+            {filters?.cost  && (
+                <span className="filter-badge">{service.cost}</span>
+            )}
+            {/*ADDD MORE FILTERS HERE*/}
         </div>
 
         <Link to={`/organisation/${encodeURIComponent(service.company_name)}`}>

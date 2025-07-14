@@ -11,8 +11,10 @@ function HomePage() {
   const [searchInput, setSearchInput] = useState("");
   const [searchTrigger, setSearchTrigger] = useState(0);
 
+  const [filters, setFilters] = useState({ category: "", cost: "" });
+
   const handleSearchClick = () => {
-    setSearchTrigger(prev => prev + 1); // tells search component to re run
+    setSearchTrigger(prev => prev + 1); //tells search component to re run
   };
 
   return (
@@ -25,11 +27,13 @@ function HomePage() {
           searchInput={searchInput}
           setSearchInput={setSearchInput}
           onSearch={handleSearchClick}
+          filters={filters}
+          setFilters={setFilters}
         />
       </div>
 
       <div className="search-results">
-        <Search serviceName={searchInput} triggerSearch={searchTrigger} />
+        <Search serviceName={searchInput} triggerSearch={searchTrigger} filters={filters} />
         <SearchAll />
       </div>
     </div>
