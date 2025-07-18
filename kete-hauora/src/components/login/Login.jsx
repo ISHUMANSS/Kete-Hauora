@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from 'react-router-dom';
 import supabase from "../../config/supabaseClient";
 import './LoginPage.css'
-import { useAuth } from '../../hooks/useAuth';
+//import { useAuth } from '../../hooks/useAuth';
 import Navbar from "../navbar/navbar";
 
 
