@@ -59,9 +59,11 @@ function RegisterPage() {
 
 
   //ADD A BETTER PASSWORD CHECKING FUNCTION IN JS AND THEN ALSO UPDATE THE SUPABASE REQUIRMENTS FOR A PASSWORD
+  /*
   function checkPassword() {
     //add like patterns and such
   }
+  */
 
 
   return (

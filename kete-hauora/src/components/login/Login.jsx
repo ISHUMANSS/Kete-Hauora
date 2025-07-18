@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+//import React, { useEffect, useState } from "react";
 import './LoginPage.css';
 
+import React, { useState } from "react";
 import { useNavigate, Link } from 'react-router-dom';
 import supabase from "../../config/supabaseClient";
 import './LoginPage.css'
@@ -9,7 +10,7 @@ import Navbar from "../navbar/navbar";
 
 
 function LoginPage() {
-  const { user, loading } = useAuth();
+  //const { user, loading } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,7 +21,7 @@ function LoginPage() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -64,7 +65,13 @@ function LoginPage() {
 
             <div className="remember-forgot">
               <label><input type="checkbox" />Remember me</label>
-              <a href="#">Forgot password?</a>
+              <button
+                type="button"
+                className="forgot-password-link"
+                onClick={() => alert('Forgot password clicked!')}
+              >
+                Forgot password?
+              </button>
             </div>
             
             <button type="submit" className="btn">Login</button>
