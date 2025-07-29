@@ -17,7 +17,7 @@ import EditOrganisationForm from './components/admin/EditOrganisationForm.jsx';
 import Organisation from './components/organisation/Organisation.jsx';
 import Navbar from './components/navbar/navbar.js';
 import NotFound from './components/notfound/NotFound.jsx';
-
+import ManageAccounts from './components/admin/ManageAccounts.jsx';
 
 
 function App() {
@@ -35,7 +35,8 @@ function App() {
 
           <Route path="/admin" element={<AdminPage />}/>{/*make it so that users have to be loged in to be able to use this with protected routes*/}
           <Route path="/addOrg" element={<AddOrganisationForm />} />
-          <Route path="/editOrg/:companyName" element={<EditOrganisationForm />} />
+          <Route path="/editOrg" element={<EditOrganisationForm />} />
+          <Route path="/manageAccounts" element={<ManageAccounts />} />
 
           <Route path="/organisation/:companyName" element={<Organisation />}/>
 

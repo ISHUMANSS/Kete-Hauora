@@ -11,7 +11,7 @@ const Navbar = () => {
           <span className="login-icon material-symbols-outlined">person</span>
           <Link to="/login">Login</Link>
         </li>
-        <li><Link to="/admin">Admin Page</Link></li>
+        <li><Link to="/admin">Admin</Link></li>
       </ul>
     </div>
   );

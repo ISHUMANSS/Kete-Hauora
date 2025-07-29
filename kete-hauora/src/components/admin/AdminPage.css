@@ -1,0 +1,138 @@
+.admin-page {
+  min-height: 100vh;
+  background-color: #f3f4f6; 
+  padding: 2;
+}
+
+.admin-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.admin-title {
+  font-size: 2.5rem;
+  color: black;
+  margin-top: 2rem;        /* Top margin to move it down */
+  margin-bottom: 2rem;     /* Space below */
+  text-align: center;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.dashboard-card {
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  padding: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card h2 {
+  font-size: 1.25rem;
+  color: #2563eb; /* blue-600 */
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-card p {
+  font-size: 0.95rem;
+  color: #4b5563; /* gray-600 */
+}
+
+.admin-access-denied {
+  padding: 3rem;
+  text-align: center;
+}
+
+/* Manage Accounts Container */
+.manage-accounts .admin-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.user-table table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  overflow: hidden; 
+}
+
+.user-table thead {
+  background-color: #1f2937; 
+  color: white;
+}
+
+.user-table thead th {
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.user-table tbody tr {
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.3s ease;
+}
+
+/* Alternate row colors */
+.user-table tbody tr:nth-child(even) {
+  background-color: #f9fafb; 
+}
+
+/* Hover effect */
+.user-table tbody tr:hover {
+  background-color: #e0e7ff; 
+  cursor: pointer;
+}
+
+/* Table cells */
+.user-table tbody td {
+  padding: 12px 15px;
+  color: #374151; 
+}
+
+/* Responsive: horizontal scroll on small screens */
+@media (max-width: 600px) {
+  .user-table table, .user-table thead, .user-table tbody, .user-table th, .user-table td, .user-table tr {
+    display: block;
+  }
+  
+  .user-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  
+  .user-table tbody tr {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+  }
+  
+  .user-table tbody td {
+    padding-left: 50%;
+    position: relative;
+  }
+  
+  .user-table tbody td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 15px;
+    top: 12px;
+    font-weight: 600;
+    color: #1f2937;
+    white-space: nowrap;
+  }
+}

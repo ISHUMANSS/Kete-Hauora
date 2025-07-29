@@ -1,4 +1,5 @@
 /* LoginPage.css */
+/* Styling for moblie */
 
 .login {
     background-image: url("blue2.jpg");
@@ -10,29 +11,32 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
 }
 
 
 /* Login form styles specific to LoginPage */
 .wrapper {
     width: 420px;
+    max-width: 420px;
     background: transparent;
     border: 2px solid rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(20px);
     color: #fff;
     border-radius: 10px;
-    padding: 30px 40px;
-    margin-top: 100px; /* Adjust depending on navbar height */
+    padding: 25px 20px;
+    margin-top: 60px; /* Adjust depending on navbar height */
+    box-sizing: border-box;
 }
 
 .wrapper h1 {
-    font-size: 36px;
+    font-size: 28px;
     text-align: center;
 }
 
 .wrapper .input-box {
     width: 100%;
-    margin: 20px 0;
+    margin: 15px 0;
     position: relative;
     display: flex;
     align-items: center;
@@ -57,17 +61,18 @@
 
 .input-box i {
     position: absolute;
-    right: 20px;
+    right: 15px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .wrapper .remember-forgot {
     display: flex;
     justify-content: space-between;
-    font-size: 14.5px;
-    margin: -15px 0 15px;
+    font-size: 13x;
+    margin: -10px 0 15px;
+    gap: 10px;
 }
 
 .remember-forgot label input {
@@ -99,9 +104,9 @@
 }
 
 .wrapper .register-link {
-    font-size: 14.5px;
+    font-size: 13px;
     text-align: center;
-    margin: 20px 0 15px;
+    margin: 20px 0 10px;
 }
 
 .register-link p a {
@@ -112,4 +117,30 @@
 
 .register-link p a:hover {
     text-decoration: underline;
+}
+
+/* Desktop styling */
+@media (min-width: 768px) {
+    .wrapper {
+        padding: 30px 40px;
+        margin-top: 100px;
+    }
+
+    .wrapper h1 {
+        font-size: 36px;
+    }
+
+    .input-box i {
+        font-size: 20px;
+    }
+
+    .wrapper .remember-forgot {
+        flex-direction: row;
+        justify-content: space-between;
+        font-size: 14.5px;
+    }
+
+    .wrapper .register-link {
+        font-size: 14.5px;
+    }
 }

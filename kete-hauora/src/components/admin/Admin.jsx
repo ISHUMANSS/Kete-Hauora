@@ -22,13 +22,26 @@ function AdminPage() {
     <div className="about">
       <Navbar />
 
-      <div className="about-content">
-        <h1>ADMIN PAGE</h1>
+      <div className="admin-content">
+        <h1 className="admin-title">Admin Dashboard</h1>
         {/* Add more content here as needed */}
-        <ul>
-          <li><Link to="/addOrg">Add Organisation</Link></li>
-          {/*<li><Link to="/EditOrg">Edit Organisation</Link></li>*/}
-        </ul>
+        
+      <div className="dashboard-grid">
+        <Link to="/addOrg" className='dashboard-card'>
+        <h2>Add Organisation</h2>
+        <p>Add new organisation in the system.</p>
+        </Link>
+
+        <Link to="/editOrg" className="dashboard-card">
+            <h2>Edit Organisation</h2>
+            <p>Edit or remove organisation details.</p>
+          </Link>
+
+          <Link to="/manageAccounts" className="dashboard-card">
+            <h2>Manage Accounts</h2>
+            <p>View and control user access to organisations.</p>
+          </Link>
+        </div>
       </div>
     </div>
   );
