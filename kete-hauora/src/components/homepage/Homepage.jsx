@@ -6,6 +6,7 @@ import Search from '../search/search';
 import supabase from "../../config/supabaseClient";
 import Navbar from '../navbar/navbar';
 import SearchBar from '../searchBar/searchBar';
+import FiltersBox from '../filters/Filters';
 
 function HomePage() {
   const [searchInput, setSearchInput] = useState("");
@@ -27,6 +28,10 @@ function HomePage() {
           searchInput={searchInput}
           setSearchInput={setSearchInput}
           onSearch={handleSearchClick}
+          filters={filters}
+          setFilters={setFilters}
+        />
+        <FiltersBox
           filters={filters}
           setFilters={setFilters}
         />
