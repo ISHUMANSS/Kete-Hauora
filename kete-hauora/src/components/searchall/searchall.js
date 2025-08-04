@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import supabase from "../../config/supabaseClient";
 import SearchResultCard from "../searchResultCard/searchResultCard";
 
+import { useTranslation } from 'react-i18next';
+
 const SearchAll = () => {
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    const { t } = useTranslation();
 
     const getServices = async () => {
         try {
@@ -28,7 +32,7 @@ const SearchAll = () => {
 
     return (
         <div className="SearchAll">
-            <h1>Search for all the services:</h1>
+            <h1>{t('SearchForAllTheServices')}:</h1>
 
             {loading ? (
                 <p>Loading services...</p>

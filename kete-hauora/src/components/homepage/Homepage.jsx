@@ -7,6 +7,8 @@ import supabase from "../../config/supabaseClient";
 import Navbar from '../navbar/navbar';
 import SearchBar from '../searchBar/searchBar';
 
+import { useTranslation } from 'react-i18next';
+
 function HomePage() {
   const [searchInput, setSearchInput] = useState("");
   const [searchTrigger, setSearchTrigger] = useState(0);
@@ -16,6 +18,8 @@ function HomePage() {
   const handleSearchClick = () => {
     setSearchTrigger(prev => prev + 1); //tells search component to re run
   };
+
+  const { t } = useTranslation();
 
   return (
     <div className="home">

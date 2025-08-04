@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import supabase from "../../config/supabaseClient";
 import SearchResultCard from "../searchResultCard/searchResultCard";
 
+import { useTranslation } from 'react-i18next';
+
 
 const Search = ({ serviceName, triggerSearch, filters  }) => {
     const [serviceResult, setServiceResult] = useState(null); // shows the search table
     const [error, setError] = useState(null); // the error which tells the user what went wrong with their search, like if there weren't any results
     const [services, setServices] = useState([]); // list of all the services given in the response
+
+    const { t } = useTranslation();
 
     useEffect(() => {
         const handleSearch = async () => {
@@ -66,7 +70,7 @@ const Search = ({ serviceName, triggerSearch, filters  }) => {
 
     return (
         <div className="Search">
-            <h2>Search Result:</h2>
+            <h2>{t('Search Result')}:</h2>
 
             {error && <p style={{ color: "red" }}>{error}</p>}
 
