@@ -36,3 +36,16 @@
   border-radius: 8px;
   cursor: pointer;
 }
+
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.checkbox-label {
+  font-weight: 500;
+  color: #444;
+}
