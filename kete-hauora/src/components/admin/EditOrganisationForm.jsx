@@ -50,6 +50,10 @@ function EditOrganisationForm() {
     
     if (loading) return <p>Loading...</p>;
 
+    /*
+
+    JUST COMMETED OUT RIGHT NOW SO WE CAN SEE THE ADMIN DATA CASUE LOGIN IS BROKEN
+
     if (user.role !== 'admin') {
         return (
             <>
@@ -59,6 +63,8 @@ function EditOrganisationForm() {
             </>
         );
     }
+
+    */
 
     const handleChange = (e) => {
         const { name, value } = e.target;

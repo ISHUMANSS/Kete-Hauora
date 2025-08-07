@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import supabase from '../../config/supabaseClient';
 import './Organisation.css';
 import Navbar from '../navbar/navbar';
@@ -39,6 +39,10 @@ function Organisation() {
                 
             </aside>
             */}
+
+            <Link to="/" className="back-button">
+                ← Back to Home
+            </Link>
 
             <main className="organisation-content">
                 <header className="organisation-header">

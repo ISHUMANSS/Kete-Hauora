@@ -6,6 +6,7 @@ import Search from '../search/search';
 import supabase from "../../config/supabaseClient";
 import Navbar from '../navbar/navbar';
 import SearchBar from '../searchBar/searchBar';
+import FiltersBox from '../filters/Filters';
 
 import { useTranslation } from 'react-i18next';
 
@@ -13,7 +14,14 @@ function HomePage() {
   const [searchInput, setSearchInput] = useState("");
   const [searchTrigger, setSearchTrigger] = useState(0);
 
-  const [filters, setFilters] = useState({ category: "", cost: "" });
+  const [filters, setFilters] = useState({
+    //set up the filters we want here
+    //these get given to the fileters box
+    category: '',
+    cost: '',
+    location: '',
+    language: [],
+  });
 
   const handleSearchClick = () => {
     setSearchTrigger(prev => prev + 1); //tells search component to re run
@@ -31,6 +39,9 @@ function HomePage() {
           searchInput={searchInput}
           setSearchInput={setSearchInput}
           onSearch={handleSearchClick}
+          
+        />
+        <FiltersBox
           filters={filters}
           setFilters={setFilters}
         />
