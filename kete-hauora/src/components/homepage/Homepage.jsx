@@ -14,7 +14,14 @@ function HomePage() {
   const [searchInput, setSearchInput] = useState("");
   const [searchTrigger, setSearchTrigger] = useState(0);
 
-  const [filters, setFilters] = useState({ category: "", cost: "" });
+  const [filters, setFilters] = useState({
+    //set up the filters we want here
+    //these get given to the fileters box
+    category: '',
+    cost: '',
+    location: '',
+    language: [],
+  });
 
   const handleSearchClick = () => {
     setSearchTrigger(prev => prev + 1); //tells search component to re run
