@@ -30,6 +30,7 @@ const Search = ({ serviceName, triggerSearch, filters  }) => {
                     )
                 `);
                 //regions currently broken
+                //filters other then cost currently broken
 
 
                 //if there is a name
