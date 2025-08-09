@@ -12,8 +12,16 @@ const FiltersBox = ({ filters, setFilters }) => {
             category: '',
             cost: '',
             location: '',
-            language: [], //is an arry so it can do more then one
+            language: '', //is an arry so it can do more then one
         });
+    };
+
+    //allow for togeling on and off
+    const handleLanguageChange = (value) => {
+        setFilters((prev) => ({
+        ...prev,
+        language: prev.language === value ? '' : value, // toggle off if same value
+        }));
     };
 
   return (
@@ -42,8 +50,8 @@ const FiltersBox = ({ filters, setFilters }) => {
                     onChange={(e) => setFilters(prev => ({ ...prev, cost: e.target.value }))}
                 >
                     <option value="">Any Cost</option>
-                    <option value="free">Free</option>
-                    <option value="Paid">Paid</option>
+                    <option value="FALSE">Free</option> {/*FALSE means it is free*/}
+                    <option value="TRUE">Paid</option>{/*TRUE means it costs money*/}
                 </select>
             </div>
 
@@ -60,27 +68,18 @@ const FiltersBox = ({ filters, setFilters }) => {
                 </select>
             </div>
 
-            <div className="filter-group">
-            <label>Languages</label>
-            <div className="checkbox-group">
+           <div className="filter-group">
+            <label>Language</label>
+            <div className="radio-group">
                 {['English', 'Maori', 'Other'].map((lang) => (
-                <label key={lang} className="checkbox-label">
+                <label key={lang} className="radio-label">
                     <input
-                    type="checkbox"
-                    value={lang}
-                    checked={filters.language.includes(lang)}
-                    onChange={(e) => {
-                        const value = e.target.value;
-                        setFilters((prev) => {
-                        const isChecked = prev.language.includes(value);
-                        return {
-                            ...prev,
-                            language: isChecked
-                            ? prev.language.filter((l) => l !== value)
-                            : [...prev.language, value],
-                        };
-                        });
-                    }}
+                        type="radio"
+                        name="language"
+                        value={lang}
+                        checked={filters.language === lang}
+                        onClick={() => handleLanguageChange(lang)}//toggle support
+                        readOnly
                     />
                     {lang}
                 </label>

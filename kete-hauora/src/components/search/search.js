@@ -14,34 +14,54 @@ const Search = ({ serviceName, triggerSearch, filters  }) => {
 
     useEffect(() => {
         const handleSearch = async () => {
-            // if it's missing the data it needs, return and don't search
-            if (!triggerSearch || !serviceName) return;
+            //now it also searches when you just change the filters
+            if (!triggerSearch ) return;
 
             try {
                 let query = supabase
-                    .from('services')
-                    .select('*');
+                .from('services')
+                .select(`
+                    *,
+                    service_categories(
+                        categories(category)
+                    ),
+                    service_languages(
+                        languages(language)
+                    )
+                `);
+                //regions currently broken
 
-                    //get the query ready to run
-                    //the start of the query has to match the 
+
+                //if there is a name
+                if (serviceName) {
                     query = query.ilike('company_name', `${serviceName}%`);
+                }
 
+                //check for if any filters have been pased through so it should only display searches that fit into that filter
+                //currently most things aren't catorgorised into actual filters so like most of these will not get results for actual data
 
-                    //check for if any filters have been pased through so it should only display searches that fit into that filter
-                    //currently most things aren't catorgorised into actual filters so like most of these will not get results for actual data
+                //category filter
+                if (filters.category) {
+                    query = query.eq('service_categories.categories.category', filters.category);
+                }
 
-                    if (filters) {
-                        if (filters.category) {
-                            query = query.eq('category', filters.category);
-                        }
-
-                        if (filters.cost) {
-                            query = query.eq('cost', filters.cost);
-                        }
-                        
-                        //add more filters as needed
-                    }
-                ;
+                if (filters.cost) {
+                    //check the cost_tf coloum 
+                    /*TRUE means it costs money*/
+                    /*FALSE means it is free*/
+                    query = query.eq('cost_tf', filters.cost);
+                }
+/*
+                //region filter
+                if (filters.location) {
+                    query = query.eq('region.region', filters.location);
+                }
+*/
+                //language filter
+                if (filters.language) {
+                    query = query.eq('service_languages.languages.language', filters.language);
+                }
+                
                 //actually run the query which might now have filters
                 const { data, error } = await query;
 

@@ -13,7 +13,7 @@ const SearchBar = ({ searchInput, setSearchInput, onSearch}) => {
         onChange={(e) => setSearchInput(e.target.value)}
       />
 
-      {/*fliters filters are now in a different location*/}
+      {/*fliters are now in a different location*/}
      
 
       <button onClick={onSearch}>Search</button>
