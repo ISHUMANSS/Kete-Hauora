@@ -35,7 +35,7 @@ const SearchAll = () => {
             <h1>{t('SearchForAllTheServices')}:</h1>
 
             {loading ? (
-                <p>Loading services...</p>
+                <p>{t("Loading services...")}</p>
             ) : (
                 <div className="result-container">
                     {services.map((service) => (
