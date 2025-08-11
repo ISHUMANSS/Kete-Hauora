@@ -53,7 +53,7 @@ const FiltersBox = ({ filters, setFilters }) => {
             category: '',
             cost: '',
             location: '',
-            language: '', //is an arry so it can do more then one
+            language: '',
         });
     };
 
@@ -73,13 +73,13 @@ const FiltersBox = ({ filters, setFilters }) => {
                 <label>Category</label>
                 <select
                     value={filters.category}
-                    onChange={(e) => setFilters(prev => ({ ...prev, category: e.target.value }))}
+                    onChange={(e) => setFilters(prev => ({ ...prev, category: Number(e.target.value) }))}
                 >
                     <option value="">All Categories</option>
                     {categories.map((cat) => (
-                    <option key={cat.category_id} value={cat.category_id}>
-                        {cat.category}
-                    </option>
+                        <option key={cat.category_id} value={cat.category_id}>
+                            {cat.category}
+                        </option>
                     ))}
                 </select>
             </div>

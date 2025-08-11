@@ -21,14 +21,17 @@ const Search = ({ serviceName, triggerSearch, filters  }) => {
                 let query = supabase
                 .from('services')
                 .select(`
-                    *,
-                    service_categories(
-                        categories(category)
-                    ),
-                    service_languages(
-                        languages(language)
-                    )
+                *,
+                service_categories(
+                    category_id,
+                    categories(category)
+                ),
+                service_languages(
+                    language_id,
+                    languages(language)
+                )
                 `);
+
                 //regions currently broken
                 //filters other then cost currently broken
 
@@ -43,7 +46,24 @@ const Search = ({ serviceName, triggerSearch, filters  }) => {
 
                 //category filter
                 if (filters.category) {
-                    query = query.eq('service_categories.categories.category', filters.category);
+                    const { data: categoryServices, error: catError } = await supabase
+                        .from('service_categories')
+                        .select('service_id')
+                        .eq('category_id', filters.category);
+
+                    if (catError) throw catError;
+
+                    const serviceIds = categoryServices.map(cs => cs.service_id);
+
+                    if (serviceIds.length > 0) {
+                        query = query.in('id', serviceIds); // assuming 'id' is the PK in 'services'
+                    } else {
+                        // No matching services — bail early
+                        setServices([]);
+                        setServiceResult(null);
+                        setError("No services found in that category.");
+                        return;
+                    }
                 }
 
                 if (filters.cost) {
@@ -75,9 +95,10 @@ const Search = ({ serviceName, triggerSearch, filters  }) => {
                     setServiceResult(true); //show the results table
                     setError(null); //clear any previous errors
                 } else {
+                    
                     setServices([]); //no results found
                     setServiceResult(null);
-                    setError("No service found with that name."); //show error message to user
+                    setError("No service found with that name"); //show error message to user
                 }
             } catch (err) {
                 console.error(err.message);
