@@ -24,7 +24,7 @@ const FiltersBox = ({ filters, setFilters }) => {
             if (catError) {
                 console.error('Error fetching categories:', catError.message);
             } else {
-                console.log('Fetched categories:', catData); // debug log
+                
                 setCategories(catData);
             };
 

@@ -22,7 +22,7 @@ const SearchResultCard = ({ service, filters }) => {
             <p><strong>Filters: </strong></p>
             {/*if there are filters display them nicely*/}
             {filters?.category  && (
-                <span className="filter-badge">{/*service.category*/}</span>
+                <span className="filter-badge">{filters.category}</span>
             )}
             {filters?.cost  && (
                 <span className="filter-badge">{service.cost}</span>

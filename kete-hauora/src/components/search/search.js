@@ -14,101 +14,64 @@ const Search = ({ serviceName, triggerSearch, filters  }) => {
 
     useEffect(() => {
         const handleSearch = async () => {
-            //now it also searches when you just change the filters
-            if (!triggerSearch ) return;
+            //check if anything to search for
+            if (!serviceName && !filters.category && !filters.cost && !filters.language) {
+                setServices([]);
+                setServiceResult(null);
+                setError(null);
+                return;
+            }
 
+            //set up the search
             try {
                 let query = supabase
                 .from('services')
                 .select(`
-                *,
-                service_categories(
-                    category_id,
-                    categories(category)
-                ),
-                service_languages(
-                    language_id,
-                    languages(language)
-                )
+                    *,
+                    service_categories!inner(category_id),
+                    service_languages(languages(language))
                 `);
 
-                //regions currently broken
-                //filters other then cost currently broken
-
-
-                //if there is a name
+                //if theres a service name add that to the search
                 if (serviceName) {
                     query = query.ilike('company_name', `${serviceName}%`);
                 }
 
-                //check for if any filters have been pased through so it should only display searches that fit into that filter
-                //currently most things aren't catorgorised into actual filters so like most of these will not get results for actual data
-
-                //category filter
-                if (filters.category) {
-                    const { data: categoryServices, error: catError } = await supabase
-                        .from('service_categories')
-                        .select('service_id')
-                        .eq('category_id', filters.category);
-
-                    if (catError) throw catError;
-
-                    const serviceIds = categoryServices.map(cs => cs.service_id);
-
-                    if (serviceIds.length > 0) {
-                        query = query.in('id', serviceIds); // assuming 'id' is the PK in 'services'
-                    } else {
-                        // No matching services — bail early
-                        setServices([]);
-                        setServiceResult(null);
-                        setError("No services found in that category.");
-                        return;
-                    }
-                }
-
+                //if theres a cost add that to the search
                 if (filters.cost) {
-                    //check the cost_tf coloum 
-                    /*TRUE means it costs money*/
-                    /*FALSE means it is free*/
                     query = query.eq('cost_tf', filters.cost);
                 }
-/*
-                //region filter
-                if (filters.location) {
-                    query = query.eq('region.region', filters.location);
+
+                //if theres a catagory add it to the search
+                if (filters.category) {
+                    query = query.eq('service_categories.category_id', Number(filters.category));
                 }
-*/
-                //language filter
+
+                //adding later
+                /*
                 if (filters.language) {
                     query = query.eq('service_languages.languages.language', filters.language);
                 }
-                
-                //actually run the query which might now have filters
+                */
                 const { data, error } = await query;
 
-                if (error) throw error;
-
-
-                //check if data came back and is not empty
-                if (data && data.length > 0) {
-                    setServices(data); //if an array of results set it
-                    setServiceResult(true); //show the results table
-                    setError(null); //clear any previous errors
+                if (error) {
+                    console.error(error);
                 } else {
-                    
-                    setServices([]); //no results found
-                    setServiceResult(null);
-                    setError("No service found with that name"); //show error message to user
+                    setServices(data);
+                    setServiceResult(true);
+                    setError(null);
                 }
+
             } catch (err) {
-                console.error(err.message);
+                console.error("Search error:", err.message);
                 setServiceResult(null);
-                setError("Error searching for service."); // generic error fallback
+                setError("An error occurred during the search.");
             }
         };
 
         handleSearch();
-    }, [triggerSearch, serviceName,filters]); //run each time the service name changes or when the search button is clicked
+    }, [serviceName, filters]); //run each time the service name changes or the filters are changed lmao the search button is just for show pretty much
 
     return (
         <div className="Search">
