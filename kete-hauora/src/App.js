@@ -17,6 +17,7 @@ import Navbar from './components/navbar/navbar.js';
 import NotFound from './components/notfound/NotFound.jsx';
 import ManageAccounts from './components/admin/ManageAccounts.jsx';
 
+
 function App() {
   return (
     <Router>

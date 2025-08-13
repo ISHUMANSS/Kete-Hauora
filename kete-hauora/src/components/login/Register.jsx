@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../../config/supabaseClient';
 import './LoginPage.css';
+import Navbar from "../navbar/navbar";
+
+import { useTranslation } from 'react-i18next';
 
 
 //just combineing register and login togther for simplicity for now
@@ -9,6 +12,8 @@ import './LoginPage.css';
 //also cause I wanted to use the same css
 
 function RegisterPage() {
+  const { t } = useTranslation();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -68,26 +73,15 @@ function RegisterPage() {
 
   return (
     <div className="login">
-      <nav className="navbar">
-        <Link to="/">LOGO</Link>
-        <ul className="nav-links">
-          <li><Link to="/about">About</Link></li>
-          <li>
-            <span className="login-icon material-symbols-outlined">person</span>
-            <Link to="/login">Login</Link>
-          </li>
-        </ul>
-      </nav>
-
-
+      <Navbar />
       <div className="wrapper">
         <form onSubmit={handleRegister}>
-          <h1>Register</h1>
+          <h1>{t("Register")}</h1>
           {error && <p style={{ color: 'red' }}>{error}</p>}
           <div className="input-box">
             <input
               type="email"
-              placeholder="Email"
+              placeholder={t("Email")}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
@@ -96,16 +90,16 @@ function RegisterPage() {
           <div className="input-box">
             <input
               type="password"
-              placeholder="Password"
+              placeholder={t("Password")}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
 
-          <button type="submit" className="btn">Register</button>
+          <button type="submit" className="btn">{t("Register")}</button>
 
           <div className="register-link">
-            <p>Already have an account? <Link to="/login">Login</Link></p>
+            <p>{t("Already have an account?")} <Link to="/login">Login</Link></p>
           </div>
         </form>
       </div>

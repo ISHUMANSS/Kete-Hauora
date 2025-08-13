@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './Filters.css';
 
+import { useTranslation } from 'react-i18next';
+
 import supabase from '../../config/supabaseClient';
 
 //filters component box where the user is able to select the filters and have that update the filters they are currently using
 //now we can just add some more filters into this box 
 
 const FiltersBox = ({ filters, setFilters }) => {
+    const { t } = useTranslation();
 
     const [categories, setCategories] = useState([]);
     //const [languages, setLanguages] = useState([]);
@@ -67,10 +70,11 @@ const FiltersBox = ({ filters, setFilters }) => {
 
   return (
     <div className="filters-box">
-        <h4>Filters</h4>
+        <h4>{t("Filters")}</h4>
         <div className="filters-section">
             <div className="filter-group">
-                <label>Category</label>
+                <label>{t("Category")}</label>
+                
                 <select
                     value={filters.category}
                     onChange={(e) => setFilters(prev => ({ ...prev, category: Number(e.target.value) }))}
@@ -85,33 +89,33 @@ const FiltersBox = ({ filters, setFilters }) => {
             </div>
 
             <div className="filter-group">
-                <label>Cost</label>
+                <label>{t("Cost")}</label>
                 <select
                     value={filters.cost}
                     onChange={(e) => setFilters(prev => ({ ...prev, cost: e.target.value }))}
                 >
-                    <option value="">Any Cost</option>
-                    <option value="FALSE">Free</option> {/*FALSE means it is free*/}
-                    <option value="TRUE">Paid</option>{/*TRUE means it costs money*/}
+                    <option value="">{t("Any Cost")}</option>
+                    <option value="FALSE">{t("Free")}</option>{/*FALSE means it is free*/}
+                    <option value="TRUE">{t("Paid")}</option>{/*TRUE means it costs money*/}
                 </select>
             </div>
 
             <div className="filter-group">
-                <label>Region</label>
+                <label>{t("Region")}</label>
                 <select
                     value={filters.location}
                     onChange={(e) => setFilters(prev => ({ ...prev, location: e.target.value }))}
                 >
-                    <option value="">All Locations</option>
-                    <option value="Auckland">Auckland</option>
-                    <option value="Manakau">Manakau</option>
-                    <option value="Other">Other</option>
+                <option value="">{t("All Locations")}</option>
+                    <option value="Auckland">{t("Auckland")}</option>
+                    <option value="Manakau">{t("Manakau")}</option>
+                    <option value="Other">{t("Other")}</option>
                 </select>
             </div>
 
-           <div className="filter-group">
-            <label>Language</label>
-            <div className="radio-group">
+            <div className="filter-group">
+            <label>{t("Languages")}</label>
+            <div className="checkbox-group">
                 {['English', 'Maori', 'Other'].map((lang) => (
                 <label key={lang} className="radio-label">
                     <input
@@ -129,7 +133,7 @@ const FiltersBox = ({ filters, setFilters }) => {
             </div>
 
             <button onClick={handleClearFilters}>
-                Clear Filters
+                {t("Clear Filters")}
             </button>
         </div>
       
