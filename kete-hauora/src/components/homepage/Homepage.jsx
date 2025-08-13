@@ -20,7 +20,7 @@ function HomePage() {
     category: '',
     cost: '',
     location: '',
-    language: [],
+    language: '',
   });
 
   const handleSearchClick = () => {

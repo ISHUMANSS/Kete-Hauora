@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Filters.css';
 
 import { useTranslation } from 'react-i18next';
+
+import supabase from '../../config/supabaseClient';
 
 //filters component box where the user is able to select the filters and have that update the filters they are currently using
 //now we can just add some more filters into this box 
@@ -9,14 +11,61 @@ import { useTranslation } from 'react-i18next';
 const FiltersBox = ({ filters, setFilters }) => {
     const { t } = useTranslation();
 
+    const [categories, setCategories] = useState([]);
+    //const [languages, setLanguages] = useState([]);
+
+    //get all the filters from the db
+    useEffect(() => {
+        const fetchFilterData = async () => {
+            //fetch categories
+            //to do this I had to allow for a RLS in supabase
+            const { data: catData, error: catError } = await supabase
+                .from('categories')
+                .select('category_id, category')
+                .order('category', { ascending: true });
+
+            if (catError) {
+                console.error('Error fetching categories:', catError.message);
+            } else {
+                
+                setCategories(catData);
+            };
+
+            /*
+            //not sure if we wnt to get the languages from the database
+            //fetch languages
+            const { data: langData, error: langError } = await supabase
+                .from('languages')
+                .select('language_id, language')
+                .order('language', { ascending: true });
+
+            if (!langError) setLanguages(langData);
+            */
+
+            //I can just add the regions here also
+        };
+        
+
+        fetchFilterData();
+    }, []);
+
+
     //click the buttons to reset the filters
     const handleClearFilters = () => {
         setFilters({
             category: '',
             cost: '',
             location: '',
-            language: [], //is an arry so it can do more then one
+            language: '',
         });
+    };
+
+    //allow for togeling on and off
+    const handleLanguageChange = (value) => {
+        setFilters((prev) => ({
+        ...prev,
+        language: prev.language === value ? '' : value, // toggle off if same value
+        }));
     };
 
   return (
@@ -28,13 +77,14 @@ const FiltersBox = ({ filters, setFilters }) => {
                 
                 <select
                     value={filters.category}
-                    
-                    onChange={(e) => setFilters(prev => ({ ...prev, category: e.target.value })) /*allows us to change the filter list*/}
+                    onChange={(e) => setFilters(prev => ({ ...prev, category: Number(e.target.value) }))}
                 >
-                    <option value="">{t("All Categories")}</option>
-                    <option value="Health">{t("Health")}</option>
-                    <option value="Education">{t("Education")}</option>
-                    <option value="Community">{t("Community")}</option>
+                    <option value="">All Categories</option>
+                    {categories.map((cat) => (
+                        <option key={cat.category_id} value={cat.category_id}>
+                            {cat.category}
+                        </option>
+                    ))}
                 </select>
             </div>
 
@@ -45,8 +95,8 @@ const FiltersBox = ({ filters, setFilters }) => {
                     onChange={(e) => setFilters(prev => ({ ...prev, cost: e.target.value }))}
                 >
                     <option value="">{t("Any Cost")}</option>
-                    <option value="free">{t("Free")}</option>
-                    <option value="Paid">{t("Paid")}</option>
+                    <option value="FALSE">{t("Free")}</option>{/*FALSE means it is free*/}
+                    <option value="TRUE">{t("Paid")}</option>{/*TRUE means it costs money*/}
                 </select>
             </div>
 
@@ -67,23 +117,14 @@ const FiltersBox = ({ filters, setFilters }) => {
             <label>{t("Languages")}</label>
             <div className="checkbox-group">
                 {['English', 'Maori', 'Other'].map((lang) => (
-                <label key={lang} className="checkbox-label">
+                <label key={lang} className="radio-label">
                     <input
-                    type="checkbox"
-                    value={lang}
-                    checked={filters.language.includes(lang)}
-                    onChange={(e) => {
-                        const value = e.target.value;
-                        setFilters((prev) => {
-                        const isChecked = prev.language.includes(value);
-                        return {
-                            ...prev,
-                            language: isChecked
-                            ? prev.language.filter((l) => l !== value)
-                            : [...prev.language, value],
-                        };
-                        });
-                    }}
+                        type="radio"
+                        name="language"
+                        value={lang}
+                        checked={filters.language === lang}
+                        onClick={() => handleLanguageChange(lang)}//toggle support
+                        readOnly
                     />
                     {lang}
                 </label>
