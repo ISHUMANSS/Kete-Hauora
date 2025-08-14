@@ -1,11 +1,8 @@
 import React, {useEffect, useState} from "react";
 import { supabase } from '../../config/supabaseClient'
-import { useAuth } from "../../hooks/useAuth";
-import { Link } from "react-router-dom";
 import Navbar from "../navbar/navbar";
 
 function ManageAccounts() {
-    const { user, loading } = useAuth();
     const [users, setUsers] = useState([]);
     const [fetchError, setFetchError] = useState(null);
 
@@ -23,18 +20,6 @@ function ManageAccounts() {
         };
         fetchUsers();
     }, []);
-
-    if (loading) return <p>Loading...</p>;
-
-    if (user.role !== 'admin') {
-        return (
-            <>
-            <p>You must be logged in with the right permissions to manage accounts.</p>
-            <Link to="/login">Go to login</Link><br />
-            <Link to="Go Home"></Link>
-            </>
-        );
-    }
 
     return (
         <div className="manage-accounts">

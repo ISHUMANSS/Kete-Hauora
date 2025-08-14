@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './AdminPage.css';
-import { useAuth } from '../../hooks/useAuth';
+/* import { useAuth } from '../../hooks/useAuth'; */
 import Navbar from '../navbar/navbar';
 
 function AdminPage() {
 
-  const { user, loading } = useAuth();
+/* const { user, loading } = useAuth();
   if (loading) return <p>Loading...</p>;
     if (user.role !== 'admin') {
         return (
@@ -16,8 +16,8 @@ function AdminPage() {
                 <Link to="/">Go to homepage</Link>
             </>
         );
-    }
-
+    } 
+*/
   return (
     <div className="about">
       <Navbar />
@@ -37,7 +37,7 @@ function AdminPage() {
             <p>Edit or remove organisation details.</p>
           </Link>
 
-          <Link to="/manageAccounts" className="dashboard-card">
+          <Link to="/manageccounts" className="dashboard-card">
             <h2>Manage Accounts</h2>
             <p>View and control user access to organisations.</p>
           </Link>

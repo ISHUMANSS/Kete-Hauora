@@ -43,7 +43,7 @@
 }
 
 .dashboard-card p {
-  font-size: 0.95rem;
+  font-size: 0.90rem;
   color: #4b5563; /* gray-600 */
 }
 
@@ -136,3 +136,135 @@
     white-space: nowrap;
   }
 }
+/* Edit organisation page container */
+.edit-org-container {
+  max-width: 900px;
+  margin: 2rem auto 4rem;
+  background: white;
+  padding: 2rem 3rem;
+  border-radius: 8px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+}
+
+/* Title */
+.edit-org-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937; 
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* SearchBar wrapper to add spacing */
+.edit-org-container > .search {
+  margin-bottom: 1rem;
+}
+
+/* Search results list */
+.edit-org-results {
+  max-height: 220px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 0;
+  margin-top: 0.25rem;
+  list-style: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  background: white;
+  z-index: 10;
+  position: relative;
+}
+
+/* Each search result item */
+.edit-org-results li {
+  padding: 10px 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  font-weight: 500;
+  color: #2563eb; /* blue-600 */
+  transition: background-color 0.2s ease;
+}
+
+.edit-org-results li:hover {
+  background-color: #e0e7ff; /* light blue highlight */
+}
+
+/* Form layout */
+.edit-org-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+/* Inputs and textarea styles */
+.edit-org-form input,
+.edit-org-form textarea {
+  padding: 12px 15px;
+  border: 1px solid #d1d5db; /* gray-300 */
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #374151; /* gray-700 */
+  transition: border-color 0.2s ease;
+  resize: vertical;
+}
+
+.edit-org-form input:focus,
+.edit-org-form textarea:focus {
+  outline: none;
+  border-color: #2563eb; 
+  box-shadow: 0 0 4px rgba(37, 99, 235, 0.5);
+}
+
+/* Button */
+.edit-org-form button {
+  padding: 14px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  background-color: #2563eb; 
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+}
+
+.edit-org-form button:hover {
+  background-color: #1e40af; 
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .edit-org-container {
+    padding: 1.5rem 1.5rem;
+    margin: 1rem;
+  }
+  
+  .edit-org-form input,
+  .edit-org-form textarea {
+    font-size: 0.95rem;
+  }
+  
+  .edit-org-results {
+    max-height: 180px;
+  }
+  
+  .edit-org-title {
+    font-size: 1.6rem;
+  }
+}
+
+.back-button {
+  background-color: transparent; 
+  border: none;
+  color: #2563eb; 
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: color 0.3s ease; 
+}
+
+
+

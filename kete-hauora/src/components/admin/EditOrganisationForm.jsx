@@ -1,117 +1,149 @@
-import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import { supabase } from '../../config/supabaseClient'
-import { Link } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../../config/supabaseClient';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../navbar/navbar';
+import SearchBar from '../searchBar/searchBar';  
 
 function EditOrganisationForm() {
+  const navigate = useNavigate();
 
-    const { user, loading } = useAuth();
-    const navigate = useNavigate();
-    const { companyName } = useParams();
+  // Search input state
+  const [searchInput, setSearchInput] = useState('');
+  const [searchTrigger, setSearchTrigger] = useState(0);
 
-    const [orgData, setOrgData] = useState({
-        company_name: '',
-        phone: '',
-        email: '',
-        website: '',
-        physical_address: '',
-        hours: '',
-        sites: '',
-        languages: '',
-        cost: '',
-        services_offered: '',
-        referral: '',
-        other_notes: '',
+  // Search results
+  const [results, setResults] = useState([]);
+  const [fetchError, setFetchError] = useState(null);
 
-        //categories: '',
-        //keywords: '',
-    });
+  // Organisation data to edit
+  const [orgData, setOrgData] = useState({
+    company_name: '',
+    phone: '',
+    email: '',
+    website: '',
+    physical_address: '',
+    hours: '',
+    sites: '',
+    languages: '',
+    cost: '',
+    services_offered: '',
+    referral: '',
+    other_notes: '',
+  });
 
-    useEffect(() => {
-        const fetchOrg = async () => {
-            const { data, error } = await supabase
-                .from('services')
-                .select('*')
-                .eq('company_name', companyName)
-                .single();
-
-            if (error) {
-                console.error('Fetch error:', error.message);
-            } else {
-                setOrgData(data);
-            }
-        };
-
-        fetchOrg();
-    }, [companyName]);
-
-    
-    if (loading) return <p>Loading...</p>;
-
-    if (user.role !== 'admin') {
-        return (
-            <>
-                <p>You must be logged in with the right permissions to add an organisation.</p>
-                <Link to="/login">Go to login</Link><br />
-                <Link to="/">Go to homepage</Link>
-            </>
-        );
+  // Fetch organisations matching searchInput whenever searchTrigger changes
+  useEffect(() => {
+    if (searchInput.trim() === '') {
+      setResults([]);
+      return;
     }
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setOrgData({ ...orgData, [name]: value });
-    };
+    async function fetchResults() {
+      let { data, error } = await supabase
+        .from('services')
+        .select('*')
+        .ilike('company_name', `%${searchInput}%`); // case-insensitive partial match
 
-    const handleUpdate = async (e) => {
-        e.preventDefault();
+      if (error) {
+        setFetchError('Could not fetch organisations');
+        setResults([]);
+      } else {
+        setResults(data);
+        setFetchError(null);
+      }
+    }
 
-        const { data, error } = await supabase
-            .from('services')
-            .update(orgData)
-            .eq('company_name', companyName)
-            .select(); //temp
+    fetchResults();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchTrigger]);
 
-        console.log('Update response:', data);
+  // When you click on an organisation from results, fill form
+  const handleSelectOrg = (org) => {
+    setOrgData(org);
+    setResults([]); // clear results
+    setSearchInput(org.company_name); // show selected name in search box
+  };
 
-        if (error) {
-            console.error('Update failed:', error.message);
-        } else if (data.length === 0) {
-            alert('Organisation not found!'); //temp
-        } else {
-            alert('Organisation updated!');
-            navigate('/');
-        }
-    };
+  // Handle form input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setOrgData({ ...orgData, [name]: value });
+  };
 
-    return (
-        <>
-            <Navbar />
+  // Update organisation in DB
+  const handleUpdate = async (e) => {
+    e.preventDefault();
 
-            
+    // Want to ensure company_name is unique or use ID instead
+    const { data, error } = await supabase
+      .from('services')
+      .update(orgData)
+      .eq('company_name', orgData.company_name);
 
-            <br /><br /><br /><br />
+    if (error) {
+      alert('Update failed: ' + error.message);
+    } else {
+      alert('Organisation updated!');
+      navigate('/admin');
+    }
+  };
 
-            <h1>Edit organisation: {orgData.company_name} </h1>
-            <form onSubmit={handleUpdate}>
-                <input name="company_name" value={orgData.company_name} onChange={handleChange} placeholder="Organisation Name" />
-                <input name="phone" value={orgData.phone} onChange={handleChange} placeholder="Phone" />
-                <input name="email" value={orgData.email} onChange={handleChange} placeholder="Email" />
-                <input name="website" value={orgData.website} onChange={handleChange} placeholder="Website" />
-                <input name="physical_address" value={orgData.physical_address} onChange={handleChange} placeholder="Physical Address" />
-                <input name="hours" value={orgData.hours} onChange={handleChange} placeholder="Operating Hours" />
-                <input name="sites" value={orgData.sites} onChange={handleChange} placeholder="Sites of Service" />
-                <input name="languages" value={orgData.languages} onChange={handleChange} placeholder="Languages" />
-                <input name="cost" value={orgData.cost} onChange={handleChange} placeholder="Cost" />
-                <textarea name="services_offered" value={orgData.services_offered} onChange={handleChange} placeholder="Services Offered" rows="8" />
-                <input name="referral" value={orgData.referral} onChange={handleChange} placeholder="Referral Info" />
-                <input name="other_notes" value={orgData.other_notes} onChange={handleChange} placeholder="Other Notes" />
-                <button type="submit">Save Changes</button>
-            </form>
-        </>
-    );
+ return (
+  <>
+    <Navbar />
+    <div className="back-button-container">
+      <button className="back-button" onClick={() => navigate(-1)}>
+        ← Back
+      </button>
+    </div>
+
+    <Navbar />
+    <div className="edit-org-container">
+      <h1 className="edit-org-title">Edit Organisation</h1>
+
+      <SearchBar
+        searchInput={searchInput}
+        setSearchInput={setSearchInput}
+        onSearch={() => setSearchTrigger(prev => prev + 1)}
+        filters={{ category: '', cost: '' }}
+        setFilters={() => {}}
+      />
+
+      {fetchError && <p style={{ color: 'red' }}>{fetchError}</p>}
+
+      {results.length > 0 && (
+        <ul className="edit-org-results">
+          {results.map(org => (
+            <li
+              key={org.company_name}
+              onClick={() => handleSelectOrg(org)}
+            >
+              {org.company_name}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <form onSubmit={handleUpdate} className="edit-org-form">
+        <input name="company_name" value={orgData.company_name} onChange={handleChange} placeholder="Organisation Name" />
+        <input name="phone" value={orgData.phone} onChange={handleChange} placeholder="Phone" />
+        <input name="email" value={orgData.email} onChange={handleChange} placeholder="Email" />
+        <input name="website" value={orgData.website} onChange={handleChange} placeholder="Website" />
+        <input name="physical_address" value={orgData.physical_address} onChange={handleChange} placeholder="Physical Address" />
+        <input name="hours" value={orgData.hours} onChange={handleChange} placeholder="Operating Hours" />
+        <input name="sites" value={orgData.sites} onChange={handleChange} placeholder="Sites of Service" />
+        <input name="languages" value={orgData.languages} onChange={handleChange} placeholder="Languages" />
+        <input name="cost" value={orgData.cost} onChange={handleChange} placeholder="Cost" />
+        <textarea name="services_offered" value={orgData.services_offered} onChange={handleChange} placeholder="Services Offered" rows="5" />
+        <input name="referral" value={orgData.referral} onChange={handleChange} placeholder="Referral Info" />
+        <input name="other_notes" value={orgData.other_notes} onChange={handleChange} placeholder="Other Notes" />
+
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
+  </>
+);
 }
 
 export default EditOrganisationForm;
