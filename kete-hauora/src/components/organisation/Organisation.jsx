@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import supabase from '../../config/supabaseClient';
 import './Organisation.css';
 import Navbar from '../navbar/navbar';
+import { useTranslation } from 'react-i18next';
 
 function Organisation() {
+    const { t } = useTranslation();
+
     const { companyName } = useParams();
     const [service, setService] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -28,8 +31,8 @@ function Organisation() {
         fetchService();
     }, [companyName]);
 
-    if (loading) return <p>Loading organisation...</p>;
-    if (!service) return <p>Organisation not found.</p>;
+    if (loading) return <p>{t("Loading organisation...")}</p>;
+    if (!service) return <p>{t("Organisation not found")}.</p>;
 
     return (
         <div className="organisation-page">
@@ -39,6 +42,10 @@ function Organisation() {
                 
             </aside>
             */}
+
+            <Link to="/" className="back-button">
+                ← {t("Back to Home")}
+            </Link>
 
             <main className="organisation-content">
                 <header className="organisation-header">
@@ -51,33 +58,33 @@ function Organisation() {
 
                 <section className="organisation-details">
                     <div className="contact-info">
-                        <p><strong>Phone:</strong> {service.phone || 'N/A'}</p>
-                        <p><strong>Email:</strong> {service.email || 'N/A'}</p>
+                        <p><strong>{t("Phone")}:</strong> {service.phone || 'N/A'}</p>
+                        <p><strong>{("Email")}:</strong> {service.email || 'N/A'}</p>
                         
                         {/*makes the links clickable 
                         has some issues with the links being incorrect or there being more then one link per link???
                         some of the links also just don't work*/}
-                        <p><strong>Website:</strong> <a href={service.website} target="_blank" rel="noreferrer">{service.website}</a></p>
+                        <p><strong>{t("Website")}:</strong> <a href={service.website} target="_blank" rel="noreferrer">{service.website}</a></p>
 
-                        <p><strong>Physical Address:</strong> {service.physical_address}</p>
-                        <p><strong>Languages:</strong> {service.languages}</p>
+                        <p><strong>{t("Physical Address")}:</strong> {service.physical_address}</p>
+                        <p><strong>{t("Languages")}:</strong> {service.languages}</p>
                     </div>
                     <div className="extra-info">
-                        <p><strong>Operating Hours:</strong> {service.hours}</p>
-                        <p><strong>Cost:</strong> {service.cost}</p>
-                        <p><strong>Referral:</strong> {service.referral}</p>
-                        <p><strong>Other Notes:</strong> {service.other_notes}</p>
+                        <p><strong>{t("Operating Hours")}:</strong> {service.hours}</p>
+                        <p><strong>{t("Cost")}:</strong> {service.cost}</p>
+                        <p><strong>{t("Referral")}:</strong> {service.referral}</p>
+                        <p><strong>{t("Other Notes")}:</strong> {service.other_notes}</p>
                     </div>
                 </section>
 
                 <section className="services-offered">
-                    <h2>Services Offered:</h2>
+                    <h2>{t("Services Offered")}:</h2>
                     <div className="services-list">
                         {service.services_offered
                         ? service.services_offered.split('\n').map((item, idx) => (
                             <p key={idx}>• {item.trim()}</p>
                             ))
-                        : <p>No services listed.</p>}
+                        : <p>{t("No services listed")}.</p>}
                     </div>
                 </section>
             </main>

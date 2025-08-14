@@ -8,16 +8,21 @@ function AdminPage() {
 
 /* const { user, loading } = useAuth();
   if (loading) return <p>Loading...</p>;
+    /*
+
+    JUST COMMETED OUT RIGHT NOW SO WE CAN SEE THE ADMIN DATA CASUE LOGIN IS BROKEN
+
     if (user.role !== 'admin') {
-        return (
-            <>
-                <p>You must be logged in with the right permissions to add an organisation.</p>
-                <Link to="/login">Go to login</Link><br />
-                <Link to="/">Go to homepage</Link>
-            </>
-        );
-    } 
-*/
+          return (
+              <>
+                  <p>You must be logged in with the right permissions to add an organisation.</p>
+                  <Link to="/login">Go to login</Link><br />
+                  <Link to="/">Go to homepage</Link>
+              </>
+          );
+      }
+    */
+
   return (
     <div className="about">
       <Navbar />

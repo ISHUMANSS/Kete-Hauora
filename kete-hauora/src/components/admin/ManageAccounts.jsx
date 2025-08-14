@@ -21,6 +21,23 @@ function ManageAccounts() {
         fetchUsers();
     }, []);
 
+    if (loading) return <p>Loading...</p>;
+
+    /*
+
+    JUST COMMETED OUT RIGHT NOW SO WE CAN SEE THE ADMIN DATA CASUE LOGIN IS BROKEN
+
+    if (user.role !== 'admin') {
+        return (
+            <>
+            <p>You must be logged in with the right permissions to manage accounts.</p>
+            <Link to="/login">Go to login</Link><br />
+            <Link to="Go Home"></Link>
+            </>
+        );
+    }
+    */
+
     return (
         <div className="manage-accounts">
       <Navbar />

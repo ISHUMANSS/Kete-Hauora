@@ -2,71 +2,80 @@ import React, { useEffect, useState } from "react";
 import supabase from "../../config/supabaseClient";
 import SearchResultCard from "../searchResultCard/searchResultCard";
 
+import { useTranslation } from 'react-i18next';
+
 
 const Search = ({ serviceName, triggerSearch, filters  }) => {
     const [serviceResult, setServiceResult] = useState(null); // shows the search table
     const [error, setError] = useState(null); // the error which tells the user what went wrong with their search, like if there weren't any results
     const [services, setServices] = useState([]); // list of all the services given in the response
 
+    const { t } = useTranslation();
+
     useEffect(() => {
         const handleSearch = async () => {
-            // if it's missing the data it needs, return and don't search
-            if (!triggerSearch || !serviceName) return;
+            //check if anything to search for
+            if (!serviceName && !filters.category && !filters.cost && !filters.language) {
+                setServices([]);
+                setServiceResult(null);
+                setError(null);
+                return;
+            }
 
+            //set up the search
             try {
                 let query = supabase
-                    .from('services')
-                    .select('*');
+                .from('services')
+                .select(`
+                    *,
+                    service_categories!inner(category_id),
+                    service_languages(languages(language))
+                `);
 
-                    //get the query ready to run
-                    //the start of the query has to match the 
+                //if theres a service name add that to the search
+                if (serviceName) {
                     query = query.ilike('company_name', `${serviceName}%`);
+                }
 
+                //if theres a cost add that to the search
+                if (filters.cost) {
+                    query = query.eq('cost_tf', filters.cost);
+                }
 
-                    //check for if any filters have been pased through so it should only display searches that fit into that filter
-                    //currently most things aren't catorgorised into actual filters so like most of these will not get results for actual data
+                //if theres a catagory add it to the search
+                if (filters.category) {
+                    query = query.eq('service_categories.category_id', Number(filters.category));
+                }
 
-                    if (filters) {
-                        if (filters.category) {
-                            query = query.eq('category', filters.category);
-                        }
-
-                        if (filters.cost) {
-                            query = query.eq('cost', filters.cost);
-                        }
-                        
-                        //add more filters as needed
-                    }
-                ;
-                //actually run the query which might now have filters
+                //adding later
+                /*
+                if (filters.language) {
+                    query = query.eq('service_languages.languages.language', filters.language);
+                }
+                */
                 const { data, error } = await query;
 
-                if (error) throw error;
-
-
-                //check if data came back and is not empty
-                if (data && data.length > 0) {
-                    setServices(data); //if an array of results set it
-                    setServiceResult(true); //show the results table
-                    setError(null); //clear any previous errors
+                if (error) {
+                    console.error(error);
                 } else {
-                    setServices([]); //no results found
-                    setServiceResult(null);
-                    setError("No service found with that name."); //show error message to user
+                    setServices(data);
+                    setServiceResult(true);
+                    setError(null);
                 }
+
             } catch (err) {
-                console.error(err.message);
+                console.error("Search error:", err.message);
                 setServiceResult(null);
-                setError("Error searching for service."); // generic error fallback
+                setError("An error occurred during the search.");
             }
         };
 
         handleSearch();
-    }, [triggerSearch, serviceName,filters]); //run each time the service name changes or when the search button is clicked
+    }, [serviceName, filters]); //run each time the service name changes or the filters are changed lmao the search button is just for show pretty much
 
     return (
         <div className="Search">
-            <h2>Search Result:</h2>
+            <h2>{t('Search Result')}:</h2>
 
             {error && <p style={{ color: "red" }}>{error}</p>}
 

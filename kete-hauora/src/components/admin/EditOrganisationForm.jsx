@@ -70,6 +70,39 @@ function EditOrganisationForm() {
     const { name, value } = e.target;
     setOrgData({ ...orgData, [name]: value });
   };
+            if (error) {
+                console.error('Fetch error:', error.message);
+            } else {
+                setOrgData(data);
+            }
+        };
+
+        fetchOrg();
+    }, [companyName]);
+
+    
+    if (loading) return <p>Loading...</p>;
+
+    /*
+
+    JUST COMMETED OUT RIGHT NOW SO WE CAN SEE THE ADMIN DATA CASUE LOGIN IS BROKEN
+
+    if (user.role !== 'admin') {
+        return (
+            <>
+                <p>You must be logged in with the right permissions to add an organisation.</p>
+                <Link to="/login">Go to login</Link><br />
+                <Link to="/">Go to homepage</Link>
+            </>
+        );
+    }
+
+    */
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setOrgData({ ...orgData, [name]: value });
+    };
 
   // Update organisation in DB
   const handleUpdate = async (e) => {

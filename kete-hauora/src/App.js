@@ -3,9 +3,7 @@ import './App.css';
 
 //import supabase from './config/supabaseClient.js';
 
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
 
 import HomePage from './components/homepage/Homepage.jsx';
 import AboutPage from './components/about/About.jsx';
@@ -22,7 +20,6 @@ import ManageAccounts from './components/admin/ManageAccounts.jsx';
 
 function App() {
   return (
-
     <Router>
       <Navbar />
       {/*did this so that the everything would be shifted down from the navbar*/}

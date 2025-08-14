@@ -26,8 +26,14 @@ function AddOrganisationForm() {
     setOrgData({ ...orgData, [name]: value });
   };
 
+<<<<<<< HEAD
   const handleSubmit = async (e) => {
     e.preventDefault();
+=======
+/*
+
+    //JUST COMMETED OUT RIGHT NOW SO WE CAN SEE THE ADMIN DATA CASUE LOGIN IS BROKEN
+>>>>>>> 545ed029bcc2d0d31e099769d21b0f93127ef9ff
 
     const { error } = await supabase.from('services').insert([
       {
@@ -52,11 +58,15 @@ function AddOrganisationForm() {
       alert('Organisation created!');
       navigate('/admin');
     }
+<<<<<<< HEAD
   };
 
   return (
     <>
       <Navbar />
+=======
+*/
+>>>>>>> 545ed029bcc2d0d31e099769d21b0f93127ef9ff
 
       {/* Back button */}
       <div style={{ maxWidth: '900px' }}>

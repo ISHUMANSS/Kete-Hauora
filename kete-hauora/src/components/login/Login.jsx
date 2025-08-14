@@ -8,8 +8,12 @@ import './LoginPage.css'
 //import { useAuth } from '../../hooks/useAuth';
 import Navbar from "../navbar/navbar";
 
+import { useTranslation } from 'react-i18next';
+
 
 function LoginPage() {
+  const { t } = useTranslation();
+
   //const { user, loading } = useAuth();
 
   const [email, setEmail] = useState('');
@@ -41,12 +45,12 @@ function LoginPage() {
 
         <div className="wrapper">
           <form onSubmit={handleLogin}>
-            <h1>Login</h1>
+            <h1>{t("Login")}</h1>
            {error && <p style={{ color: 'red' }}>{error}</p>}
             <div className="input-box">
               <input
                 type="email"
-                placeholder="Email"
+                placeholder={t("Email")}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -56,7 +60,7 @@ function LoginPage() {
             <div className="input-box">
               <input
                 type="password"
-                placeholder="Password"
+                placeholder={t("Password")}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -64,20 +68,20 @@ function LoginPage() {
             </div>
 
             <div className="remember-forgot">
-              <label><input type="checkbox" />Remember me</label>
+              <label><input type="checkbox" />{t("Remember me")}</label>
               <button
                 type="button"
                 className="forgot-password-link"
                 onClick={() => alert('Forgot password clicked!')}
               >
-                Forgot password?
+                {t("Forgot password")}?
               </button>
             </div>
             
-            <button type="submit" className="btn">Login</button>
+            <button type="submit" className="btn">{t("Login")}</button>
 
             <div className="register-link">
-              <p>Don't have an account? <Link to="/register">Register</Link></p>
+              <p>{t("Don't have an account?")} <Link to="/register">{t("Register")}</Link></p>
             </div>
           </form>
         </div>
