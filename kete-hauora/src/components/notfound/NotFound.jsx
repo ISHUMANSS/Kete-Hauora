@@ -18,7 +18,7 @@ const NotFound = () => {
                 <p className="notfound-message">{t("Sorry, we couldn’t find the page you’re looking for.")}</p>
                 
                 <Link to="/">
-                    <button className="notfound-button">{t("Go Home")}</button>
+                    <button className="notfound-button">{t("Back to Home")}</button>
                 </Link>
             </div>
         </div>

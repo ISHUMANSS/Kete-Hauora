@@ -108,7 +108,7 @@ const FiltersBox = ({ filters, setFilters }) => {
                 >
                 <option value="">{t("All Locations")}</option>
                     <option value="Auckland">{t("Auckland")}</option>
-                    <option value="Manakau">{t("Manakau")}</option>
+                    <option value="Manakau">Manakau</option>
                     <option value="Other">{t("Other")}</option>
                 </select>
             </div>

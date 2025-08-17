@@ -22,7 +22,7 @@ const Navbar = () => {
         <li>
           <Link to="/login"><span className="login-icon material-symbols-outlined">person</span>{t("Login")}</Link>
         </li>
-        <li><Link to="/admin">{t("Admin")}</Link></li>
+        <li><Link to="/admin">Admin</Link></li>
 
         {/*change site language dropdown*/}
         <li>
