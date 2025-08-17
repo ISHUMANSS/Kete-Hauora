@@ -18,9 +18,13 @@ function HomePage() {
     //set up the filters we want here
     //these get given to the fileters box
     category: '',
+    category_name: '',
     cost: '',
+    cost_name: '',
     location: '',
+    location_name:'',
     language: '',
+    language_name: '',
   });
 
   const handleSearchClick = () => {

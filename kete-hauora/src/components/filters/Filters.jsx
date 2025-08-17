@@ -51,12 +51,17 @@ const FiltersBox = ({ filters, setFilters }) => {
 
 
     //click the buttons to reset the filters
+    //I have the names and the id becasue it means we don't have to re search the db to get the names
     const handleClearFilters = () => {
         setFilters({
             category: '',
+            category_name: '',
             cost: '',
+            cost_name: '',
             location: '',
+            location_name:'',
             language: '',
+            language_name: '',
         });
     };
 
@@ -77,7 +82,22 @@ const FiltersBox = ({ filters, setFilters }) => {
                 
                 <select
                     value={filters.category}
-                    onChange={(e) => setFilters(prev => ({ ...prev, category: Number(e.target.value) }))}
+                    onChange={(e) =>  {
+                        //get the id
+                        const selectedId = Number(e.target.value);
+
+                        //get the name
+                        const selectedName = categories.find(cat => cat.category_id === selectedId)?.category || '';
+
+
+                        setFilters(prev => ({
+                            ...prev,
+                            category: selectedId || '',   // store the ID (or '' if cleared)
+                            category_name: selectedName   // store the display name
+                        }));
+
+                        
+                    }}
                 >
                     <option value="">All Categories</option>
                     {categories.map((cat) => (
@@ -92,7 +112,24 @@ const FiltersBox = ({ filters, setFilters }) => {
                 <label>{t("Cost")}</label>
                 <select
                     value={filters.cost}
-                    onChange={(e) => setFilters(prev => ({ ...prev, cost: e.target.value }))}
+                    onChange={(e) => {
+                    const selectedVal = e.target.value;
+                    let selectedName = "";
+
+                    if (selectedVal === "FALSE") {
+                        selectedName = "Free";
+                    } else if (selectedVal === "TRUE") {
+                        selectedName = "Paid";
+                    }
+
+                    setFilters(prev => ({
+                        ...prev,
+                        cost: selectedVal,
+                        cost_name: selectedName
+                    }));
+
+                    
+                    }}
                 >
                     <option value="">{t("Any Cost")}</option>
                     <option value="FALSE">{t("Free")}</option>{/*FALSE means it is free*/}
