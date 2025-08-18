@@ -31,6 +31,16 @@ function Organisation() {
         fetchService();
     }, [companyName]);
 
+
+    //format the websites so they always open as the website rather then as in the site
+    const formatWebsite = (url) => {
+        if (!url) return null;
+        //if url starts with http:// or https:// its fine leave it
+        if (url.startsWith('http://') || url.startsWith('https://')) return url;
+        //add https://
+        return `https://${url}`;
+    };
+
     if (loading) return <p>{t("Loading organisation...")}</p>;
     if (!service) return <p>{t("Organisation not found")}.</p>;
 
@@ -53,19 +63,19 @@ function Organisation() {
                 <img src="http://www.gravatar.com/avatar/?d=mp" alt={`${service.company_name} logo`} className="organisation-logo" />
                 
                 <h1>{service.company_name}</h1>
-                <span className="category">Category</span>{/*we will need to add a catagory tag to the database*/}
                 </header>
 
                 <section className="organisation-details">
                     <div className="contact-info">
                         <p><strong>{t("Phone")}:</strong> {service.phone || 'N/A'}</p>
                         <p><strong>{("Email")}:</strong> {service.email || 'N/A'}</p>
-                        
-                        {/*makes the links clickable 
-                        has some issues with the links being incorrect or there being more then one link per link???
-                        some of the links also just don't work*/}
-                        <p><strong>{t("Website")}:</strong> <a href={service.website} target="_blank" rel="noreferrer">{service.website}</a></p>
-
+            
+                        <p>
+                            <strong>{t("Website")}:</strong>{" "}
+                            <a href={formatWebsite(service.website)} target="_blank" rel="noreferrer">
+                                {service.website}
+                            </a>
+                        </p>
                         <p><strong>{t("Physical Address")}:</strong> {service.physical_address}</p>
                         <p><strong>{t("Languages")}:</strong> {service.languages}</p>
                     </div>
