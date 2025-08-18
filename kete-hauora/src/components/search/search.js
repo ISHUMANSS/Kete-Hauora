@@ -48,11 +48,11 @@ const Search = ({ serviceName, triggerSearch, filters  }) => {
                 }
 
                 //adding later
-                /*
+                
                 if (filters.language) {
                     query = query.eq('service_languages.languages.language', filters.language);
                 }
-                */
+                
                 const { data, error } = await query;
 
                 if (error) {

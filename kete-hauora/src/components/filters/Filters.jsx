@@ -12,7 +12,7 @@ const FiltersBox = ({ filters, setFilters }) => {
     const { t } = useTranslation();
 
     const [categories, setCategories] = useState([]);
-    //const [languages, setLanguages] = useState([]);
+    const [languages, setLanguages] = useState([]);
 
     //get all the filters from the db
     useEffect(() => {
@@ -31,7 +31,7 @@ const FiltersBox = ({ filters, setFilters }) => {
                 setCategories(catData);
             };
 
-            /*
+            
             //not sure if we wnt to get the languages from the database
             //fetch languages
             const { data: langData, error: langError } = await supabase
@@ -40,7 +40,7 @@ const FiltersBox = ({ filters, setFilters }) => {
                 .order('language', { ascending: true });
 
             if (!langError) setLanguages(langData);
-            */
+            
 
             //I can just add the regions here also
         };
@@ -65,13 +65,7 @@ const FiltersBox = ({ filters, setFilters }) => {
         });
     };
 
-    //allow for togeling on and off
-    const handleLanguageChange = (value) => {
-        setFilters((prev) => ({
-        ...prev,
-        language: prev.language === value ? '' : value, // toggle off if same value
-        }));
-    };
+
 
   return (
     <div className="filters-box">
@@ -151,23 +145,33 @@ const FiltersBox = ({ filters, setFilters }) => {
             </div>
 
             <div className="filter-group">
-            <label>{t("Languages")}</label>
-            <div className="checkbox-group">
-                {['English', 'Maori', 'Other'].map((lang) => (
-                <label key={lang} className="radio-label">
-                    <input
-                        type="radio"
-                        name="language"
-                        value={lang}
-                        checked={filters.language === lang}
-                        onClick={() => handleLanguageChange(lang)}//toggle support
-                        readOnly
-                    />
-                    {lang}
-                </label>
-                ))}
+                <label>{t("Languages")}</label>
+                <select
+                    value={filters.language}
+                    onChange={(e) => {
+                    const selectedId = Number(e.target.value);
+
+                    // find the name for the selected ID
+                    const selectedName = languages.find(
+                        lang => lang.language_id === selectedId
+                    )?.language || "";
+
+                    setFilters(prev => ({
+                        ...prev,
+                        language: selectedId || "",    // store id
+                        language_name: selectedName    // store readable name
+                    }));
+                    }}
+                >
+                    <option value="">{t("All Languages")}</option>
+                    {languages.map((lang) => (
+                    <option key={lang.language_id} value={lang.language_id}>
+                        {lang.language}
+                    </option>
+                    ))}
+                </select>
             </div>
-            </div>
+
 
             <button onClick={handleClearFilters}>
                 {t("Clear Filters")}

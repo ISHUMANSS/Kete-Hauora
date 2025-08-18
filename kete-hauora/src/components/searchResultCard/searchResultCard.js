@@ -31,18 +31,21 @@ const SearchResultCard = ({ service, filters }) => {
             {filters?.cost  && (
                 <span className="filter-badge">{filters.cost_name}</span>
             )}
+            {filters?.language  && (
+                <span className="filter-badge">{filters.language_name}</span>
+            )}
             {/*ADDD MORE FILTERS HERE*/}
         </div>
 
         <Link to={`/organisation/${encodeURIComponent(service.company_name)}`}>
             <button>{t("More info")}</button>
         </Link>
-
-        {/*should be only visible to the admins and i'm also not sure if it should be done in the basic search but it is currently the only way to edit services so its being left for now*/}
+{/*
+    this was for the editing orgs but I don't think its needed
         <Link to={`/editOrg/${encodeURIComponent(service.company_name)}`}>
             <button>{t("Edit")}</button>
         </Link>
-        
+*/}        
     </div>
   );
 };
