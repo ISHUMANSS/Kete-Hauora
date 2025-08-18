@@ -59,7 +59,7 @@ const FiltersBox = ({ filters, setFilters }) => {
             cost: '',
             cost_name: '',
             location: '',
-            location_name:'',
+            location_name: '',
             language: '',
             language_name: '',
         });
