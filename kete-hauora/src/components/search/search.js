@@ -29,8 +29,9 @@ const Search = ({ serviceName, triggerSearch, filters  }) => {
                 .select(`
                     *,
                     service_categories!inner(category_id),
-                    service_languages(languages(language))
+                    service_languages!inner(language_id)
                 `);
+                
 
                 //if theres a service name add that to the search
                 if (serviceName) {
@@ -47,13 +48,16 @@ const Search = ({ serviceName, triggerSearch, filters  }) => {
                     query = query.eq('service_categories.category_id', Number(filters.category));
                 }
 
-                //adding later
-                /*
+                
                 if (filters.language) {
-                    query = query.eq('service_languages.languages.language', filters.language);
+                    query = query.eq('service_languages.language_id', Number(filters.language));
                 }
-                */
+
+                //still need to add locations
+
+
                 const { data, error } = await query;
+
 
                 if (error) {
                     console.error(error);
