@@ -1,4 +1,6 @@
+/* wrap the input + dropdown so absolute positioning works */
 .search {
+  position: relative; /* important for dropdown positioning */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,6 +42,33 @@
   cursor: pointer;
 }
 
+/* suggestions dropdown styling */
+.suggestions-dropdown {
+  position: absolute;
+  top: 100%; /* directly below the .search bar */
+  left: 0;
+  right: 0;
+  margin-top: 4px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  list-style: none;
+  padding: 0;
+}
+
+.suggestions-dropdown li {
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+}
+
+.suggestions-dropdown li:hover {
+  background-color: #f5f5f5;
+}
+
 /* Desktop styling */
 @media (min-width: 50rem) { /* 800px */
   .search {
@@ -54,4 +83,13 @@
   .search-icon {
     font-size: 1.5rem; /* 24px */
   }
+}
+
+
+.suggestions-dropdown .close-suggestions {
+  background: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+}
+.suggestions-dropdown li:hover {
+  background-color: #eee;
 }
