@@ -40,6 +40,29 @@
   cursor: pointer;
 }
 
+.filters-box select {
+  color: #000;                 /* black text */
+  background-color: #fff;      /* white background */
+  border: 1px solid #ccc;      /* subtle border */
+  border-radius: 0.5rem;       /* rounded corners */
+  padding: 0.5rem 0.75rem;     /* space inside the select */
+  font-size: 1rem;
+  cursor: pointer;
+  appearance: none;            /* removes default arrow style in some browsers */
+}
+
+.filters-box select option {
+  color: #000;                 /* black text */
+  background-color: #fff;      /* white background */
+}
+
+.filters-box select:focus {
+  border-color: #6200ee;       /* highlight on focus */
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(98, 0, 238, 0.25);
+}
+
+
 /* Desktop styling */
 @media (min-width: 50rem) { /* 800px */
   .filters-box {

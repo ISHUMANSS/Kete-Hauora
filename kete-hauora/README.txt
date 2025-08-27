@@ -18,5 +18,6 @@ needed dependencys: (please add to this list when ever you add any more dependen
 - react-router-dom = npm i react-router-dom
 - supabase = npm i @supabase/supabase-js
 
+
 npm install i18next react-i18next i18next-browser-languagedetector --legacy-peer-deps
 
