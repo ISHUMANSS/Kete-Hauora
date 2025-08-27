@@ -4,7 +4,10 @@ import './searchBar.css';
 import { useTranslation } from 'react-i18next';
 import supabase from '../../config/supabaseClient';
 
-const SearchBar = ({ searchInput, setSearchInput, onSearch}) => {
+
+
+
+const SearchBar = ({ searchInput, setSearchInput, onSearch, filters}) => {
   const { t } = useTranslation();
 
   //get the suggestions which are most like the thing they want
@@ -18,19 +21,51 @@ const SearchBar = ({ searchInput, setSearchInput, onSearch}) => {
         return;
       }
 
+      //to be able to apply the filters to the suggestions we also grab all the filter info
       const { data, error } = await supabase
         .from('services')
-        .select('company_name')
+        .select(`company_name,
+          cost_tf,
+          service_categories!left(category_id),
+          service_languages!left(language_id)
+        `)
         .ilike('company_name', `${searchInput}%`)
         .limit(5); //only show top 5 matches
 
       if (!error && data) {
-        setSuggestions(data.map((s) => s.company_name));
+        let names = data.map(s => s);
+
+        //apply current filters to suggestions
+        if (filters.category) {
+          names = names.filter(service =>
+            service.service_categories?.some(cat => cat.category_id === Number(filters.category))
+          );
+        }
+
+        if (filters.language) {
+          names = names.filter(service =>
+            service.service_languages?.some(lang => lang.language_id === Number(filters.language))
+          );
+        }
+
+        if (filters.cost) {
+          names = names.filter(service => service.cost_tf === filters.cost);
+        }
+
+        //only keep names that start with the input
+        const filteredSuggestions = names
+          .map(s => s.company_name)
+          .filter(name => name.toLowerCase().startsWith(searchInput.toLowerCase()))
+          .slice(0, 5); //top 5 suggestions
+
+        setSuggestions(filteredSuggestions);
       }
     };
 
     fetchSuggestions();
-  }, [searchInput]);
+  }, [searchInput, filters]);
+
+
 
    const handleSelect = (value) => {
     setSearchInput(value);

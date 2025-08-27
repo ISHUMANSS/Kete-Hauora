@@ -13,6 +13,7 @@ const FiltersBox = ({ filters, setFilters }) => {
 
     const [categories, setCategories] = useState([]);
     const [languages, setLanguages] = useState([]);
+    const [regions, setRegions] = useState([]);
 
     //get all the filters from the db
     useEffect(() => {
@@ -42,9 +43,14 @@ const FiltersBox = ({ filters, setFilters }) => {
             if (!langError) setLanguages(langData);
             
 
-            //I can just add the regions here also
+            //get all the regions from the database
+            const {data: locationData, error : locationError} = await supabase
+                .from('region')
+                .select('region_id, region')
+                .order('region', { ascending: true });
+            if (!locationError) setRegions(locationData);
+
         };
-        
 
         fetchFilterData();
     }, []);
@@ -64,8 +70,6 @@ const FiltersBox = ({ filters, setFilters }) => {
             language_name: '',
         });
     };
-
-
 
   return (
     <div className="filters-box">
@@ -135,12 +139,21 @@ const FiltersBox = ({ filters, setFilters }) => {
                 <label>{t("Region")}</label>
                 <select
                     value={filters.location}
-                    onChange={(e) => setFilters(prev => ({ ...prev, location: e.target.value }))}
+                    onChange={(e) => {
+                        const selectedId = Number(e.target.value);
+                        const selectedName = regions.find(r => r.region_id === selectedId)?.region || '';
+                        setFilters(prev => ({
+                            ...prev,
+                            location: selectedId || '',
+                            location_name: selectedName
+                        }));
+                    }}
                 >
-                <option value="">{t("All Locations")}</option>
-                    <option value="Auckland">{t("Auckland")}</option>
-                    <option value="Manakau">Manakau</option>
-                    <option value="Other">{t("Other")}</option>
+                    <option value="">{t("All Locations")}</option>
+                    {regions.map(region => (
+                        
+                        <option key={region.region_id} value={region.region_id}>{region.region}</option>
+                    ))}
                 </select>
             </div>
 

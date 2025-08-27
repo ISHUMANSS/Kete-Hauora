@@ -15,7 +15,7 @@ const Search = ({ serviceName, triggerSearch, filters  }) => {
     useEffect(() => {
         const handleSearch = async () => {
             //if nothing to search for
-            if (!serviceName && !filters.category && !filters.cost && !filters.language) {
+            if (!serviceName && !filters.category && !filters.cost && !filters.language && !filters.location) {
                 setServices([]);
                 setServiceResult(null);
                 setError(null);
@@ -29,7 +29,8 @@ const Search = ({ serviceName, triggerSearch, filters  }) => {
                 .select(`
                 *,
                 service_categories!left(category_id),
-                service_languages!left(language_id)
+                service_languages!left(language_id),
+                service_regions!left(region_id)
                 `);
 
             if (error) {
@@ -55,7 +56,7 @@ const Search = ({ serviceName, triggerSearch, filters  }) => {
             if (filters.cost) {
                 //convert to bool for local filtering
                 const costBool = filters.cost === "TRUE"; // "TRUE" → true, "FALSE" → false
-                filtered = filtered.filter(service => service.cost_tf === costBool);
+                filtered = filtered.filter(service => service.cost_tf === costBool || service.cost_tf === null);
             }
 
             //filter by category
@@ -80,15 +81,24 @@ const Search = ({ serviceName, triggerSearch, filters  }) => {
                 );
             }
 
+            //region filter
+            if (filters.location) {
+                filtered = filtered.filter(service =>
+                    service.service_regions?.some(
+                        region => region.region_id === Number(filters.location)
+                    )
+                );
+            }
+
             setServices(filtered);
             setServiceResult(true);
             setError(filtered.length === 0 ? "No results found." : null);
 
             } catch (err) {
-            console.error("Search error:", err.message);
-            setServices([]);
-            setServiceResult(null);
-            setError("An error occurred during the search.");
+                console.error("Search error:", err.message);
+                setServices([]);
+                setServiceResult(null);
+                setError("An error occurred during the search.");
             }
         };
 

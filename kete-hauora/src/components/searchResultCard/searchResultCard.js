@@ -100,7 +100,9 @@ const SearchResultCard = ({ service, filters }) => {
             {filters?.language  && (
                 <span className="filter-badge">{filters.language_name}</span>
             )}
-            {/*ADDD MORE FILTERS HERE*/}
+            {filters?.location  && (
+                <span className="filter-badge">{filters.location_name}</span>
+            )}
         </div>
 
         <Link to={`/organisation/${encodeURIComponent(service.company_name)}`}>
