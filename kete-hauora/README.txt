@@ -19,5 +19,11 @@ needed dependencys: (please add to this list when ever you add any more dependen
 - supabase = npm i @supabase/supabase-js
 
 
+
+- if you have issues with the typescript: 
+npm install --legacy-peer-deps
+
+
+
 npm install i18next react-i18next i18next-browser-languagedetector --legacy-peer-deps
 
