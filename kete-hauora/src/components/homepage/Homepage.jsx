@@ -8,7 +8,7 @@ import Navbar from '../navbar/navbar';
 import SearchBar from '../searchBar/searchBar';
 import FiltersBox from '../filters/Filters';
 
-import { useTranslation } from 'react-i18next';
+//import { useTranslation } from 'react-i18next';
 
 function HomePage() {
   const [searchInput, setSearchInput] = useState("");
@@ -31,7 +31,7 @@ function HomePage() {
     setSearchTrigger(prev => prev + 1); //tells search component to re run
   };
 
-  const { t } = useTranslation();
+  //const { t } = useTranslation();
 
   return (
     <div className="home">
