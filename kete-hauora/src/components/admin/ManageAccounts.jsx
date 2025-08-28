@@ -26,9 +26,8 @@ function ManageAccounts() {
 
     if (loading) return <p>Loading...</p>;
 
-    /*
 
-    JUST COMMETED OUT RIGHT NOW SO WE CAN SEE THE ADMIN DATA CASUE LOGIN IS BROKEN
+    //JUST COMMETED OUT RIGHT NOW SO WE CAN SEE THE ADMIN DATA CASUE LOGIN IS BROKEN
 
     if (user.role !== 'admin') {
         return (
@@ -39,7 +38,7 @@ function ManageAccounts() {
             </>
         );
     }
-    */
+ 
 
     return (
         <div className="manage-accounts">

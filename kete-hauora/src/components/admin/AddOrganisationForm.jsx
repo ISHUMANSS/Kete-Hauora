@@ -26,7 +26,7 @@ function AddOrganisationForm() {
         //keywords: '',
     })
 
-/*
+
 
     //JUST COMMETED OUT RIGHT NOW SO WE CAN SEE THE ADMIN DATA CASUE LOGIN IS BROKEN
 
@@ -40,7 +40,7 @@ function AddOrganisationForm() {
             </>
         );
     }
-*/
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target

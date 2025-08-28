@@ -8,9 +8,9 @@ function AdminPage() {
 
   const { user, loading } = useAuth();
   if (loading) return <p>Loading...</p>;
-    /*
 
-    JUST COMMETED OUT RIGHT NOW SO WE CAN SEE THE ADMIN DATA CASUE LOGIN IS BROKEN
+
+    //JUST COMMETED OUT RIGHT NOW SO WE CAN SEE THE ADMIN DATA CASUE LOGIN IS BROKEN
 
     if (user.role !== 'admin') {
           return (
@@ -21,7 +21,7 @@ function AdminPage() {
               </>
           );
       }
-    */
+
 
   return (
     <div className="about">
