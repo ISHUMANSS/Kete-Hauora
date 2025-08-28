@@ -1,0 +1,4 @@
+[build]
+  base = "kete-hauora"
+  publish = "kete-hauora/build"
+  command = "npm install --legacy-peer-deps && npm run build"
