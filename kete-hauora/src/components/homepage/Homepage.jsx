@@ -44,6 +44,7 @@ function HomePage() {
           setSearchInput={setSearchInput}
           onSearch={handleSearchClick}
           filters={filters}
+          setFilters={setFilters}
           
         />
         <FiltersBox
