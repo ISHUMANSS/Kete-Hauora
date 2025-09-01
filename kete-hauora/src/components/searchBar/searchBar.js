@@ -3,11 +3,12 @@ import './searchBar.css';
 
 import { useTranslation } from 'react-i18next';
 import supabase from '../../config/supabaseClient';
+import FilterChips from '../filters/FilterChips';
 
 
 
 
-const SearchBar = ({ searchInput, setSearchInput, onSearch, filters}) => {
+const SearchBar = ({ searchInput, setSearchInput, onSearch, filters, setFilters}) => {
   const { t } = useTranslation();
 
   //get the suggestions which are most like the thing they want
@@ -85,7 +86,9 @@ const SearchBar = ({ searchInput, setSearchInput, onSearch, filters}) => {
           setShowSuggestions(true);
         }}
       />
-      <button onClick={onSearch}>{t("Search")}</button>
+      <FilterChips filters={filters} setFilters={setFilters}/>
+
+      {/*<button onClick={onSearch}>{t("Search")}</button>*/}
 
       {/* suggestions dropdown */}
       {showSuggestions && suggestions.length > 0 && (

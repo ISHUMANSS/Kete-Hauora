@@ -15,6 +15,9 @@ const FiltersBox = ({ filters, setFilters }) => {
     const [languages, setLanguages] = useState([]);
     const [regions, setRegions] = useState([]);
 
+    //allow us to minize the filters box
+    const [collapsed, setCollapsed] = useState(false);
+
     //get all the filters from the db
     useEffect(() => {
         const fetchFilterData = async () => {
@@ -73,7 +76,19 @@ const FiltersBox = ({ filters, setFilters }) => {
 
   return (
     <div className="filters-box">
-        <h4>{t("Filters")}</h4>
+        <div className="filters-header">
+            <h4>{t("Filters")}</h4>
+            <button 
+                className="collapse-btn"
+                onClick={() => setCollapsed(prev => !prev)}
+                aria-label={collapsed ? t("Expand") : t("Collapse")}
+                >
+                {collapsed ? "▼" : "▲"}
+            </button>
+        </div>
+
+
+        {!collapsed && (
         <div className="filters-section">
             <div className="filter-group">
                 <label>{t("Category")}</label>
@@ -190,7 +205,7 @@ const FiltersBox = ({ filters, setFilters }) => {
                 {t("Clear Filters")}
             </button>
         </div>
-      
+      )}
     </div>
   );
 };
