@@ -105,8 +105,8 @@ const FiltersBox = ({ filters, setFilters }) => {
 
                         setFilters(prev => ({
                             ...prev,
-                            category: selectedId || '',   // store the ID (or '' if cleared)
-                            category_name: selectedName   // store the display name
+                            category: selectedId || '',//store the ID (or '' if cleared)
+                            category_name: selectedName //store the display name
                         }));
 
                         
