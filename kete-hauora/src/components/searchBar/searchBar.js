@@ -79,7 +79,7 @@ const SearchBar = ({ searchInput, setSearchInput, onSearch, filters, setFilters}
       <input
         className="search-input"
         type="search"
-        placeholder={t("Enter service ID")}
+        placeholder={t("Enter service Name")}
         value={searchInput}
         onChange={(e) => {
           setSearchInput(e.target.value);
