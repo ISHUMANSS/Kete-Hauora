@@ -32,7 +32,7 @@ const SearchAll = () => {
 
     return (
         <div className="SearchAll">
-            <h1>{t('SearchForAllTheServices')}:</h1>
+            <h1>{t('All The Services')}:</h1>
 
             {loading ? (
                 <p>{t("Loading services...")}</p>
