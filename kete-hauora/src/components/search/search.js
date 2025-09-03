@@ -30,7 +30,10 @@ const Search = ({ serviceName, triggerSearch, filters  }) => {
                 *,
                 service_categories!left(category_id),
                 service_languages!left(language_id),
-                service_regions!left(region_id)
+                service_regions!left(region_id),
+                service_translations!left(
+                    services_offered_maori
+                )
                 `);
 
             if (error) {

@@ -8,13 +8,13 @@ const Navbar = () => {
   const { t } = useTranslation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const toggleSidebar = () => setSidebarOpen(prev => !prev);
-
   const handleLanguageChange = (e) => { // runs whenever new option is selected from language dropdown and gets value of selected item
     const newLang = e.target.value;
     i18next.changeLanguage(newLang);
     localStorage.setItem("i18nextLng", newLang);//remembers selection
   };
+
+  const toggleSidebar = () => setSidebarOpen(prev => !prev);
 
   return (
     <nav className="navbar">
