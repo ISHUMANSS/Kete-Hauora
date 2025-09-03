@@ -1,0 +1,20 @@
+.center-container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  margin: 0 auto;
+  max-width: 900px;
+  text-align: center;
+}
+
+.result-container {
+  display: grid;
+  gap: 30px;
+
+  /*set up the grid so it is able to repeat, will auto fill as many as can fit into each row*/
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  
+}

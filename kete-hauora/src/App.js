@@ -16,6 +16,7 @@ import Organisation from './components/organisation/Organisation.jsx';
 import Navbar from './components/navbar/navbar.js';
 import NotFound from './components/notfound/NotFound.jsx';
 import ManageAccounts from './components/admin/ManageAccounts.jsx';
+import Serivces from './components/services/Services.jsx';
 
 
 function App() {
@@ -34,6 +35,8 @@ function App() {
           <Route path="/addOrg" element={<AddOrganisationForm />} />
           <Route path="/editOrg" element={<EditOrganisationForm />} />
           <Route path="/manageAccounts" element={<ManageAccounts />} />
+
+          <Route path="/services" element={<Serivces />} />
 
           <Route path="/organisation/:companyName" element={<Organisation />}/>
 
