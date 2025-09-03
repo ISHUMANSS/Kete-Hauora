@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { supabase } from '../../config/supabaseClient';
 import { useNavigate, Link } from 'react-router-dom';
@@ -63,19 +64,6 @@ function AddOrganisationForm() {
     getUserRole();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
-
-  // Protect route
-  if (!user) {
-    return (
-      <>
-        <p>You must be logged in to add an organisation.</p>
-        <Link to="/login">Go to login</Link><br />
-        <Link to="/">Go to homepage</Link>
-      </>
-    );
-  }
-
   if (roleId !== 1) { // 1 = admin
     return (
       <>
@@ -84,17 +72,6 @@ function AddOrganisationForm() {
       </>
     );
   }
-    if (loading) return <p>Loading...</p>;
-    if (user.role !== 'admin') {
-        return (
-            <>
-                <p>You must be logged in with the right permissions to add an organisation.</p>
-                <Link to="/login">Go to login</Link><br />
-                <Link to="/">Go to homepage</Link>
-            </>
-        );
-    }
-
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

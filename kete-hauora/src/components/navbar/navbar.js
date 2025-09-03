@@ -1,8 +1,10 @@
+/* eslint-disable no-undef */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './navbar.css';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
+import i18n from '../../i18n';
 
 const Navbar = () => {
   const { t } = useTranslation();
@@ -15,6 +17,13 @@ const Navbar = () => {
   };
 
   const toggleSidebar = () => setSidebarOpen(prev => !prev);
+
+  const handleLanguageChange = (e) => { // runs whenever new option is selected from language dropdown and gets value of selected item
+    const newLang = e.target.value;
+    // eslint-disable-next-line no-undef
+    i18n.changeLanguage(newLang);
+    localStorage.setItem("i18nextLng", newLang);//remembers selection
+  };
 
   return (
     <nav className="navbar">
@@ -43,7 +52,7 @@ const Navbar = () => {
             <option value="en">English</option>
             <option value="mi">Maori</option>
           </select>
-        </li>
+        </li>x
       </ul>
          {sidebarOpen && <div className="overlay" onClick={toggleSidebar}></div>}
 
