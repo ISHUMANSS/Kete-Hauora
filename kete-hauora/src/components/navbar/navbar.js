@@ -10,6 +10,12 @@ const Navbar = () => {
 
   const toggleSidebar = () => setSidebarOpen(prev => !prev);
 
+  const handleLanguageChange = (e) => { // runs whenever new option is selected from language dropdown and gets value of selected item
+    const newLang = e.target.value;
+    i18next.changeLanguage(newLang);
+    localStorage.setItem("i18nextLng", newLang);//remembers selection
+  };
+
   return (
     <nav className="navbar">
       <div className="logo">
