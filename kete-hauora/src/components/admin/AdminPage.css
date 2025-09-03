@@ -53,54 +53,157 @@
 }
 
 /* Manage Accounts Container */
-.manage-accounts .admin-content {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 1rem;
+/* Container */
+.manage-accounts {
+  padding: 80px 15px 30px; /* top padding for navbar */
+  background-color: #f3f4f6;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
 }
 
-.user-table table {
+/* Page title */
+.manage-accounts h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Filter */
+.manage-accounts select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 0.95rem;
+  margin-left: 0.5rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.manage-accounts select:focus {
+  border-color: #2563eb;
+}
+
+/* Table styling */
+.user-table {
   width: 100%;
   border-collapse: collapse;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  margin-top: 1rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
   border-radius: 8px;
-  overflow: hidden; 
+  overflow: hidden;
+  background: #fff;
 }
 
 .user-table thead {
-  background-color: #1f2937; 
-  color: white;
+  background-color: #2563eb;
+  color: #fff;
 }
 
-.user-table thead th {
+.user-table th, .user-table td {
   padding: 12px 15px;
   text-align: left;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
 }
 
 .user-table tbody tr {
-  border-bottom: 1px solid #ddd;
-  transition: background-color 0.3s ease;
+  border-bottom: 1px solid #e5e7eb;
+  transition: background-color 0.2s;
 }
 
-/* Alternate row colors */
-.user-table tbody tr:nth-child(even) {
-  background-color: #f9fafb; 
-}
-
-/* Hover effect */
 .user-table tbody tr:hover {
-  background-color: #e0e7ff; 
-  cursor: pointer;
+  background-color: #e0f2fe;
 }
 
-/* Table cells */
-.user-table tbody td {
-  padding: 12px 15px;
-  color: #374151; 
+.user-table tbody td button {
+  margin-right: 5px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s;
 }
+
+.user-table tbody td button.edit {
+  background-color: #facc15; /* amber */
+  color: #1f2937;
+}
+
+.user-table tbody td button.delete {
+  background-color: #ef4444; /* red */
+  color: #fff;
+}
+
+.user-table tbody td button.reset {
+  background-color: #3b82f6; /* blue */
+  color: #fff;
+}
+
+.user-table tbody td button:hover {
+  opacity: 0.85;
+}
+
+/* Input fields in table */
+.user-table input,
+.user-table select {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+/* Responsive for mobile */
+@media (max-width: 640px) {
+  .user-table, .user-table thead, .user-table tbody, .user-table th, .user-table td, .user-table tr {
+    display: block;
+    width: 100%;
+  }
+
+  .user-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .user-table tbody tr {
+    margin-bottom: 12px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  .user-table tbody td {
+    position: relative;
+    padding-left: 50%;
+    text-align: left;
+  }
+
+  .user-table tbody td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 15px;
+    top: 12px;
+    font-weight: 600;
+    color: #2563eb;
+  }
+
+  .user-table tbody td button {
+    margin-top: 5px;
+    width: 100%;
+  }
+}
+
+/* Buttons wrapper */
+.manage-accounts .action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
 
 /* Responsive: horizontal scroll on small screens */
 @media (max-width: 600px) {

@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '../../config/supabaseClient';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Navbar from '../navbar/navbar';
 
 function AddOrganisationForm() {
@@ -21,19 +21,77 @@ function AddOrganisationForm() {
     other_notes: '',
   });
 
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
+  const [roleId, setRoleId] = useState(null);
+
+  useEffect(() => {
+    async function getUserRole() {
+      setLoading(true);
+
+      // Get logged in user
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      if (userError) {
+        console.error(userError);
+        setLoading(false);
+        return;
+      }
+
+      if (!user) {
+        setLoading(false);
+        return;
+      }
+
+      setUser(user);
+
+      // Fetch role_id from profiles table
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('role_id')
+        .eq('id', user.id)
+        .single();
+
+      if (error) {
+        console.error(error);
+      } else {
+        setRoleId(data.role_id);
+      }
+
+      setLoading(false);
+    }
+
+    getUserRole();
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+
+  // Protect route
+  if (!user) {
+    return (
+      <>
+        <p>You must be logged in to add an organisation.</p>
+        <Link to="/login">Go to login</Link><br />
+        <Link to="/">Go to homepage</Link>
+      </>
+    );
+  }
+
+  if (roleId !== 1) { // 1 = admin
+    return (
+      <>
+        <p>You must be an admin to add an organisation.</p>
+        <Link to="/">Go to homepage</Link>
+      </>
+    );
+  }
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setOrgData({ ...orgData, [name]: value });
   };
 
-<<<<<<< HEAD
   const handleSubmit = async (e) => {
     e.preventDefault();
-=======
-/*
-
-    //JUST COMMETED OUT RIGHT NOW SO WE CAN SEE THE ADMIN DATA CASUE LOGIN IS BROKEN
->>>>>>> 545ed029bcc2d0d31e099769d21b0f93127ef9ff
 
     const { error } = await supabase.from('services').insert([
       {
@@ -54,21 +112,17 @@ function AddOrganisationForm() {
 
     if (error) {
       console.error('Insert failed:', error.message);
+      alert('Failed to add organisation.');
     } else {
       alert('Organisation created!');
       navigate('/admin');
     }
-<<<<<<< HEAD
   };
 
   return (
     <>
       <Navbar />
-=======
-*/
->>>>>>> 545ed029bcc2d0d31e099769d21b0f93127ef9ff
 
-      {/* Back button */}
       <div style={{ maxWidth: '900px' }}>
         <button className="back-button" onClick={() => navigate(-1)}>
           ← Back
