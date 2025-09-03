@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './navbar.css';
 import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
 const Navbar = () => {
   const { t } = useTranslation();
@@ -31,7 +32,7 @@ const Navbar = () => {
 
         {/*change site language dropdown*/}
         <li>
-          <select onChange={handleLanguageChange} value={i18n.language}>
+          <select onChange={handleLanguageChange} value={i18next.language}>
             <option value="en">English</option>
             <option value="mi">Maori</option>
           </select>

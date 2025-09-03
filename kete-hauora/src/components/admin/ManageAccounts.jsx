@@ -27,27 +27,11 @@ function ManageAccounts() {
         .eq('id', user.id)
         .single();
 
-<<<<<<< HEAD
       if (profileData) setRoleId(profileData.role_id);
       setLoading(false);
     }
     getUserRole();
   }, []);
-=======
-
-    //JUST COMMETED OUT RIGHT NOW SO WE CAN SEE THE ADMIN DATA CASUE LOGIN IS BROKEN
-
-    if (user.role !== 'admin') {
-        return (
-            <>
-            <p>You must be logged in with the right permissions to manage accounts.</p>
-            <Link to="/login">Go to login</Link><br />
-            <Link to="Go Home"></Link>
-            </>
-        );
-    }
- 
->>>>>>> dc582d4edab3eb3f2982489408bcb11705045584
 
   const fetchUsers = async () => {
     const { data, error } = await supabase.from('profiles').select('*');
