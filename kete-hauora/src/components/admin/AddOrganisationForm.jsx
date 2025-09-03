@@ -84,6 +84,17 @@ function AddOrganisationForm() {
       </>
     );
   }
+    if (loading) return <p>Loading...</p>;
+    if (user.role !== 'admin') {
+        return (
+            <>
+                <p>You must be logged in with the right permissions to add an organisation.</p>
+                <Link to="/login">Go to login</Link><br />
+                <Link to="/">Go to homepage</Link>
+            </>
+        );
+    }
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

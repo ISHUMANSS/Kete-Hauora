@@ -14,7 +14,16 @@ to start
 
 
 needed dependencys: (please add to this list when ever you add any more dependencys)
+- npm install
 - react-router-dom = npm i react-router-dom
 - supabase = npm i @supabase/supabase-js
-- translation thing = npm install react-i18next i18next (if you have issues with this try using npm install react-i18next i18next --legacy-peer-deps instead)
+
+
+
+- if you have issues with the typescript: 
+npm install --legacy-peer-deps
+
+
+
+npm install i18next react-i18next i18next-browser-languagedetector --legacy-peer-deps
 

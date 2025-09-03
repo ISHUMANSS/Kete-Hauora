@@ -18,7 +18,6 @@
     "Region": "Region",
     "All Locations": "All Locations",
     "Auckland": "Auckland",
-    "Manakau": "Manakau",
     "Other": "Other",
     "Languages": "Languages",
     "Clear Filters": "Clear Filters",
@@ -38,12 +37,11 @@
     "//comment": "navbar.js",
     "Home": "Home",
     "About": "About",
-    "Admin": "Admin",
 
     "//comment": "NotFound.js",
     "Page not found": "Page not found",
     "Sorry, we couldn’t find the page you’re looking for.": "Sorry, we couldn’t find the page you’re looking for.",
-    "Go Home": "Go Home",
+    "Back to Home": "Back to Home",
 
     "//comment": "Organisation.jsx",
     "Loading organisation...": "Loading organisation...",
@@ -65,7 +63,7 @@
     "Search Result": "Search Result",
 
     "//comment": "searchall.js",
-    "SearchForAllTheServices": "Search for all the services",
+    "Search for all the services": "Search for all the services",
     "Loading services...": "Loading services...",
 
     "//comment": "searchBar.js",

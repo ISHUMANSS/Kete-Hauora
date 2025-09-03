@@ -1,27 +1,59 @@
 .filters-box {
   background: #fff;
-  border-radius: 1.25rem; /* 20px */
-  padding: 1.25rem; /* 20px */
+  border-radius: 1.25rem;
+  padding: 1.25rem;
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.15);
-
   width: 90%;
-  max-width: 60rem; /* 960px */
-  margin: 1.875rem auto; /* 30px */
+  max-width: 60rem;
+  margin: 1.875rem auto;
+  transition: all 0.3s ease;
+}
+
+.filters-box.collapsed {
+  padding: 0.75rem 1.25rem; /* smaller padding */
+}
+
+.filters-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filters-header h4 {
+  margin: 0;
+}
+
+.collapse-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 50%;
+  background-color: #6200ee;
+  color: white; /* make arrow visible */
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.collapse-btn:hover {
+  background-color: #4b00b5;
 }
 
 .filters-section {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 1.25rem; /* 20px */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1.5rem; /* consistent spacing */
 }
 
 .filter-group {
-  flex: 1;
-  min-width: 12rem; /* 192px */
   display: flex;
   flex-direction: column;
 }
+
+
 
 .filter-group label {
   font-weight: bold;
@@ -37,6 +69,33 @@
   border-radius: 0.5rem; /* 8px */
   cursor: pointer;
 }
+
+.filters-box select {
+  width: 100%;
+  padding: 0.625rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+
+  /* Remove native arrow and add custom one */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background-image: url("data:image/svg+xml;utf8,<svg fill='gray' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1rem;
+}
+
+.filters-box select:focus {
+  border-color: #6200ee;
+  box-shadow: 0 0 0 3px rgba(98, 0, 238, 0.25);
+  outline: none;
+}
+
 
 /* Desktop styling */
 @media (min-width: 50rem) { /* 800px */

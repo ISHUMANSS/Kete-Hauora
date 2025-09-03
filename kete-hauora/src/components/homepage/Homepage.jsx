@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 //import { Link } from 'react-router-dom';
 import './HomePage.css';
-import SearchAll from '../searchall/searchall';
 import Search from '../search/search';
 import supabase from "../../config/supabaseClient";
 import Navbar from '../navbar/navbar';
 import SearchBar from '../searchBar/searchBar';
 import FiltersBox from '../filters/Filters';
 
-import { useTranslation } from 'react-i18next';
+//import { useTranslation } from 'react-i18next';
 
 function HomePage() {
   const [searchInput, setSearchInput] = useState("");
@@ -18,16 +17,20 @@ function HomePage() {
     //set up the filters we want here
     //these get given to the fileters box
     category: '',
+    category_name: '',
     cost: '',
+    cost_name: '',
     location: '',
+    location_name:'',
     language: '',
+    language_name: '',
   });
 
   const handleSearchClick = () => {
     setSearchTrigger(prev => prev + 1); //tells search component to re run
   };
 
-  const { t } = useTranslation();
+  //const { t } = useTranslation();
 
   return (
     <div className="home">
@@ -39,6 +42,8 @@ function HomePage() {
           searchInput={searchInput}
           setSearchInput={setSearchInput}
           onSearch={handleSearchClick}
+          filters={filters}
+          setFilters={setFilters}
           
         />
         <FiltersBox
@@ -49,7 +54,6 @@ function HomePage() {
 
       <div className="search-results">
         <Search serviceName={searchInput} triggerSearch={searchTrigger} filters={filters} />
-        <SearchAll />
       </div>
     </div>
   );

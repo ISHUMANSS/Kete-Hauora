@@ -1,0 +1,17 @@
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip {
+  background: #cac8c8;
+  border-radius: 2rem;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.chip:hover {
+  background: #ddd;
+}

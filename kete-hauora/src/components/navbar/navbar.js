@@ -27,7 +27,15 @@ const Navbar = () => {
             <span className="login-icon material-symbols-outlined">person</span>{t("Login")}
           </Link>
         </li>
-        <li><Link to="/admin">{t("Admin")}</Link></li>
+        <li><Link to="/admin">Admin</Link></li>
+
+        {/*change site language dropdown*/}
+        <li>
+          <select onChange={handleLanguageChange} value={i18n.language}>
+            <option value="en">English</option>
+            <option value="mi">Maori</option>
+          </select>
+        </li>
       </ul>
          {sidebarOpen && <div className="overlay" onClick={toggleSidebar}></div>}
 

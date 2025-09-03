@@ -12,7 +12,11 @@ const FiltersBox = ({ filters, setFilters }) => {
     const { t } = useTranslation();
 
     const [categories, setCategories] = useState([]);
-    //const [languages, setLanguages] = useState([]);
+    const [languages, setLanguages] = useState([]);
+    const [regions, setRegions] = useState([]);
+
+    //allow us to minize the filters box
+    const [collapsed, setCollapsed] = useState(false);
 
     //get all the filters from the db
     useEffect(() => {
@@ -31,7 +35,7 @@ const FiltersBox = ({ filters, setFilters }) => {
                 setCategories(catData);
             };
 
-            /*
+            
             //not sure if we wnt to get the languages from the database
             //fetch languages
             const { data: langData, error: langError } = await supabase
@@ -40,44 +44,73 @@ const FiltersBox = ({ filters, setFilters }) => {
                 .order('language', { ascending: true });
 
             if (!langError) setLanguages(langData);
-            */
+            
 
-            //I can just add the regions here also
+            //get all the regions from the database
+            const {data: locationData, error : locationError} = await supabase
+                .from('region')
+                .select('region_id, region')
+                .order('region', { ascending: true });
+            if (!locationError) setRegions(locationData);
+
         };
-        
 
         fetchFilterData();
     }, []);
 
 
     //click the buttons to reset the filters
+    //I have the names and the id becasue it means we don't have to re search the db to get the names
     const handleClearFilters = () => {
         setFilters({
             category: '',
+            category_name: '',
             cost: '',
+            cost_name: '',
             location: '',
+            location_name: '',
             language: '',
+            language_name: '',
         });
-    };
-
-    //allow for togeling on and off
-    const handleLanguageChange = (value) => {
-        setFilters((prev) => ({
-        ...prev,
-        language: prev.language === value ? '' : value, // toggle off if same value
-        }));
     };
 
   return (
     <div className="filters-box">
-        <h4>{t("Filters")}</h4>
+        <div className="filters-header">
+            <h4>{t("Filters")}</h4>
+            <button 
+                className="collapse-btn"
+                onClick={() => setCollapsed(prev => !prev)}
+                aria-label={collapsed ? t("Expand") : t("Collapse")}
+                >
+                {collapsed ? "▼" : "▲"}
+            </button>
+        </div>
+
+
+        {!collapsed && (
         <div className="filters-section">
             <div className="filter-group">
                 <label>{t("Category")}</label>
                 
                 <select
                     value={filters.category}
-                    onChange={(e) => setFilters(prev => ({ ...prev, category: Number(e.target.value) }))}
+                    onChange={(e) =>  {
+                        //get the id
+                        const selectedId = Number(e.target.value);
+
+                        //get the name
+                        const selectedName = categories.find(cat => cat.category_id === selectedId)?.category || '';
+
+
+                        setFilters(prev => ({
+                            ...prev,
+                            category: selectedId || '',//store the ID (or '' if cleared)
+                            category_name: selectedName //store the display name
+                        }));
+
+                        
+                    }}
                 >
                     <option value="">All Categories</option>
                     {categories.map((cat) => (
@@ -92,7 +125,24 @@ const FiltersBox = ({ filters, setFilters }) => {
                 <label>{t("Cost")}</label>
                 <select
                     value={filters.cost}
-                    onChange={(e) => setFilters(prev => ({ ...prev, cost: e.target.value }))}
+                    onChange={(e) => {
+                    const selectedVal = e.target.value;
+                    let selectedName = "";
+
+                    if (selectedVal === "FALSE") {
+                        selectedName = "Free";
+                    } else if (selectedVal === "TRUE") {
+                        selectedName = "Paid";
+                    }
+
+                    setFilters(prev => ({
+                        ...prev,
+                        cost: selectedVal,
+                        cost_name: selectedName
+                    }));
+
+                    
+                    }}
                 >
                     <option value="">{t("Any Cost")}</option>
                     <option value="FALSE">{t("Free")}</option>{/*FALSE means it is free*/}
@@ -104,39 +154,58 @@ const FiltersBox = ({ filters, setFilters }) => {
                 <label>{t("Region")}</label>
                 <select
                     value={filters.location}
-                    onChange={(e) => setFilters(prev => ({ ...prev, location: e.target.value }))}
+                    onChange={(e) => {
+                        const selectedId = Number(e.target.value);
+                        const selectedName = regions.find(r => r.region_id === selectedId)?.region || '';
+                        setFilters(prev => ({
+                            ...prev,
+                            location: selectedId || '',
+                            location_name: selectedName
+                        }));
+                    }}
                 >
-                <option value="">{t("All Locations")}</option>
-                    <option value="Auckland">{t("Auckland")}</option>
-                    <option value="Manakau">{t("Manakau")}</option>
-                    <option value="Other">{t("Other")}</option>
+                    <option value="">{t("All Locations")}</option>
+                    {regions.map(region => (
+                        
+                        <option key={region.region_id} value={region.region_id}>{region.region}</option>
+                    ))}
                 </select>
             </div>
 
             <div className="filter-group">
-            <label>{t("Languages")}</label>
-            <div className="checkbox-group">
-                {['English', 'Maori', 'Other'].map((lang) => (
-                <label key={lang} className="radio-label">
-                    <input
-                        type="radio"
-                        name="language"
-                        value={lang}
-                        checked={filters.language === lang}
-                        onClick={() => handleLanguageChange(lang)}//toggle support
-                        readOnly
-                    />
-                    {lang}
-                </label>
-                ))}
+                <label>{t("Languages")}</label>
+                <select
+                    value={filters.language}
+                    onChange={(e) => {
+                    const selectedId = Number(e.target.value);
+
+                    // find the name for the selected ID
+                    const selectedName = languages.find(
+                        lang => lang.language_id === selectedId
+                    )?.language || "";
+
+                    setFilters(prev => ({
+                        ...prev,
+                        language: selectedId || "",    // store id
+                        language_name: selectedName    // store readable name
+                    }));
+                    }}
+                >
+                    <option value="">{t("All Languages")}</option>
+                    {languages.map((lang) => (
+                    <option key={lang.language_id} value={lang.language_id}>
+                        {lang.language}
+                    </option>
+                    ))}
+                </select>
             </div>
-            </div>
+
 
             <button onClick={handleClearFilters}>
                 {t("Clear Filters")}
             </button>
         </div>
-      
+      )}
     </div>
   );
 };

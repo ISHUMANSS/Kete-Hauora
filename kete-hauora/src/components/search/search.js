@@ -14,64 +14,96 @@ const Search = ({ serviceName, triggerSearch, filters  }) => {
 
     useEffect(() => {
         const handleSearch = async () => {
-            //check if anything to search for
-            if (!serviceName && !filters.category && !filters.cost && !filters.language) {
+            //if nothing to search for
+            if (!serviceName && !filters.category && !filters.cost && !filters.language && !filters.location) {
                 setServices([]);
                 setServiceResult(null);
                 setError(null);
                 return;
             }
 
-            //set up the search
             try {
-                let query = supabase
+            //fetch all services with left joins
+            const { data, error } = await supabase
                 .from('services')
                 .select(`
-                    *,
-                    service_categories!inner(category_id),
-                    service_languages(languages(language))
+                *,
+                service_categories!left(category_id),
+                service_languages!left(language_id),
+                service_regions!left(region_id)
                 `);
 
-                //if theres a service name add that to the search
-                if (serviceName) {
-                    query = query.ilike('company_name', `${serviceName}%`);
-                }
+            if (error) {
+                console.error(error);
+                setError("An error occurred during the search.");
+                return;
+            }
 
-                //if theres a cost add that to the search
-                if (filters.cost) {
-                    query = query.eq('cost_tf', filters.cost);
-                }
+            //now running filters localy
 
-                //if theres a catagory add it to the search
-                if (filters.category) {
-                    query = query.eq('service_categories.category_id', Number(filters.category));
-                }
+            //start with all data
+            let filtered = data;
 
-                //adding later
-                /*
-                if (filters.language) {
-                    query = query.eq('service_languages.languages.language', filters.language);
-                }
-                */
-                const { data, error } = await query;
+            //filter by serviceName at the start of the string
+            if (serviceName) {
+                const searchLower = serviceName.toLowerCase();
+                filtered = filtered.filter(service =>
+                    service.company_name.toLowerCase().startsWith(searchLower)
+                );
+            }
 
-                if (error) {
-                    console.error(error);
-                } else {
-                    setServices(data);
-                    setServiceResult(true);
-                    setError(null);
-                }
+            //filter by cost
+            if (filters.cost) {
+                //convert to bool for local filtering
+                const costBool = filters.cost === "TRUE"; // "TRUE" → true, "FALSE" → false
+                filtered = filtered.filter(service => service.cost_tf === costBool || service.cost_tf === null);
+            }
+
+            //filter by category
+            //checks if like the id of the returned catagories match the catagory id in service catagories
+            //keep only services that have at least one category matching the selected category ID
+            if (filters.category) {
+                filtered = filtered.filter(service =>
+                service.service_categories?.some(
+                    cat => cat.category_id === Number(filters.category)
+                )
+                );
+            }
+
+            //filter by language
+            //checks if like the id of the returned languages match the languages id in service languages
+            //keep only services that have at least one language matching the selected language ID
+            if (filters.language) {
+                filtered = filtered.filter(service =>
+                service.service_languages?.some(
+                    lang => lang.language_id === Number(filters.language)
+                )
+                );
+            }
+
+            //region filter
+            if (filters.location) {
+                filtered = filtered.filter(service =>
+                    service.service_regions?.some(
+                        region => region.region_id === Number(filters.location)
+                    )
+                );
+            }
+
+            setServices(filtered);
+            setServiceResult(true);
+            setError(filtered.length === 0 ? "No results found." : null);
 
             } catch (err) {
                 console.error("Search error:", err.message);
+                setServices([]);
                 setServiceResult(null);
                 setError("An error occurred during the search.");
             }
         };
 
         handleSearch();
-    }, [serviceName, filters]); //run each time the service name changes or the filters are changed lmao the search button is just for show pretty much
+        }, [serviceName, filters]); //run each time the service name changes or the filters are changed lmao the search button is just for show pretty much
 
     return (
         <div className="Search">
