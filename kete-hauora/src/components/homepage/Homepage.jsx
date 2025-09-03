@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 //import { Link } from 'react-router-dom';
 import './HomePage.css';
-import SearchAll from '../searchall/searchall';
 import Search from '../search/search';
 import supabase from "../../config/supabaseClient";
 import Navbar from '../navbar/navbar';
@@ -55,7 +54,6 @@ function HomePage() {
 
       <div className="search-results">
         <Search serviceName={searchInput} triggerSearch={searchTrigger} filters={filters} />
-        <SearchAll />
       </div>
     </div>
   );

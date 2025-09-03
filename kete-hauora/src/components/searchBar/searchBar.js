@@ -57,7 +57,7 @@ const SearchBar = ({ searchInput, setSearchInput, onSearch, filters, setFilters}
         const filteredSuggestions = names
           .map(s => s.company_name)
           .filter(name => name.toLowerCase().startsWith(searchInput.toLowerCase()))
-          .slice(0, 5); //top 5 suggestions
+          .slice(0, 4);//how many suggestions will be showen
 
         setSuggestions(filteredSuggestions);
       }
@@ -114,8 +114,6 @@ const SearchBar = ({ searchInput, setSearchInput, onSearch, filters, setFilters}
       )}
     </div>
     
-
-
   );
 };
 
