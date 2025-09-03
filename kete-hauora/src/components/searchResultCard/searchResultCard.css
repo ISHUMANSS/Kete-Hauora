@@ -8,7 +8,10 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  align-self: flex-start;
 }
+
 
 .search-result-card h3 {
   margin-bottom: 8px;
