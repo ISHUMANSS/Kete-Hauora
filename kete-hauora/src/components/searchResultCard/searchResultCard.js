@@ -1,7 +1,7 @@
 //just update the card here and use this where ever you need search results
 //used to replace the table system we had before
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './searchResultCard.css';
 
@@ -9,6 +9,9 @@ import { useTranslation } from 'react-i18next';
 
 const SearchResultCard = ({ service, filters }) => {
     const { t } = useTranslation();
+
+    //shorten the services offered section
+    const [expanded, setExpanded] = useState(false);
 
     //format the websites so they always open as the website rather then as in the site
     const formatWebsite = (url) => {
@@ -58,6 +61,28 @@ const SearchResultCard = ({ service, filters }) => {
     };
 
 
+    //shorten the services offered section 
+    const renderServices = () => {
+        const text = service.services_offered || service.other_notes || t("Not provided");
+        const maxLength = 120;//characters shown
+
+        if (text.length <= maxLength) {
+        return text;
+        }
+        return (
+            <div className='services-text'>
+                {expanded ? text : text.substring(0, maxLength) + "..."}
+                <button
+                    className="show-more-btn"
+                    onClick={() => setExpanded(!expanded)}
+                >
+                    {expanded ? t("Show less") : t("Show more")}
+                </button>
+            </div>
+        );
+    };
+
+
     //takes in a service from the search and then gets the info from that
   return (
     <div className="search-result-card">
@@ -78,14 +103,14 @@ const SearchResultCard = ({ service, filters }) => {
 
         <p>
             <strong>
-                {service.services_offered
+            {service.services_offered
                 ? t("Services")
                 : service.other_notes
                 ? t("Other notes")
                 : t("Services")}
-                :
+            :
             </strong>{" "}
-            {service.services_offered || service.other_notes || t("Not provided")}
+            {renderServices()}
         </p>
 
         <div className='filters'>
@@ -108,12 +133,7 @@ const SearchResultCard = ({ service, filters }) => {
         <Link to={`/organisation/${encodeURIComponent(service.company_name)}`}>
             <button>{t("More info")}</button>
         </Link>
-{/*
-    this was for the editing orgs but I don't think its needed
-        <Link to={`/editOrg/${encodeURIComponent(service.company_name)}`}>
-            <button>{t("Edit")}</button>
-        </Link>
-*/}        
+
     </div>
   );
 };
