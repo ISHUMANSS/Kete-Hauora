@@ -3,14 +3,18 @@ import supabase from "../../config/supabaseClient";
 import SearchResultCard from "../searchResultCard/searchResultCard";
 
 import { useTranslation } from 'react-i18next';
+import { useFilters } from "../../context/FiltersContext";
 
 
-const Search = ({ serviceName, triggerSearch, filters  }) => {
+const Search = ({ serviceName, triggerSearch, filters,   }) => {
     const [serviceResult, setServiceResult] = useState(null); // shows the search table
     const [error, setError] = useState(null); // the error which tells the user what went wrong with their search, like if there weren't any results
     const [services, setServices] = useState([]); // list of all the services given in the response
 
     const { t } = useTranslation();
+
+    const { categories } = useFilters();
+
 
     useEffect(() => {
         const handleSearch = async () => {
@@ -49,16 +53,46 @@ const Search = ({ serviceName, triggerSearch, filters  }) => {
 
             //filter by serviceName at the start of the string
             if (serviceName) {
-                const searchLower = serviceName.toLowerCase();
-                filtered = filtered.filter(service =>
-                    service.company_name.toLowerCase().startsWith(searchLower)
+            const searchLower = serviceName.toLowerCase();
+
+            //company name matches first
+            const nameMatches = filtered.filter(service =>
+                service.company_name.toLowerCase().startsWith(searchLower)
+            );
+
+            //category matches second
+            const matchedCategories = categories.filter(c =>
+                c.category.toLowerCase().includes(searchLower)
+            );
+            let categoryMatches = [];
+            if (matchedCategories.length > 0) {
+                const matchedIds = matchedCategories.map(c => c.category_id);
+                categoryMatches = filtered.filter(service =>
+                service.service_categories?.some(cat =>
+                    matchedIds.includes(cat.category_id)
+                )
                 );
             }
+
+            //merge them without duplicates
+            //allows both the sets to be there at the same time
+            const combined = [...nameMatches];
+            categoryMatches.forEach(service => {
+                if (!combined.some(s => s.id === service.id)) {
+                combined.push(service);
+                }
+            });
+
+            filtered = combined;
+            }
+
 
             //filter by cost
             if (filters.cost) {
                 //convert to bool for local filtering
                 const costBool = filters.cost === "TRUE"; // "TRUE" → true, "FALSE" → false
+
+                //alows for results that don't match either to pass for both
                 filtered = filtered.filter(service => service.cost_tf === costBool || service.cost_tf === null);
             }
 
@@ -106,7 +140,7 @@ const Search = ({ serviceName, triggerSearch, filters  }) => {
         };
 
         handleSearch();
-        }, [serviceName, filters]); //run each time the service name changes or the filters are changed lmao the search button is just for show pretty much
+        }, [serviceName, filters, categories]); //run each time the service name changes or the filters are changed lmao the search button is just for show pretty much
 
     return (
         <div className="Search">
@@ -118,7 +152,7 @@ const Search = ({ serviceName, triggerSearch, filters  }) => {
                 // if the service result exists, show the table
                 <div className="result-container">
                     {services.map((service) => (
-                        <SearchResultCard key={service.company_name} service={service} filters={filters}/>
+                        <SearchResultCard key={service.id} service={service} filters={filters}/>
                     ))}
                 </div>
             )}

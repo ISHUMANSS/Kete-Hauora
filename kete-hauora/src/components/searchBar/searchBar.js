@@ -4,6 +4,7 @@ import './searchBar.css';
 import { useTranslation } from 'react-i18next';
 import supabase from '../../config/supabaseClient';
 import FilterChips from '../filters/FilterChips';
+import { useFilters } from '../../context/FiltersContext';
 
 
 
@@ -15,63 +16,93 @@ const SearchBar = ({ searchInput, setSearchInput, onSearch, filters, setFilters}
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
+  const { categories } = useFilters();
+
   useEffect(() => {
     const fetchSuggestions = async () => {
-      if (!searchInput) {
-        setSuggestions([]);
-        return;
+    if (!searchInput) {
+      setSuggestions([]);
+      return;
+    }
+
+    // --- Service name suggestions ---
+    const { data, error } = await supabase
+      .from("services")
+      .select(
+        `id, company_name,
+         cost_tf,
+         service_categories!left(category_id),
+         service_languages!left(language_id)`
+      )
+      .ilike("company_name", `${searchInput}%`)
+      .limit(5);
+
+    let nameSuggestions = [];
+    if (!error && data) {
+      let names = data;
+
+      // apply filters
+      if (filters.category) {
+        names = names.filter(service =>
+          service.service_categories?.some(
+            cat => cat.category_id === Number(filters.category)
+          )
+        );
+      }
+      if (filters.language) {
+        names = names.filter(service =>
+          service.service_languages?.some(
+            lang => lang.language_id === Number(filters.language)
+          )
+        );
+      }
+      if (filters.cost) {
+        names = names.filter(
+          service => service.cost_tf === filters.cost
+        );
       }
 
-      //to be able to apply the filters to the suggestions we also grab all the filter info
-      const { data, error } = await supabase
-        .from('services')
-        .select(`company_name,
-          cost_tf,
-          service_categories!left(category_id),
-          service_languages!left(language_id)
-        `)
-        .ilike('company_name', `${searchInput}%`)
-        .limit(5); //only show top 5 matches
+      nameSuggestions = names.map(s => ({
+        type: "service",
+        label: s.company_name,
+        value: s.company_name,
+      }));
+    }
 
-      if (!error && data) {
-        let names = data.map(s => s);
+    //Category suggestions
+    const categorySuggestions = categories
+      .filter(c =>
+        c.category.toLowerCase().includes(searchInput.toLowerCase())
+      )
+      .slice(0, 3)//only top 3
+      .map(c => ({
+        type: "category",
+        label: c.category,
+        value: c.category_id,//store id for filtering
+      }));
 
-        //apply current filters to suggestions
-        if (filters.category) {
-          names = names.filter(service =>
-            service.service_categories?.some(cat => cat.category_id === Number(filters.category))
-          );
-        }
-
-        if (filters.language) {
-          names = names.filter(service =>
-            service.service_languages?.some(lang => lang.language_id === Number(filters.language))
-          );
-        }
-
-        if (filters.cost) {
-          names = names.filter(service => service.cost_tf === filters.cost);
-        }
-
-        //only keep names that start with the input
-        const filteredSuggestions = names
-          .map(s => s.company_name)
-          .filter(name => name.toLowerCase().startsWith(searchInput.toLowerCase()))
-          .slice(0, 4);//how many suggestions will be showen
-
-        setSuggestions(filteredSuggestions);
-      }
-    };
+    //merge syggestions
+    setSuggestions([...nameSuggestions, ...categorySuggestions]);
+  };
 
     fetchSuggestions();
-  }, [searchInput, filters]);
+  }, [searchInput, filters, categories]);
 
 
 
-   const handleSelect = (value) => {
-    setSearchInput(value);
-    setShowSuggestions(false);
-  };
+ const handleSelect = (s) => {
+  if (s.type === "service") {
+    setSearchInput(s.label); //user searches by company name
+  } else if (s.type === "category") {
+    setFilters(prev => ({
+      ...prev,
+      category: s.value,//store category_id
+      category_name: s.label,//store category label for chips
+    }));
+    //setSearchInput("");//clear input need feed back on
+  }
+  setShowSuggestions(false);
+};
 
   return (
     <div className="search relative">
@@ -89,25 +120,32 @@ const SearchBar = ({ searchInput, setSearchInput, onSearch, filters, setFilters}
       <FilterChips filters={filters} setFilters={setFilters}/>
 
       {/*<button onClick={onSearch}>{t("Search")}</button>*/}
-
+      
       {/* suggestions dropdown */}
       {showSuggestions && suggestions.length > 0 && (
         <ul className="suggestions-dropdown">
-          <li 
+          <li
             className="close-suggestions"
             onClick={() => setShowSuggestions(false)}
             style={{
               fontWeight: "bold",
               cursor: "pointer",
               textAlign: "right",
-              paddingRight: "0.75rem"
+              paddingRight: "0.75rem",
             }}
           >
             ✕
           </li>
           {suggestions.map((s, i) => (
-            <li key={i} onClick={() => handleSelect(s)}>
-              {s}
+            <li
+              key={i}
+              onClick={() => handleSelect(s)}
+              style={{
+                fontStyle: s.type === "category" ? "italic" : "normal",
+                color: s.type === "category" ? "blue" : "black",
+              }}
+            >
+              {s.label} {s.type === "category" && <span>(Category)</span>}
             </li>
           ))}
         </ul>
