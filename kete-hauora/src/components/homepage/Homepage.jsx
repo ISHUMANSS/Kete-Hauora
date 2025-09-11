@@ -53,7 +53,11 @@ function HomePage() {
       </div>
 
       <div className="search-results">
-        <Search serviceName={searchInput} triggerSearch={searchTrigger} filters={filters} />
+        <Search 
+        serviceName={searchInput} 
+        triggerSearch={searchTrigger} 
+        filters={filters} 
+        />
       </div>
     </div>
   );

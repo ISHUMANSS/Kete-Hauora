@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './Filters.css';
 
 import { useTranslation } from 'react-i18next';
 
-import supabase from '../../config/supabaseClient';
+import { useFilters } from '../../context/FiltersContext';
+
+
 
 //filters component box where the user is able to select the filters and have that update the filters they are currently using
 //now we can just add some more filters into this box 
@@ -11,53 +13,12 @@ import supabase from '../../config/supabaseClient';
 const FiltersBox = ({ filters, setFilters }) => {
     const { t } = useTranslation();
 
-    const [categories, setCategories] = useState([]);
-    const [languages, setLanguages] = useState([]);
-    const [regions, setRegions] = useState([]);
+    const { categories, languages, regions, loading } = useFilters();
 
     //allow us to minize the filters box
     const [collapsed, setCollapsed] = useState(false);
 
-    //get all the filters from the db
-    useEffect(() => {
-        const fetchFilterData = async () => {
-            //fetch categories
-            //to do this I had to allow for a RLS in supabase
-            const { data: catData, error: catError } = await supabase
-                .from('categories')
-                .select('category_id, category')
-                .order('category', { ascending: true });
-
-            if (catError) {
-                console.error('Error fetching categories:', catError.message);
-            } else {
-                
-                setCategories(catData);
-            };
-
-            
-            //not sure if we wnt to get the languages from the database
-            //fetch languages
-            const { data: langData, error: langError } = await supabase
-                .from('languages')
-                .select('language_id, language')
-                .order('language', { ascending: true });
-
-            if (!langError) setLanguages(langData);
-            
-
-            //get all the regions from the database
-            const {data: locationData, error : locationError} = await supabase
-                .from('region')
-                .select('region_id, region')
-                .order('region', { ascending: true });
-            if (!locationError) setRegions(locationData);
-
-        };
-
-        fetchFilterData();
-    }, []);
-
+    
 
     //click the buttons to reset the filters
     //I have the names and the id becasue it means we don't have to re search the db to get the names
@@ -73,6 +34,10 @@ const FiltersBox = ({ filters, setFilters }) => {
             language_name: '',
         });
     };
+
+    if (loading) {
+        return <div className="filters-box"><p>{t("Loading filters...")}</p></div>;
+    }
 
   return (
     <div className="filters-box">

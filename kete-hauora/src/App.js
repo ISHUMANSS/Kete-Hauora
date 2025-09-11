@@ -17,36 +17,39 @@ import Navbar from './components/navbar/navbar.js';
 import NotFound from './components/notfound/NotFound.jsx';
 import ManageAccounts from './components/admin/ManageAccounts.jsx';
 import Serivces from './components/services/Services.jsx';
+import { FiltersProvider } from './context/FiltersContext.jsx';
 
 
 function App() {
   return (
-    <Router>
-      <Navbar />
-      {/*did this so that the everything would be shifted down from the navbar*/}
-      <div className='page-content'>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+    <FiltersProvider>{/*get all of the filters needed*/}
+      <Router>
+        <Navbar />
+        {/*did this so that the everything would be shifted down from the navbar*/}
+        <div className='page-content'>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
 
-          <Route path="/admin" element={<AdminPage />}/>{/*make it so that users have to be loged in to be able to use this with protected routes*/}
-          <Route path="/addOrg" element={<AddOrganisationForm />} />
-          <Route path="/editOrg" element={<EditOrganisationForm />} />
-          <Route path="/manageAccounts" element={<ManageAccounts />} />
+            <Route path="/admin" element={<AdminPage />}/>{/*make it so that users have to be loged in to be able to use this with protected routes*/}
+            <Route path="/addOrg" element={<AddOrganisationForm />} />
+            <Route path="/editOrg" element={<EditOrganisationForm />} />
+            <Route path="/manageAccounts" element={<ManageAccounts />} />
 
-          <Route path="/services" element={<Serivces />} />
+            <Route path="/services" element={<Serivces />} />
 
-          <Route path="/organisation/:companyName" element={<Organisation />}/>
+            <Route path="/organisation/:companyName" element={<Organisation />}/>
 
 
-          {/*catch all route for any thing that doesn't exist*/}
-          <Route path="*" element={<NotFound />} />
+            {/*catch all route for any thing that doesn't exist*/}
+            <Route path="*" element={<NotFound />} />
 
-        </Routes>
-      </div>
-    </Router>
+          </Routes>
+        </div>
+      </Router>
+    </FiltersProvider>
     
   );
 }
