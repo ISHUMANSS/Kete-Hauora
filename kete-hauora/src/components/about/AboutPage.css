@@ -1,25 +1,98 @@
-/* AboutPage.css */
-
 /* General page styles */
 .about {
-    font-family: 'Poppins', sans-serif;
-    min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  background: #fafafa; /* subtle background */
+  color: #333;
 }
 
-
-/* About page specific content */
+/* Content container */
 .about-content {
-    padding-top: 80px; /* Space for fixed navbar */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    height: calc(100vh - 80px);
+  padding: 100px 20px 60px; /* space for navbar + bottom padding */
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
 }
 
+/* Main heading */
 .about-content h1 {
-    font-size: 3rem;
-    margin-bottom: 2rem;
-    color: #333;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #00695c; /* deep teal */
+}
+
+/* Sections */
+.about-section {
+  background: #fff;
+  margin: 2rem 0;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  text-align: left;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.about-section:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Section titles */
+.about-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #004d40;
+  border-left: 5px solid #26a69a;
+  padding-left: 12px;
+}
+
+/* Paragraphs */
+.about-section p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  color: #555;
+}
+
+/* Lists */
+.about-section ul {
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+
+.about-section ul li {
+  margin-bottom: 0.5rem;
+  font-size: 1.05rem;
+}
+
+/* Video placeholder */
+.video-placeholder {
+  background: linear-gradient(135deg, #e0f2f1, #b2dfdb);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #004d40;
+  font-weight: 500;
+}
+
+
+/*disclaimer styling */
+.disclaimer {
+  background: #fff3cd; /* soft amber */
+  border-left: 6px solid #ffca28;
+  padding: 2rem;
+  border-radius: 12px;
+  color: #5c3d00;
+}
+
+.disclaimer h2 {
+  color: #8a6000;
+}
+
+.disclaimer p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
 }
