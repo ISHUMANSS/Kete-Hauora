@@ -49,16 +49,15 @@ This project is used by the following companies:
 
 
 ## Features
-
-###Search
+### Search
 - Search by name
 - Search by category
 - Filter by category, Cost (paid or free), Language, Region
 
-###Lanugage Translation
+### Lanugage Translation
 - 
 
-###Admin
+### Admin
 - 
 
 ## Demo
