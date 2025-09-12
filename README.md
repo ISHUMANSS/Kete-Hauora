@@ -50,11 +50,16 @@ This project is used by the following companies:
 
 ## Features
 
-- Light/dark mode toggle
-- Live previews
-- Fullscreen mode
-- Cross platform
+###Search
+- Search by name
+- Search by category
+- Filter by category, Cost (paid or free), Language, Region
 
+###Lanugage Translation
+- 
+
+###Admin
+- 
 
 ## Demo
 
@@ -79,9 +84,9 @@ coming soon
 - **Supabase Dashboard** – database and authentication management  
 - **Netlify Dashboard** – deployment and hosting  
 
-## Color Reference
+## Colour Reference
 
-This will be where the colour refrence from tui goes
+This will be where the colour reference from tui goes
 | Color             | Hex                                                                |
 | ----------------- | ------------------------------------------------------------------ |
 | Example Color | ![#0a192f](https://via.placeholder.com/10/0a192f?text=+) #0a192f |
@@ -197,3 +202,5 @@ Future development could include:
 
 
 ## Contact / Support
+
+Ongoing support will be limited for this project as it was designed to be a Research and Development project rather than an ongoing project but for some contact and support, contact Alister [@Is_human](https://github.com/ISHUMANSS) (Alister Faid)
