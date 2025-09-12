@@ -178,3 +178,5 @@ Future development could include:
 
 
 ## Contact / Support
+
+# Licence
