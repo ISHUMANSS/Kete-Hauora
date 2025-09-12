@@ -5,8 +5,27 @@ Te Kete Hauora is a wellness service directory that connects whānau, individual
 
 This version is a digital version of the orginal Te Kete Hauora Wellness Service Directory which was created as a pdf by the Middlemore Foundation. This project was created in partnership with Auckland University of Technology Bachelor of Computer & Information Sciences Research & Development Project, by final year students for the capstone Research and Development Project.
 
+## Table of Contents
+
+- [Kete-Hauora](#kete-hauora)
+- [Credits / Partnerships](#credits--partnerships)
+- [Project Goals / Problem Statement](#project-goals--problem-statement)
+- [Used By](#used-by)
+- [Features](#features)
+- [Demo](#demo)
+- [Screenshots / UI Preview](#screenshots--ui-preview)
+- [Tech Stack](#tech-stack)
+- [Color Reference](#color-reference)
+- [Deployment](#deployment)
+- [Run Locally](#run-locally)
+- [Environment Variables](#environment-variables)
+- [Roadmap / Future Work](#roadmap--future-work)
+- [Authors](#authors)
+- [Contact / Support](#contact--support)
 
 ## Credits / Partnerships
+
+
 ## Project Goals / Problem Statement
 
 The original *Te Kete Hauora* directory existed only as a static PDF document. While useful, it had several limitations:
@@ -178,5 +197,3 @@ Future development could include:
 
 
 ## Contact / Support
-
-# Licence
