@@ -1,17 +1,38 @@
 //just update the card here and use this where ever you need search results
 //used to replace the table system we had before
 
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import './searchResultCard.css';
-
+import supabase from '../../config/supabaseClient';
 import { useTranslation } from 'react-i18next';
 
 const SearchResultCard = ({ service, filters }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const [serviceTranslation, setServiceTranslation] = useState(null);
 
     //shorten the services offered section
     const [expanded, setExpanded] = useState(false);
+
+     useEffect(() => {
+        const fetchTranslation = async () => {
+            const { data, error } = await supabase
+                .from('service_translations')
+                .select('services_offered_maori')
+                .eq('service_id', service.service_id)
+                .single();
+
+            if (error) {
+                console.error('Error fetching service translation:', error);
+            } else {
+                setServiceTranslation(data?.services_offered_maori || null);
+            }
+        };
+
+        if (service?.id) {
+            fetchTranslation();
+        }
+    }, [service?.id]);
 
     //format the websites so they always open as the website rather then as in the site
     const formatWebsite = (url) => {
@@ -63,7 +84,11 @@ const SearchResultCard = ({ service, filters }) => {
 
     //shorten the services offered section 
     const renderServices = () => {
-        const text = service.services_offered || service.other_notes || t("Not provided");
+        const text = 
+        i18n.language === 'mi' && serviceTranslation
+        ? serviceTranslation
+        : service.services_offered || service.other_notes || t("Not provided");
+        
         const maxLength = 120;//characters shown
 
         if (text.length <= maxLength) {
