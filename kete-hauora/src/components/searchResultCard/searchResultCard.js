@@ -14,6 +14,7 @@ const SearchResultCard = ({ service, filters }) => {
     //shorten the services offered section
     const [expanded, setExpanded] = useState(false);
 
+    //when service_id changes, fetch the Māori translation and saves it into serviceTranslation state
      useEffect(() => {
         const fetchTranslation = async () => {
             const { data, error } = await supabase
@@ -85,6 +86,7 @@ const SearchResultCard = ({ service, filters }) => {
     //shorten the services offered section 
     const renderServices = () => {
         const text = 
+        //checks if site is in maori and if a translation exists otherwise falls back to english or other notes
         i18n.language === 'mi' && serviceTranslation
         ? serviceTranslation
         : service.services_offered || service.other_notes || t("Not provided");

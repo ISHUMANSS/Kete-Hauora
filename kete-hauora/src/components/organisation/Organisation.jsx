@@ -27,7 +27,8 @@ function Organisation() {
             } else {
                 setService(data);
             }
-
+            
+            //new query to get the maori translation of the services offered
             const { data: translationData, error: translationError } = await supabase
                 .from('service_translations')
                 .select('services_offered_maori')
@@ -105,6 +106,7 @@ function Organisation() {
                 <section className="services-offered">
                     <h2>{t("Services Offered")}:</h2>
                     <div className="services-list">
+                        {/*if current language is maori and a translation exists then displays that version*/}
                         {i18n.language === 'mi' && serviceTranslation
                             ? serviceTranslation.split('\n').map((item, idx) => (
                                 <p key={idx}>• {item.trim()}</p>
