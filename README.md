@@ -53,6 +53,7 @@ This project is used by the following companies:
 - Search by name
 - Search by category
 - Filter by category, Cost (paid or free), Language, Region
+- Fuzzy match search by catagory (spell check)
 
 ### Lanugage Translation
 - 
@@ -133,6 +134,9 @@ Install dependencies (as of 12/09/25)
 ```
 ```bash
   npm install i18next react-i18next i18next-browser-languagedetector --legacy-peer-deps
+```
+```bash
+   npm install fuse.js
 ```
 
 Start the server

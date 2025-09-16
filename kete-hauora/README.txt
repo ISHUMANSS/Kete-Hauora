@@ -18,6 +18,7 @@ needed dependencys: (please add to this list when ever you add any more dependen
 - react-router-dom = npm i react-router-dom
 - supabase = npm i @supabase/supabase-js
 
+- fuse for spell check - npm install fuse.js
 
 
 - if you have issues with the typescript: 
