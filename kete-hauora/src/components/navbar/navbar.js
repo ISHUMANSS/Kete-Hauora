@@ -46,7 +46,7 @@ const Navbar = () => {
             <option value="en">English</option>
             <option value="mi">Maori</option>
           </select>
-        </li>x
+        </li>
       </ul>
          {sidebarOpen && <div className="overlay" onClick={toggleSidebar}></div>}
 

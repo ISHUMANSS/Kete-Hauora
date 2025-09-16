@@ -6,7 +6,8 @@ import supabase from '../../config/supabaseClient';
 import FilterChips from '../filters/FilterChips';
 import { useFilters } from '../../context/FiltersContext';
 
-
+//used for filter suggestions
+import Fuse from "fuse.js";
 
 
 const SearchBar = ({ searchInput, setSearchInput, onSearch, filters, setFilters}) => {
@@ -35,7 +36,7 @@ const SearchBar = ({ searchInput, setSearchInput, onSearch, filters, setFilters}
          service_languages!left(language_id)`
       )
       .ilike("company_name", `${searchInput}%`)
-      .limit(5);
+      .limit(3);
 
     let nameSuggestions = [];
     if (!error && data) {
@@ -62,24 +63,27 @@ const SearchBar = ({ searchInput, setSearchInput, onSearch, filters, setFilters}
         );
       }
 
-      nameSuggestions = names.map(s => ({
-        type: "service",
-        label: s.company_name,
-        value: s.company_name,
+      nameSuggestions = names.map(s => ({ 
+        type: "service", 
+        label: s.company_name, 
+        value: s.company_name, 
       }));
     }
 
     //Category suggestions
-    const categorySuggestions = categories
-      .filter(c =>
-        c.category.toLowerCase().includes(searchInput.toLowerCase())
-      )
-      .slice(0, 3)//only top 3
-      .map(c => ({
-        type: "category",
-        label: c.category,
-        value: c.category_id,//store id for filtering
-      }));
+    //fuzzy match
+    const fuseCategories = new Fuse(categories, {
+      keys: ["category"],
+      threshold: 0.5,//smaller = stricter match
+    });
+
+    const categoryResults = fuseCategories.search(searchInput).slice(0, 3);
+
+    const categorySuggestions = categoryResults.map(r => ({
+      type: "category",
+      label: r.item.category,
+      value: r.item.category_id,
+    }));
 
     //merge syggestions
     setSuggestions([...nameSuggestions, ...categorySuggestions]);
@@ -99,7 +103,8 @@ const SearchBar = ({ searchInput, setSearchInput, onSearch, filters, setFilters}
       category: s.value,//store category_id
       category_name: s.label,//store category label for chips
     }));
-    //setSearchInput("");//clear input need feed back on
+    //when a catagory is selected from the list in the drop down clear the input
+    setSearchInput("");
   }
   setShowSuggestions(false);
 };
