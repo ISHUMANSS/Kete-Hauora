@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import supabase from '../../config/supabaseClient';
 import './Organisation.css';
@@ -6,26 +6,42 @@ import Navbar from '../navbar/navbar';
 import { useTranslation } from 'react-i18next';
 
 function Organisation() {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     const { companyName } = useParams();
     const [service, setService] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const [serviceTranslation, setServiceTranslation] = useState(null);
+
     useEffect(() => {
         const fetchService = async () => {
-        const { data, error } = await supabase
-            .from('services')
-            .select('*')
-            .eq('company_name', companyName)
-            .single();
+            const { data, error } = await supabase
+                .from('services')
+                .select('*')
+                .eq('company_name', companyName)
+                .single();
 
-        if (error) {
-            console.error('Error fetching service:', error);
-        } else {
-            setService(data);
-        }
-        setLoading(false);
+            if (error) {
+                console.error('Error fetching service:', error);
+            } else {
+                setService(data);
+            }
+            
+            //new query to get the maori translation of the services offered
+            const { data: translationData, error: translationError } = await supabase
+                .from('service_translations')
+                .select('services_offered_maori')
+                .eq('service_id', data.service_id)
+                .single();
+
+            if (translationError) {
+                console.error('Error fetching translation:', translationError);
+            } else {
+                setServiceTranslation(translationData?.services_offered_maori || null);
+            }
+
+            setLoading(false);
         };
 
         fetchService();
@@ -59,17 +75,17 @@ function Organisation() {
 
             <main className="organisation-content">
                 <header className="organisation-header">
-                {/*im not sure if we will have all the organisation images so currently just using a default one*/}
-                <img src="http://www.gravatar.com/avatar/?d=mp" alt={`${service.company_name} logo`} className="organisation-logo" />
-                
-                <h1>{service.company_name}</h1>
+                    {/*im not sure if we will have all the organisation images so currently just using a default one*/}
+                    <img src="http://www.gravatar.com/avatar/?d=mp" alt={`${service.company_name} logo`} className="organisation-logo" />
+
+                    <h1>{service.company_name}</h1>
                 </header>
 
                 <section className="organisation-details">
                     <div className="contact-info">
                         <p><strong>{t("Phone")}:</strong> {service.phone || 'N/A'}</p>
                         <p><strong>{("Email")}:</strong> {service.email || 'N/A'}</p>
-            
+
                         <p>
                             <strong>{t("Website")}:</strong>{" "}
                             <a href={formatWebsite(service.website)} target="_blank" rel="noreferrer">
@@ -90,15 +106,21 @@ function Organisation() {
                 <section className="services-offered">
                     <h2>{t("Services Offered")}:</h2>
                     <div className="services-list">
-                        {service.services_offered
-                        ? service.services_offered.split('\n').map((item, idx) => (
-                            <p key={idx}>• {item.trim()}</p>
+                        {/*if current language is maori and a translation exists then displays that version*/}
+                        {i18n.language === 'mi' && serviceTranslation
+                            ? serviceTranslation.split('\n').map((item, idx) => (
+                                <p key={idx}>• {item.trim()}</p>
                             ))
-                        : <p>{t("No services listed")}.</p>}
+                            :
+                            service.services_offered
+                            ? service.services_offered.split('\n').map((item, idx) => (
+                                <p key={idx}>• {item.trim()}</p>
+                            ))
+                            : <p>{t("No services listed")}.</p>}
                     </div>
                 </section>
             </main>
-            </div>
+        </div>
     );
 }
 

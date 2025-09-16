@@ -77,7 +77,7 @@ const FiltersBox = ({ filters, setFilters }) => {
                         
                     }}
                 >
-                    <option value="">All Categories</option>
+                    <option value="">{t("All Categories")}</option>
                     {categories.map((cat) => (
                         <option key={cat.category_id} value={cat.category_id}>
                             {cat.category}
