@@ -10,6 +10,12 @@ const Navbar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => setSidebarOpen(prev => !prev);
+
+    const handleLanguageChange = (e) => {
+    const selectedLang = e.target.value;
+    i18next.changeLanguage(selectedLang);
+  };
+
   return (
     <nav className="navbar">
       <div className="logo">
