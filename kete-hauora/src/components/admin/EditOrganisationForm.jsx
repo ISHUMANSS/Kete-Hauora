@@ -9,7 +9,6 @@ function EditOrganisationForm() {
 
   // Auth states
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
   const [roleId, setRoleId] = useState(null);
 
   // Search input state
@@ -47,8 +46,7 @@ function EditOrganisationForm() {
         setLoading(false);
         return;
       }
-      setUser(user);
-
+      
       const { data: profileData, error: profileError } = await supabase
         .from('profiles')
         .select('role_id')
@@ -105,17 +103,6 @@ function EditOrganisationForm() {
   }, [searchTrigger, searchInput]);
 
   if (loading) return <p>Loading...</p>;
-
-  // Protect route
-  if (!user) {
-    return (
-      <>
-        <p>You must be logged in to edit an organisation.</p>
-        <Link to="/login">Go to login</Link><br />
-        <Link to="/">Go to homepage</Link>
-      </>
-    );
-  }
 
   if (roleId !== 1) {
     return (
@@ -245,3 +232,4 @@ function EditOrganisationForm() {
 }
 
 export default EditOrganisationForm;
+
