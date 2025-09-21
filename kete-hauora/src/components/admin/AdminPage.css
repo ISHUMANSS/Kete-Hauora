@@ -12,8 +12,8 @@
 .admin-title {
   font-size: 2.5rem;
   color: black;
-  margin-top: 2rem;        /* Top margin to move it down */
-  margin-bottom: 2rem;     /* Space below */
+  margin-top: 2rem;
+  margin-bottom: 2rem;
   text-align: center;
 }
 
@@ -53,159 +53,52 @@
 }
 
 /* Manage Accounts Container */
-/* Container */
-.manage-accounts {
-  padding: 80px 15px 30px; /* top padding for navbar */
-  background-color: #f3f4f6;
-  min-height: 100vh;
-  font-family: 'Inter', sans-serif;
+.manage-accounts .admin-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem;
 }
 
-/* Page title */
-.manage-accounts h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1f2937;
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-/* Filter */
-.manage-accounts select {
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid #d1d5db;
-  font-size: 0.95rem;
-  margin-left: 0.5rem;
-  outline: none;
-  transition: border-color 0.2s ease;
-}
-
-.manage-accounts select:focus {
-  border-color: #2563eb;
-}
-
-/* Table styling */
-.user-table {
+.user-table table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
   border-radius: 8px;
-  overflow: hidden;
-  background: #fff;
+  overflow: hidden; 
 }
 
 .user-table thead {
-  background-color: #2563eb;
-  color: #fff;
+  background-color: #1f2937; 
+  color: white;
 }
 
-.user-table th, .user-table td {
+.user-table thead th {
   padding: 12px 15px;
   text-align: left;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .user-table tbody tr {
-  border-bottom: 1px solid #e5e7eb;
-  transition: background-color 0.2s;
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.3s ease;
+}
+
+.user-table tbody tr:nth-child(even) {
+  background-color: #f9fafb; 
 }
 
 .user-table tbody tr:hover {
-  background-color: #e0f2fe;
-}
-
-.user-table tbody td button {
-  margin-right: 5px;
-  padding: 6px 10px;
-  border: none;
-  border-radius: 6px;
-  font-size: 0.85rem;
+  background-color: #e0e7ff; 
   cursor: pointer;
-  font-weight: 600;
-  transition: background 0.2s, color 0.2s;
 }
 
-.user-table tbody td button.edit {
-  background-color: #facc15; /* amber */
-  color: #1f2937;
+.user-table tbody td {
+  padding: 12px 15px;
+  color: #374151; 
 }
 
-.user-table tbody td button.delete {
-  background-color: #ef4444; /* red */
-  color: #fff;
-}
-
-.user-table tbody td button.reset {
-  background-color: #3b82f6; /* blue */
-  color: #fff;
-}
-
-.user-table tbody td button:hover {
-  opacity: 0.85;
-}
-
-/* Input fields in table */
-.user-table input,
-.user-table select {
-  padding: 6px 8px;
-  border-radius: 6px;
-  border: 1px solid #d1d5db;
-  font-size: 0.9rem;
-  width: 100%;
-}
-
-/* Responsive for mobile */
-@media (max-width: 640px) {
-  .user-table, .user-table thead, .user-table tbody, .user-table th, .user-table td, .user-table tr {
-    display: block;
-    width: 100%;
-  }
-
-  .user-table thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-  }
-
-  .user-table tbody tr {
-    margin-bottom: 12px;
-    background: #fff;
-    border-radius: 8px;
-    padding: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  }
-
-  .user-table tbody td {
-    position: relative;
-    padding-left: 50%;
-    text-align: left;
-  }
-
-  .user-table tbody td::before {
-    content: attr(data-label);
-    position: absolute;
-    left: 15px;
-    top: 12px;
-    font-weight: 600;
-    color: #2563eb;
-  }
-
-  .user-table tbody td button {
-    margin-top: 5px;
-    width: 100%;
-  }
-}
-
-/* Buttons wrapper */
-.manage-accounts .action-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-
-/* Responsive: horizontal scroll on small screens */
 @media (max-width: 600px) {
   .user-table table, .user-table thead, .user-table tbody, .user-table th, .user-table td, .user-table tr {
     display: block;
@@ -239,7 +132,8 @@
     white-space: nowrap;
   }
 }
-/* Edit organisation page container */
+
+/* ===== Edit Organisation Page ===== */
 .edit-org-container {
   max-width: 900px;
   margin: 2rem auto 4rem;
@@ -249,7 +143,6 @@
   box-shadow: 0 3px 12px rgba(0,0,0,0.1);
 }
 
-/* Title */
 .edit-org-title {
   font-size: 2rem;
   font-weight: 700;
@@ -258,12 +151,10 @@
   text-align: center;
 }
 
-/* SearchBar wrapper to add spacing */
 .edit-org-container > .search {
   margin-bottom: 1rem;
 }
 
-/* Search results list */
 .edit-org-results {
   max-height: 220px;
   overflow-y: auto;
@@ -278,37 +169,34 @@
   position: relative;
 }
 
-/* Each search result item */
 .edit-org-results li {
   padding: 10px 15px;
   cursor: pointer;
   border-bottom: 1px solid #eee;
   font-weight: 500;
-  color: #2563eb; /* blue-600 */
+  color: #2563eb;
   transition: background-color 0.2s ease;
 }
 
 .edit-org-results li:hover {
-  background-color: #e0e7ff; /* light blue highlight */
+  background-color: #e0e7ff;
 }
 
-/* Form layout */
 .edit-org-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
   margin-top: 2rem;
 }
 
-/* Inputs and textarea styles */
 .edit-org-form input,
 .edit-org-form textarea {
   padding: 12px 15px;
-  border: 1px solid #d1d5db; /* gray-300 */
+  border: 1px solid #d1d5db;
   border-radius: 6px;
   font-size: 1rem;
   font-weight: 400;
-  color: #374151; /* gray-700 */
+  color: #374151;
   transition: border-color 0.2s ease;
   resize: vertical;
 }
@@ -320,8 +208,8 @@
   box-shadow: 0 0 4px rgba(37, 99, 235, 0.5);
 }
 
-/* Button */
 .edit-org-form button {
+  grid-column: 1 / -1;
   padding: 14px;
   font-size: 1.1rem;
   font-weight: 700;
@@ -338,7 +226,6 @@
   background-color: #1e40af; 
 }
 
-/* Responsive adjustments */
 @media (max-width: 640px) {
   .edit-org-container {
     padding: 1.5rem 1.5rem;
@@ -368,6 +255,4 @@
   cursor: pointer;
   transition: color 0.3s ease; 
 }
-
-
 

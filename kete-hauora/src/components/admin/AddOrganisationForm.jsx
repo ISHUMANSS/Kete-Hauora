@@ -1,7 +1,6 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { supabase } from '../../config/supabaseClient';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../navbar/navbar';
 
 function AddOrganisationForm() {
@@ -24,7 +23,6 @@ function AddOrganisationForm() {
     other_notes: '',
   });
 
- // fetch the current logged in user
   useEffect(() => {
     const fetchUser = async () => {
       const { data: { user } } = await supabase.auth.getUser();
@@ -36,7 +34,6 @@ function AddOrganisationForm() {
 
   if (loading) return <p>Loading...</p>;
   if (!user) return <p>Please log in to access this page.</p>;
-
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -64,8 +61,7 @@ function AddOrganisationForm() {
     ]);
 
     if (error) {
-      console.error('Insert failed:', error.message);
-      alert('Failed to add organisation.');
+      alert('Failed to add organisation: ' + error.message);
     } else {
       alert('Organisation created!');
       navigate('/admin');
@@ -73,41 +69,42 @@ function AddOrganisationForm() {
   };
 
   return (
-    <>
+    <div className="dashboard-page">
       <Navbar />
+      <div className="dashboard-container">
+        <button className="back-button" onClick={() => navigate(-1)}>← Back</button>
 
-      <div style={{ maxWidth: '900px' }}>
-        <button className="back-button" onClick={() => navigate(-1)}>
-          ← Back
-        </button>
-      </div>
+        <h1 className="dashboard-title">Add Organisation</h1>
+        <p className="dashboard-subtitle">Fill in organisation details below.</p>
 
-      <div className="edit-org-container">
-        <h1 className="edit-org-title">Add Organisation</h1>
+        <form className="form-card" onSubmit={handleSubmit}>
+          {Object.keys(orgData).map((key) => (
+            <div className="form-group" key={key}>
+              <label>{key.replace('_', ' ').toUpperCase()}</label>
+              {key === 'services_offered' || key === 'other_notes' ? (
+                <textarea
+                  name={key}
+                  value={orgData[key]}
+                  onChange={handleInputChange}
+                  rows={key === 'services_offered' ? 4 : 3}
+                  placeholder={`Enter ${key.replace('_', ' ')}`}
+                />
+              ) : (
+                <input
+                  type="text"
+                  name={key}
+                  value={orgData[key]}
+                  onChange={handleInputChange}
+                  placeholder={`Enter ${key.replace('_', ' ')}`}
+                />
+              )}
+            </div>
+          ))}
 
-        <form className="edit-org-form" onSubmit={handleSubmit}>
-          <input name="name" placeholder="Organisation Name" onChange={handleInputChange} />
-          <input name="phone" placeholder="Phone" onChange={handleInputChange} />
-          <input name="email" placeholder="Email" onChange={handleInputChange} />
-          <input name="website" placeholder="Website" onChange={handleInputChange} />
-          <input name="physical_address" placeholder="Physical Address" onChange={handleInputChange} />
-          <input name="hours" placeholder="Operating Hours" onChange={handleInputChange} />
-          <input name="sites" placeholder="Sites of Service" onChange={handleInputChange} />
-          <input name="languages" placeholder="Languages" onChange={handleInputChange} />
-          <input name="cost" placeholder="Cost" onChange={handleInputChange} />
-          <input name="services_offered" placeholder="Services Offered" onChange={handleInputChange} />
-          <input name="referral" placeholder="Referral" onChange={handleInputChange} />
-          <textarea
-            name="other_notes"
-            placeholder="Other Notes"
-            onChange={handleInputChange}
-            rows="3"
-          ></textarea>
-
-          <button type="submit">Create</button>
+          <button type="submit" className="btn-primary">Add Organisation</button>
         </form>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -7,19 +7,15 @@ import SearchBar from '../searchBar/searchBar';
 function EditOrganisationForm() {
   const navigate = useNavigate();
 
-  // Auth states
   const [loading, setLoading] = useState(true);
   const [roleId, setRoleId] = useState(null);
 
-  // Search input state
   const [searchInput, setSearchInput] = useState('');
   const [searchTrigger, setSearchTrigger] = useState(0);
 
-  // Search results
   const [results, setResults] = useState([]);
   const [fetchError, setFetchError] = useState(null);
 
-  // Organisation data to edit
   const [orgData, setOrgData] = useState({
     company_name: '',
     phone: '',
@@ -37,15 +33,11 @@ function EditOrganisationForm() {
 
   const [selectedOrgId, setSelectedOrgId] = useState(null);
 
-  // Fetch logged-in user and role
+  // Fetch user role
   useEffect(() => {
     async function getUserRole() {
-      setLoading(true);
       const { data: { user }, error } = await supabase.auth.getUser();
-      if (error || !user) {
-        setLoading(false);
-        return;
-      }
+      if (error || !user) return setLoading(false);
 
       const { data: profileData, error: profileError } = await supabase
         .from('profiles')
@@ -53,41 +45,21 @@ function EditOrganisationForm() {
         .eq('id', user.id)
         .single();
 
-      if (!profileError && profileData) {
-        setRoleId(profileData.role_id);
-      }
-
+      if (!profileError && profileData) setRoleId(profileData.role_id);
       setLoading(false);
     }
 
     getUserRole();
   }, []);
 
-  // Fetch organisations matching search input
+  // Fetch organisations on search
   useEffect(() => {
-    if (searchInput.trim() === '') {
-      setResults([]);
-      return;
-    }
+    if (!searchInput.trim()) return setResults([]);
 
     async function fetchResults() {
       const { data, error } = await supabase
         .from('services')
-        .select(`
-          id,
-          company_name,
-          phone,
-          email,
-          website,
-          physical_address,
-          hours,
-          sites,
-          languages,
-          cost,
-          services_offered,
-          referral,
-          other_notes
-        `)
+        .select('*')
         .ilike('company_name', `%${searchInput}%`);
 
       if (error) {
@@ -103,8 +75,7 @@ function EditOrganisationForm() {
   }, [searchTrigger, searchInput]);
 
   if (loading) return <p>Loading...</p>;
-
-  if (roleId !== 1 && roleId !==2) {
+  if (![1, 2].includes(roleId)) {
     return (
       <>
         <p>You must be an admin to edit an organisation.</p>
@@ -113,13 +84,12 @@ function EditOrganisationForm() {
     );
   }
 
-  // Handle form changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setOrgData({ ...orgData, [name]: value });
   };
 
-  // When user selects an organisation from search
+  // Auto-fill form when organisation is selected
   const handleSelectOrg = (org) => {
     setOrgData({
       company_name: org.company_name || '',
@@ -133,98 +103,110 @@ function EditOrganisationForm() {
       cost: org.cost || '',
       services_offered: org.services_offered || '',
       referral: org.referral || '',
-      other_notes: org.other_notes || ''
+      other_notes: org.other_notes || '',
     });
     setSelectedOrgId(org.id);
     setSearchInput(org.company_name);
     setResults([]);
   };
 
-  // Update organisation in DB
   const handleUpdate = async (e) => {
     e.preventDefault();
-
-    if (!selectedOrgId) {
-      alert('No organisation selected.');
-      return;
-    }
-
-    const updateData = {
-      phone: orgData.phone,
-      email: orgData.email,
-      website: orgData.website,
-      physical_address: orgData.physical_address,
-      hours: orgData.hours,
-      sites: orgData.sites,
-      languages: orgData.languages,
-      cost: orgData.cost,
-      services_offered: orgData.services_offered,
-      referral: orgData.referral,
-      other_notes: orgData.other_notes
-    };
+    if (!selectedOrgId) return alert('No organisation selected.');
 
     const { error } = await supabase
       .from('services')
-      .update(updateData)
+      .update(orgData)
       .eq('id', selectedOrgId);
 
-    if (error) {
-      console.error('Error updating organisation:', error.message);
-      alert('Update failed: ' + error.message);
-    } else {
-      alert('Organisation updated!');
-      setSearchTrigger(prev => prev + 1); // refresh search results
-    }
+    if (error) alert('Update failed: ' + error.message);
+    else alert('Organisation updated!');
   };
 
   return (
     <>
       <Navbar />
+      <div className="dashboard-container">
+        <button className="back-button" onClick={() => navigate(-1)}>← Back</button>
+        <h1 className="dashboard-title">Edit Organisation</h1>
 
-      <div className="back-button-container">
-        <button className="back-button" onClick={() => navigate(-1)}>
-          ← Back
-        </button>
-      </div>
+        {/* Search Section */}
+        <div className="search-section">
+          <SearchBar
+            searchInput={searchInput}
+            setSearchInput={setSearchInput}
+            onSearch={() => setSearchTrigger(prev => prev + 1)}
+            filters={{ category: '', cost: '' }}
+            setFilters={() => {}}
+          />
+          {fetchError && <p className="error-text">{fetchError}</p>}
+          {results.length > 0 && (
+            <ul className="search-results">
+              {results.map(org => (
+                <li
+                  key={org.id}
+                  onClick={() => handleSelectOrg(org)}
+                  className={selectedOrgId === org.id ? 'selected' : ''}
+                >
+                  {org.company_name}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
 
-      <div className="edit-org-container">
-        <h1 className="edit-org-title">Edit Organisation</h1>
-
-        <SearchBar
-          searchInput={searchInput}
-          setSearchInput={setSearchInput}
-          onSearch={() => setSearchTrigger(prev => prev + 1)}
-          filters={{ category: '', cost: '' }}
-          setFilters={() => {}}
-        />
-
-        {fetchError && <p style={{ color: 'red' }}>{fetchError}</p>}
-
-        {results.length > 0 && (
-          <ul className="edit-org-results">
-            {results.map(org => (
-              <li key={org.id} onClick={() => handleSelectOrg(org)}>
-                {org.company_name}
-              </li>
+        {/* Edit Form */}
+        <form className="edit-org-form" onSubmit={handleUpdate}>
+          <div className="form-grid">
+            {[
+              { label: 'Organisation Name', name: 'company_name' },
+              { label: 'Phone', name: 'phone' },
+              { label: 'Email', name: 'email' },
+              { label: 'Website', name: 'website' },
+              { label: 'Physical Address', name: 'physical_address' },
+              { label: 'Hours', name: 'hours' },
+              { label: 'Sites', name: 'sites' },
+              { label: 'Languages', name: 'languages' },
+              { label: 'Cost', name: 'cost' },
+              { label: 'Referral', name: 'referral' },
+            ].map(field => (
+              <div className="form-group" key={field.name}>
+                <label>{field.label}</label>
+                <input
+                  name={field.name}
+                  value={orgData[field.name]}
+                  onChange={handleChange}
+                  placeholder={`Enter ${field.label.toLowerCase()}`}
+                />
+              </div>
             ))}
-          </ul>
-        )}
 
-        <form onSubmit={handleUpdate} className="edit-org-form">
-          <input name="company_name" value={orgData.company_name} onChange={handleChange} placeholder="Organisation Name" />
-          <input name="phone" value={orgData.phone} onChange={handleChange} placeholder="Phone" />
-          <input name="email" value={orgData.email} onChange={handleChange} placeholder="Email" />
-          <input name="website" value={orgData.website} onChange={handleChange} placeholder="Website" />
-          <input name="physical_address" value={orgData.physical_address} onChange={handleChange} placeholder="Physical Address" />
-          <input name="hours" value={orgData.hours} onChange={handleChange} placeholder="Operating Hours" />
-          <input name="sites" value={orgData.sites} onChange={handleChange} placeholder="Sites of Service" />
-          <input name="languages" value={orgData.languages} onChange={handleChange} placeholder="Languages" />
-          <input name="cost" value={orgData.cost} onChange={handleChange} placeholder="Cost" />
-          <textarea name="services_offered" value={orgData.services_offered} onChange={handleChange} placeholder="Services Offered" rows="5" />
-          <input name="referral" value={orgData.referral} onChange={handleChange} placeholder="Referral Info" />
-          <input name="other_notes" value={orgData.other_notes} onChange={handleChange} placeholder="Other Notes" />
+            {/* Textareas */}
+            <div className="form-group textarea">
+              <label>Services Offered</label>
+              <textarea
+                name="services_offered"
+                value={orgData.services_offered}
+                onChange={handleChange}
+                rows={5}
+                placeholder="Enter services offered"
+              />
+            </div>
+            <div className="form-group textarea">
+              <label>Other Notes</label>
+              <textarea
+                name="other_notes"
+                value={orgData.other_notes}
+                onChange={handleChange}
+                rows={3}
+                placeholder="Enter any other notes"
+              />
+            </div>
+          </div>
 
-          <button type="submit">Save Changes</button>
+          <button type="submit" className="btn-primary" disabled={!selectedOrgId}>
+            Save Changes
+          </button>
         </form>
       </div>
     </>
@@ -232,4 +214,3 @@ function EditOrganisationForm() {
 }
 
 export default EditOrganisationForm;
-

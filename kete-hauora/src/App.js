@@ -20,6 +20,7 @@ import Serivces from './components/services/Services.jsx';
 import { FiltersProvider } from './context/FiltersContext.jsx';
 import SuperAdminDashboard from './components/admin/SuperAdminDashboard.jsx';
 import ProviderDashboard from './components/admin/ProviderDashboard.jsx';
+import ManageCategories from './components/admin/ManageCategories.jsx';
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
 
             <Route path="/super-admin-dashboard" element={<SuperAdminDashboard />} />
             <Route path="/provider-dashboard" element={<ProviderDashboard />} />
+            <Route path="/managecategories" element={<ManageCategories />} />
 
             {/*catch all route for any thing that doesn't exist*/}
             <Route path="*" element={<NotFound />} />
