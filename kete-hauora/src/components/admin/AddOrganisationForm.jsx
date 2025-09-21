@@ -6,6 +6,8 @@ import Navbar from '../navbar/navbar';
 
 function AddOrganisationForm() {
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const [orgData, setOrgData] = useState({
     name: '',
@@ -22,56 +24,19 @@ function AddOrganisationForm() {
     other_notes: '',
   });
 
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
-  const [roleId, setRoleId] = useState(null);
-
+ // fetch the current logged in user
   useEffect(() => {
-    async function getUserRole() {
-      setLoading(true);
-
-      // Get logged in user
-      const { data: { user }, error: userError } = await supabase.auth.getUser();
-      if (userError) {
-        console.error(userError);
-        setLoading(false);
-        return;
-      }
-
-      if (!user) {
-        setLoading(false);
-        return;
-      }
-
+    const fetchUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
-
-      // Fetch role_id from profiles table
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('role_id')
-        .eq('id', user.id)
-        .single();
-
-      if (error) {
-        console.error(error);
-      } else {
-        setRoleId(data.role_id);
-      }
-
       setLoading(false);
-    }
-
-    getUserRole();
+    };
+    fetchUser();
   }, []);
 
-  if (roleId !== 1) { // 1 = admin
-    return (
-      <>
-        <p>You must be an admin to add an organisation.</p>
-        <Link to="/">Go to homepage</Link>
-      </>
-    );
-  }
+  if (loading) return <p>Loading...</p>;
+  if (!user) return <p>Please log in to access this page.</p>;
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

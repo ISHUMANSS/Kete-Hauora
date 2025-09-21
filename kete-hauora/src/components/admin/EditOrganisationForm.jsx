@@ -46,7 +46,7 @@ function EditOrganisationForm() {
         setLoading(false);
         return;
       }
-      
+
       const { data: profileData, error: profileError } = await supabase
         .from('profiles')
         .select('role_id')
@@ -104,7 +104,7 @@ function EditOrganisationForm() {
 
   if (loading) return <p>Loading...</p>;
 
-  if (roleId !== 1) {
+  if (roleId !== 1 && roleId !==2) {
     return (
       <>
         <p>You must be an admin to edit an organisation.</p>
