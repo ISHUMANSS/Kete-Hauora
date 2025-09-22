@@ -1,152 +1,175 @@
-import { useState, useEffect } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react';
 import { supabase } from '../../config/supabaseClient';
 import Navbar from '../navbar/navbar';
+import './ManageCategories.css'; // <-- new CSS file for styles
 
-function ManageCategories() {
+const ManageCategories = () => {
   const [categories, setCategories] = useState([]);
-  const [services, setServices] = useState([]);
+  const [newCategory, setNewCategory] = useState('');
+  const [editingCategory, setEditingCategory] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [formData, setFormData] = useState({ name: '', description: '' });
-  const [editingId, setEditingId] = useState(null);
-  const [assignedServices, setAssignedServices] = useState([]); // service IDs for current category
+  const [errorMsg, setErrorMsg] = useState('');
 
-  // Fetch categories & services
-  useEffect(() => {
-    async function fetchData() {
-      const { data: catData } = await supabase.from('categories').select('*').order('created_at');
-      const { data: svcData } = await supabase.from('services').select('*').order('company_name');
-      setCategories(catData || []);
-      setServices(svcData || []);
-      setLoading(false);
+  // Fetch categories
+  const fetchCategories = async () => {
+    setLoading(true);
+    const { data, error } = await supabase
+      .from('categories')
+      .select('*')
+      .order('category_id', { ascending: true });
+
+    if (error) {
+      console.error('Error fetching categories:', error.message);
+      setErrorMsg('Failed to fetch categories.');
+    } else {
+      setCategories(data);
+      setErrorMsg('');
     }
-    fetchData();
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchCategories();
   }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleAssignService = (serviceId) => {
-    setAssignedServices(prev =>
-      prev.includes(serviceId)
-        ? prev.filter(id => id !== serviceId)
-        : [...prev, serviceId]
-    );
-  };
-
-  const handleAddCategory = async (e) => {
+  // Add or Update Category
+  const handleSaveCategory = async (e) => {
     e.preventDefault();
-    if (!formData.name) return alert('Category name required');
+    const trimmed = newCategory.trim();
+    if (!trimmed) {
+      alert('Category name is required');
+      return;
+    }
 
-    let categoryId = editingId;
-    if (editingId) {
-      // Update category
-      await supabase.from('categories').update(formData).eq('id', editingId);
+    if (editingCategory) {
+      // Update
+      const { error } = await supabase
+        .from('categories')
+        .update({ category: trimmed })
+        .eq('category_id', editingCategory.category_id);
+
+      if (error) {
+        console.error('Error updating category:', error.message);
+        alert(`Error: ${error.message}`);
+      } else {
+        fetchCategories();
+        setNewCategory('');
+        setEditingCategory(null);
+      }
     } else {
-      // Add new category
-      const { data, error } = await supabase.from('categories').insert([formData]).select();
-      if (error) return alert('Error adding category');
-      categoryId = data[0].id;
-      setCategories([...categories, data[0]]);
-    }
+      // Insert
+      const { data, error } = await supabase
+        .from('categories')
+        .insert([{ category: trimmed }])
+        .select();
 
-    // Assign services
-    if (assignedServices.length > 0) {
-      // Remove old assignments first
-      await supabase.from('service_categories').delete().eq('category_id', categoryId);
-      // Insert new assignments
-      const assignments = assignedServices.map(service_id => ({ service_id, category_id: categoryId }));
-      await supabase.from('service_categories').insert(assignments);
+      if (error) {
+        console.error('Error adding category:', error.message);
+        alert(`Error: ${error.message}`);
+      } else {
+        setCategories([...categories, ...data]);
+        setNewCategory('');
+      }
     }
-
-    // Reset form
-    setFormData({ name: '', description: '' });
-    setAssignedServices([]);
-    setEditingId(null);
   };
 
-  const handleEditCategory = async (category) => {
-    setFormData({ name: category.name, description: category.description || '' });
-    setEditingId(category.id);
-
-    // Fetch assigned services
-    const { data } = await supabase.from('service_categories').select('service_id').eq('category_id', category.id);
-    setAssignedServices(data.map(d => d.service_id));
+  // Edit
+  const handleEditCategory = (category) => {
+    setNewCategory(category.category);
+    setEditingCategory(category);
   };
 
+  // Delete
   const handleDeleteCategory = async (id) => {
     if (!window.confirm('Delete this category?')) return;
-    await supabase.from('categories').delete().eq('id', id);
+
+    // Cascade delete if needed
     await supabase.from('service_categories').delete().eq('category_id', id);
-    setCategories(categories.filter(c => c.id !== id));
+
+    const { error } = await supabase.from('categories').delete().eq('category_id', id);
+    if (error) {
+      console.error('Error deleting category:', error.message);
+      alert(`Error: ${error.message}`);
+    } else {
+      fetchCategories();
+    }
   };
 
-  if (loading) return <p>Loading...</p>;
-
   return (
-    <div className="dashboard-page">
+    <div className="manage-categories-page">
       <Navbar />
-      <div className="dashboard-container">
-        <h1 className="dashboard-title">Manage Categories</h1>
+      <div className="manage-categories-container">
+        <h1 className="page-title">Manage Categories</h1>
 
-        <form className="form-card" onSubmit={handleAddCategory}>
-          <h2>{editingId ? 'Edit Category' : 'Add Category'}</h2>
-          <div className="form-group">
-            <label>Name</label>
-            <input name="name" value={formData.name} onChange={handleInputChange} />
-          </div>
-          <div className="form-group">
-            <label>Description</label>
-            <textarea name="description" value={formData.description} onChange={handleInputChange} rows={3} />
-          </div>
+        {/* Form Card */}
+        <div className="form-card">
+          <h2>{editingCategory ? 'Edit Category' : 'Add Category'}</h2>
+          <form onSubmit={handleSaveCategory} className="category-form">
+            <input
+              type="text"
+              className="input-box"
+              value={newCategory}
+              onChange={(e) => setNewCategory(e.target.value)}
+              placeholder="Enter category name"
+            />
+            <button type="submit" className="btn-primary">
+              {editingCategory ? 'Update' : 'Add'}
+            </button>
+            {editingCategory && (
+              <button
+                type="button"
+                className="btn-secondary"
+                onClick={() => {
+                  setEditingCategory(null);
+                  setNewCategory('');
+                }}
+              >
+                Cancel
+              </button>
+            )}
+          </form>
+        </div>
 
-          <div className="form-group">
-            <label>Assign Services</label>
-            <div className="services-list">
-              {services.map(svc => (
-                <label key={svc.id}>
-                  <input
-                    type="checkbox"
-                    checked={assignedServices.includes(svc.id)}
-                    onChange={() => handleAssignService(svc.id)}
-                  />
-                  {svc.company_name}
-                </label>
-              ))}
-            </div>
-          </div>
-
-          <button type="submit" className="btn-primary">
-            {editingId ? 'Update Category' : 'Add Category'}
-          </button>
-        </form>
-
-        <h2>Existing Categories</h2>
-        <table className="dashboard-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {categories.map(cat => (
-              <tr key={cat.id}>
-                <td>{cat.name}</td>
-                <td>{cat.description}</td>
-                <td>
-                  <button className="btn-edit" onClick={() => handleEditCategory(cat)}>Edit</button>
-                  <button className="btn-delete" onClick={() => handleDeleteCategory(cat.id)}>Delete</button>
-                </td>
+        {errorMsg && <p className="error-text">{errorMsg}</p>}
+        {loading ? (
+          <p>Loading categories...</p>
+        ) : (
+          <table className="dashboard-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Category</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {categories.map((cat) => (
+                <tr key={cat.category_id}>
+                  <td>{cat.category_id}</td>
+                  <td>{cat.category}</td>
+                  <td>
+                    <button
+                      className="btn-edit"
+                      onClick={() => handleEditCategory(cat)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn-delete"
+                      onClick={() => handleDeleteCategory(cat.category_id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );
-}
+};
 
 export default ManageCategories;
