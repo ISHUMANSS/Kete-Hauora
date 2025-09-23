@@ -9,7 +9,7 @@ const ProviderDashboard = () => {
       <Navbar />
       <div className="dashboard-container">
         <h1 className="dashboard-title">Provider Dashboard</h1>
-        <p className="dashboard-subtitle">Manage your organisation and view service analytics.</p>
+        <p className="dashboard-subtitle">Manage your organisation.</p>
 
         <div className="dashboard-grid">
           <Link to="/editOrg" className='dashboard-card'>
@@ -17,14 +17,14 @@ const ProviderDashboard = () => {
             <p>Update your service details and contact info.</p>
           </Link>
 
-          <Link to="/viewFeedback" className='dashboard-card'>
-            <h2>View Feedback</h2>
-            <p>See user reviews and service ratings.</p>
+          <Link to="/Example1" className='dashboard-card'>
+            <h2>Other feature??</h2>
+            <p></p>
           </Link>
 
-          <Link to="/serviceAnalytics" className='dashboard-card'>
-            <h2>Analytics</h2>
-            <p>Track your service performance and engagement.</p>
+          <Link to="/Example" className='dashboard-card'>
+            <h2>Example</h2>
+            <p></p>
           </Link>
         </div>
       </div>
