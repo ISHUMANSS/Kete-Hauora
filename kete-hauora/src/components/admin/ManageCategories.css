@@ -11,9 +11,8 @@
 
 .page-title {
   font-size: 2rem;
-  font-weight: 700;
-  color: #333333;
-  margin-bottom: 40px;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
   text-align: center;
 }
 
@@ -169,3 +168,4 @@
 .services-assign-container label:hover {
   background: #f0f0f0;
 }
+

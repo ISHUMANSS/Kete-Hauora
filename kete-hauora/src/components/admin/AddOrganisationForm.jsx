@@ -68,43 +68,58 @@ function AddOrganisationForm() {
     }
   };
 
+  // Inline styles
+  const pageStyle = { display: 'flex', justifyContent: 'center', padding: '2rem', background: '#f5f7fa', minHeight: '100vh' };
+  const cardStyle = { background: 'white', padding: '2rem', borderRadius: '10px', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', width: '100%', maxWidth: '800px' };
+  const titleStyle = { textAlign: 'center', fontSize: '2rem', marginBottom: '0.5rem', color: '#1f2937' };
+  const subtitleStyle = { textAlign: 'center', marginBottom: '1.5rem', color: '#4b5563' };
+  const formGrid = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' };
+  const formGroup = { display: 'flex', flexDirection: 'column' };
+  const inputStyle = { padding: '0.8rem', border: '1px solid #d1d5db', borderRadius: '6px', fontSize: '1rem' };
+  const buttonStyle = { marginTop: '1.5rem', padding: '12px', width: '100%', background: '#2563eb', color: 'white', fontWeight: '600', border: 'none', borderRadius: '6px', cursor: 'pointer' };
+  const backButtonStyle = { background: 'none', border: 'none', color: '#2563eb', cursor: 'pointer', fontSize: '1rem', marginBottom: '1rem' };
+
   return (
-    <div className="dashboard-page">
+    <>
       <Navbar />
-      <div className="dashboard-container">
-        <button className="back-button" onClick={() => navigate(-1)}>← Back</button>
+      <div style={pageStyle}>
+        <div style={cardStyle}>
+          <button style={backButtonStyle} onClick={() => navigate(-1)}>← Back</button>
+          <h1 style={titleStyle}>Add Organisation</h1>
+          <p style={subtitleStyle}>Fill in organisation details below.</p>
 
-        <h1 className="dashboard-title">Add Organisation</h1>
-        <p className="dashboard-subtitle">Fill in organisation details below.</p>
-
-        <form className="form-card" onSubmit={handleSubmit}>
-          {Object.keys(orgData).map((key) => (
-            <div className="form-group" key={key}>
-              <label>{key.replace('_', ' ').toUpperCase()}</label>
-              {key === 'services_offered' || key === 'other_notes' ? (
-                <textarea
-                  name={key}
-                  value={orgData[key]}
-                  onChange={handleInputChange}
-                  rows={key === 'services_offered' ? 4 : 3}
-                  placeholder={`Enter ${key.replace('_', ' ')}`}
-                />
-              ) : (
-                <input
-                  type="text"
-                  name={key}
-                  value={orgData[key]}
-                  onChange={handleInputChange}
-                  placeholder={`Enter ${key.replace('_', ' ')}`}
-                />
-              )}
+          <form onSubmit={handleSubmit}>
+            <div style={formGrid}>
+              {Object.keys(orgData).map((key) => (
+                <div style={formGroup} key={key}>
+                <label>{key.replace('_', ' ').replace(/\b\w/g, c => c.toUpperCase())}</label>
+                  {key === 'services_offered' || key === 'other_notes' ? (
+                    <textarea
+                      name={key}
+                      value={orgData[key]}
+                      onChange={handleInputChange}
+                      rows={key === 'services_offered' ? 4 : 3}
+                      placeholder={`Enter ${key.replace('_', ' ')}`}
+                      style={inputStyle}
+                    />
+                  ) : (
+                    <input
+                      type="text"
+                      name={key}
+                      value={orgData[key]}
+                      onChange={handleInputChange}
+                      placeholder={`Enter ${key.replace('_', ' ')}`}
+                      style={inputStyle}
+                    />
+                  )}
+                </div>
+              ))}
             </div>
-          ))}
-
-          <button type="submit" className="btn-primary">Add Organisation</button>
-        </form>
+            <button type="submit" style={buttonStyle}>Add Organisation</button>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
