@@ -1,20 +1,35 @@
+/* General layout & containers */
 .manage-categories-container {
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 20px;
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
 }
 
 .page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333333;
+  margin-bottom: 40px;
   text-align: center;
-  margin-bottom: 20px;
 }
 
-.form-card {
-  background: #fff;
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  margin-bottom: 20px;
+/* Form card & inputs */
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.form-card h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 10px;
+  text-align: left;
 }
 
 .category-form {
@@ -23,57 +38,134 @@
   flex-wrap: wrap;
 }
 
-.input-box {
-  flex: 1;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+.category-form .input-box {
+  flex-grow: 1;
+  min-width: 350px;
+  padding: 10px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+/* Add button */
+.form-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+/* Table cells */
+.dashboard-table th,
+.dashboard-table td {
+  padding: 15px 20px;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* Table header */
+.dashboard-table thead th {
+  background: #fafafa;
+  font-weight: 600;
+  color: #333333;
+  text-transform: uppercase;
+  font-size: 0.9em;
+}
+
+/* Alternating row colors */
+.dashboard-table tbody tr:nth-child(odd) {
+  background-color: #ffffff; /* white */
+}
+
+.dashboard-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9; 
+}
+
+/* Hover effect */
+.dashboard-table tbody tr:hover {
+  background-color: #f2f2f2;
+}
+
+/* Buttons - update, save, cancel */
+.btn-primary, .btn-secondary, .btn-action {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
 }
 
 .btn-primary {
-  background: #2563eb;
+  background-color: #333333;
   color: #fff;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
-  cursor: pointer;
 }
 
-.btn-secondary {
-  background: #6b7280;
-  color: #fff;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
-  cursor: pointer;
+.btn-primary:hover {
+  background-color: #666666;
+  transform: translateY(-1px);
 }
 
-.dashboard-table {
-  width: 100%;
-  border-collapse: collapse;
+.btn-secondary:hover {
+  background-color: #e5e5e5;
 }
 
-.dashboard-table th,
-.dashboard-table td {
-  padding: 10px;
-  border: 1px solid #ddd;
-}
-
-.btn-edit {
-  background: #f59e0b;
-  color: #fff;
-  border: none;
-  padding: 6px 12px;
-  margin-right: 5px;
-  border-radius: 6px;
-  cursor: pointer;
+.btn-edit:hover {
+  background: #dddddd;
 }
 
 .btn-delete {
-  background: #dc2626;
-  color: #fff;
+  background: #ffe5e5;
+  color: #F44336;
+}
+
+.btn-delete:hover {
+  background: #fdd;
+}
+
+.btn-assign:hover {
+  background: #dddddd;
+}
+
+.back-btn {
+  background-color: transparent; 
   border: none;
-  padding: 6px 12px;
+  color: #2563eb; 
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: color 0.3s ease; 
+}
+
+.back-btn:hover {
+  background: #2563eb;
+}
+
+/* Assign container */
+.services-assign-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #f9f9f9;
+}
+
+.services-assign-container label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  padding: 6px 10px;
+  background: #fff;
+  border: 1px solid #ddd;
   border-radius: 6px;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.services-assign-container label:hover {
+  background: #f0f0f0;
 }
