@@ -18,6 +18,7 @@ import NotFound from './components/notfound/NotFound.jsx';
 import ManageAccounts from './components/admin/ManageAccounts.jsx';
 import Serivces from './components/services/Services.jsx';
 import { FiltersProvider } from './context/FiltersContext.jsx';
+import ContactPage from './components/contact/Contact.jsx';
 
 
 function App() {
@@ -37,6 +38,8 @@ function App() {
             <Route path="/addOrg" element={<AddOrganisationForm />} />
             <Route path="/editOrg" element={<EditOrganisationForm />} />
             <Route path="/manageAccounts" element={<ManageAccounts />} />
+
+            <Route path='/contact' element={<ContactPage />} />
 
             <Route path="/services" element={<Serivces />} />
 
