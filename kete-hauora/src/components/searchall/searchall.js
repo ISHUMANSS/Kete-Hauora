@@ -14,7 +14,8 @@ const SearchAll = () => {
         try {
             const { data, error } = await supabase
                 .from('services')
-                .select('*');
+                .select('*')
+                .order("company_name", { ascending: true });
 
             if (error) throw error;
 
@@ -32,8 +33,6 @@ const SearchAll = () => {
 
     return (
         <div className="SearchAll">
-            <h1>{t('All The Services')}:</h1>
-
             {loading ? (
                 <p>{t("Loading services...")}</p>
             ) : (

@@ -1,3 +1,16 @@
+.home {
+  margin: 0;
+  padding: 0;
+  background-color: aliceblue;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  color: #1f2937;
+}
+
+
 .center-container {
   position: relative;
   z-index: 1;
@@ -10,11 +23,33 @@
   text-align: center;
 }
 
+.title {
+  color: #000000;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.search-results {
+  position: relative;
+  z-index: 1;
+  margin: 2rem auto;
+  padding: 1rem;
+  width: 95%;
+  
+  /*max-width: 1600px; this impacts the amout of cards we can use but like rn its up caped so yeah*/
+}
+
+/*heading for search results*/
+.Search h2 {
+  font-size: 2rem;
+  text-align: center;
+}
+
+/*search results container*/
 .result-container {
   display: grid;
   gap: 30px;
-
-  /*set up the grid so it is able to repeat, will auto fill as many as can fit into each row*/
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  width: 100%;
 }
+

@@ -32,7 +32,8 @@ const Navbar = () => {
       <ul className={`nav-links ${sidebarOpen ? 'open' : ''}`}>
         <li><Link to="/">{t("Home")}</Link></li>
         <li><Link to="/about">{t("About")}</Link></li>
-        <li><Link to="/services">{t("Services")}</Link></li>
+        <li><Link to="/contact">{t("Contact Us")}</Link></li>
+        <li><Link to="/services">{t("Find A Service")}</Link></li>
         <li>
           <Link to="/login">
             <span className="login-icon material-symbols-outlined">person</span>{t("Login")}

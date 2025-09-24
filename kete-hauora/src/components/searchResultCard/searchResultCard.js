@@ -30,10 +30,10 @@ const SearchResultCard = ({ service, filters }) => {
             }
         };
 
-        if (service?.id) {
+        if (service?.service_id) {
             fetchTranslation();
         }
-    }, [service?.id]);
+    }, [service?.service_id]);
 
     //format the websites so they always open as the website rather then as in the site
     const formatWebsite = (url) => {
@@ -140,22 +140,23 @@ const SearchResultCard = ({ service, filters }) => {
             {renderServices()}
         </p>
 
-        <div className='filters'>
-            <p><strong>{t("Filters")}: </strong></p>
-            {/*if there are filters display them nicely*/}
-            {filters?.category  && (
-                <span className="filter-badge">{filters.category_name}</span>
-            )}
-            {filters?.cost  && (
-                <span className="filter-badge">{filters.cost_name}</span>
-            )}
-            {filters?.language  && (
-                <span className="filter-badge">{filters.language_name}</span>
-            )}
-            {filters?.location  && (
-                <span className="filter-badge">{filters.location_name}</span>
-            )}
-        </div>
+        {(filters?.category || filters?.cost || filters?.language || filters?.location) && (
+            <div className='filters'>
+                <p><strong>{t("Filters")}: </strong></p>
+                {filters?.category && (
+                    <span className="filter-badge">{filters.category_name}</span>
+                )}
+                {filters?.cost && (
+                    <span className="filter-badge">{filters.cost_name}</span>
+                )}
+                {filters?.language && (
+                    <span className="filter-badge">{filters.language_name}</span>
+                )}
+                {filters?.location && (
+                    <span className="filter-badge">{filters.location_name}</span>
+                )}
+            </div>
+        )}
 
         <Link to={`/organisation/${encodeURIComponent(service.company_name)}`}>
             <button>{t("More info")}</button>
