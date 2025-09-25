@@ -16,6 +16,8 @@ const SearchResultCard = ({ service, filters }) => {
 
     //when service_id changes, fetch the Māori translation and saves it into serviceTranslation state
      useEffect(() => {
+        if (i18n.language !== 'mi') return;
+        
         const fetchTranslation = async () => {
             const { data, error } = await supabase
                 .from('service_translations')
