@@ -5,6 +5,7 @@ import './navbar.css';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import i18n from '../../i18n';
+import logo from '../../assets/stacked_logo_white.svg';
 
 const Navbar = () => {
   const { t } = useTranslation();
@@ -22,7 +23,9 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="logo">
-        <Link to="/">LOGO</Link>
+        <Link to="/">
+          <img src={logo} alt="Middlemore Foundation Logo" className="logo-img" />
+        </Link>
       </div>
 
       <div className="hamburger" onClick={toggleSidebar}>
@@ -30,7 +33,6 @@ const Navbar = () => {
       </div>
 
       <ul className={`nav-links ${sidebarOpen ? 'open' : ''}`}>
-        <li><Link to="/">{t("Home")}</Link></li>
         <li><Link to="/about">{t("About")}</Link></li>
         <li><Link to="/contact">{t("Contact Us")}</Link></li>
         <li><Link to="/services">{t("Find A Service")}</Link></li>
