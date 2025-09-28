@@ -16,7 +16,7 @@ import Organisation from './components/organisation/Organisation.jsx';
 import Navbar from './components/navbar/navbar.js';
 import NotFound from './components/notfound/NotFound.jsx';
 import ManageAccounts from './components/admin/ManageAccounts.jsx';
-import Serivces from './components/services/Services.jsx';
+import Services from './components/services/Services.jsx';
 import { FiltersProvider } from './context/FiltersContext.jsx';
 import ContactPage from './components/contact/Contact.jsx';
 
@@ -41,7 +41,7 @@ function App() {
 
             <Route path='/contact' element={<ContactPage />} />
 
-            <Route path="/services" element={<Serivces />} />
+            <Route path="/services" element={<Services />} />
 
             <Route path="/organisation/:companyName" element={<Organisation />}/>
 
