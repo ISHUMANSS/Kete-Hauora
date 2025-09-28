@@ -1,21 +1,18 @@
-import './Contact.css';
+import "./Contact.css";
 
-import Navbar from '../navbar/navbar';
+import Navbar from "../navbar/navbar";
 
 //import { useTranslation } from 'react-i18next';
 
 function ContactPage() {
-  
-
   //const { t } = useTranslation();
 
   return (
-    <div className="home">
+    <div className="contact">
       <Navbar />
-      
-      <div className="center-container">
-        <h1 className='title'>Kete Hauora - Contact page</h1>
 
+      <div className="contact-content">
+        <h1>Contact Us</h1>
       </div>
     </div>
   );

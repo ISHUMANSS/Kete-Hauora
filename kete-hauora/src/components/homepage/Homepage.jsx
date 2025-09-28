@@ -9,9 +9,9 @@ import Navbar from "../navbar/navbar";
 
 function HomePage() {
   return (
-    <div className="home">
+    <div className="homepage">
       <Navbar />
-      <div className="home-content">
+      <div className="homepage-content">
         <h1>Te Kete Hauora</h1>
         <p className="subtitle">
           Your community health and wellbeing directory.

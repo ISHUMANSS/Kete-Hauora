@@ -11,8 +11,15 @@
 .organisation-header {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--brand-white);
   margin-bottom: 1rem;
+}
+
+.organisation-header h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--brand-red);
 }
 
 .organisation-logo {
@@ -29,7 +36,7 @@
 
 .category {
   font-size: 1.2rem;
-  color: #555;
+  color: var(--brand-gray);
 }
 
 .organisation-details {
@@ -38,29 +45,37 @@
   margin-bottom: 1.5rem;
 }
 
-.contact-info, .extra-info {
+.contact-info,
+.extra-info {
   width: 48%;
 }
 
-.contact-info p, .extra-info p {
+.contact-info p,
+.extra-info p {
   margin: 0.3rem 0;
 }
 
 .services-offered {
-  background-color: #f9f9f9;
+  background-color: var(--brand-offwhite);
   padding: 1rem;
-  border: 1px solid #ddd;
+  border-left: 5px solid var(--brand-red);
   border-radius: 4px;
 }
 
 .services-offered h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
   margin-top: 0;
+  color: var(--brand-red);
+  padding-left: 12px;
 }
 
 .services-list p {
-  margin: 0.4rem 0;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  color: var(--brand-black);
 }
-
 
 .back-button {
   display: inline-block;
@@ -68,15 +83,15 @@
   margin: 1rem 2rem 0.5rem 2rem;
   padding: 0.3rem 0.8rem;
   background-color: transparent;
-  color: #007bff;
+  color: var(--brand-blue);
   text-decoration: none;
   font-size: 0.95rem;
-  border: 1px solid #007bff;
+  border: 1px solid var(--brand-blue);
   border-radius: 4px;
   transition: all 0.2s ease;
 }
 
 .back-button:hover {
-  background-color: #007bff;
-  color: white;
+  background-color: var(--brand-blue);
+  color: var(--brand-white);
 }

@@ -25,7 +25,6 @@ const Services = () => {
     setSearchTrigger((prev) => prev + 1); // rerun search
   };
 
-
   const isAnyFilterActive = Object.values(filters).some(
     (val) => val !== null && val !== "" && String(val).trim() !== ""
   );
@@ -33,11 +32,11 @@ const Services = () => {
   const shouldShowSearch = searchInput.trim() || isAnyFilterActive;
 
   return (
-    <div className="home">
+    <div className="services">
       <Navbar />
 
       <div className="center-container">
-        <h1 className="title">Find A Service</h1>
+        <h1>Find A Service</h1>
         <SearchBar
           searchInput={searchInput}
           setSearchInput={setSearchInput}

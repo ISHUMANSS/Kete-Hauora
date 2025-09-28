@@ -1,7 +1,7 @@
 .home {
   margin: 0;
   padding: 0;
-  background-color: aliceblue;
+  background-color: var(--brand-offwhite);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -30,21 +30,21 @@
 
 /* Desktop styling */
 @media (min-width: 768px) {
-  .home {
+  .homepage {
     font-family: "Poppins", sans-serif;
     min-height: 100vh;
     color: #3c3c3b;
-    background-color: transparent;
+    background-color: var(--brand-offwhite);
   }
 
-  .home-content {
+  .homepage-content {
     padding: 100px 20px 60px;
     max-width: 900px;
     margin: 0 auto;
     text-align: center;
   }
 
-  .home-content h1 {
+  .homepage-content h1 {
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
@@ -58,13 +58,18 @@
   }
 
   .why-section {
-    background: #ffffff;
+    background: var(--brand-white);
     margin: 2rem 2rem 0rem 2rem;
     padding: 2rem 2rem 1rem 2rem;
     border-radius: 16px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     text-align: left;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .why-section:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   }
 
   .why-section h2 {
