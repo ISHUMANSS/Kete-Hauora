@@ -37,6 +37,8 @@
     "//comment": "navbar.js",
     "Home": "Home",
     "About": "About",
+    "Contact Us":"Contact Us",
+    "Find A Service":"Find A Service",
 
     "//comment": "NotFound.js",
     "Page not found": "Page not found",

@@ -16,11 +16,12 @@ import Organisation from './components/organisation/Organisation.jsx';
 import Navbar from './components/navbar/navbar.js';
 import NotFound from './components/notfound/NotFound.jsx';
 import ManageAccounts from './components/admin/ManageAccounts.jsx';
-import Serivces from './components/services/Services.jsx';
+import Services from './components/services/Services.jsx';
 import { FiltersProvider } from './context/FiltersContext.jsx';
 import SuperAdminDashboard from './components/admin/SuperAdminDashboard.jsx';
 import ProviderDashboard from './components/admin/ProviderDashboard.jsx';
 import ManageCategories from './components/admin/ManageCategories.jsx';
+import ContactPage from './components/contact/Contact.jsx';
 
 
 function App() {
@@ -40,7 +41,9 @@ function App() {
             <Route path="/editOrg" element={<EditOrganisationForm />} />
             <Route path="/manageAccounts" element={<ManageAccounts />} />
 
-            <Route path="/services" element={<Serivces />} />
+            <Route path='/contact' element={<ContactPage />} />
+
+            <Route path="/services" element={<Services />} />
 
             <Route path="/organisation/:companyName" element={<Organisation />}/>
 

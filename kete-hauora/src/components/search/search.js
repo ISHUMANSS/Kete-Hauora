@@ -144,7 +144,7 @@ const Search = ({ serviceName, triggerSearch, filters,   }) => {
 
     return (
         <div className="Search">
-            <h2>{t('Search Result')}:</h2>
+            
 
             {error && <p style={{ color: "red" }}>{error}</p>}
 
