@@ -6,9 +6,13 @@ import FiltersBox from "../filters/Filters";
 import Search from "../search/search";
 import SearchAll from "../searchall/searchall";
 
+import { useTranslation } from 'react-i18next';
+
 const Services = () => {
   const [searchInput, setSearchInput] = useState("");
   const [searchTrigger, setSearchTrigger] = useState(0);
+
+  const { t } = useTranslation();
 
   const [filters, setFilters] = useState({
     category: "",
@@ -37,7 +41,7 @@ const Services = () => {
       <Navbar />
 
       <div className="center-container">
-        <h1 className="title">Find A Service</h1>
+        <h1 className="title">{t("Find A Service")}</h1>
         <SearchBar
           searchInput={searchInput}
           setSearchInput={setSearchInput}

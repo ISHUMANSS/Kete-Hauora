@@ -2,7 +2,26 @@
     "welcomeMessage": "Nau mai ki Kete Hauora",
 
     "//comment": "About.js",
-    "WELCOME": "NAU MAI HAERE MAI",
+    "Welcome": "Nau mai ki Te Kete Hauora",
+    "Te Kete Hauora is a wellness service directory that connects whānau, individuals, and health professionals with a wide range of services across Counties Manukau. It helps people find support that suits their needs and empowers communities to take control of their wellbeing.": "He rārangi ratonga hauora a Te Kete Hauora e hono ana i te whānau, te tangata takitahi, me ngā kaiwhakarato hauora ki te whānuitanga o ngā ratonga puta noa i Counties Manukau. Ka āwhina i te tangata ki te kimi tautoko e tika ana mō rātou, ā, ka whakakaha hoki i ngā hapori kia whai mana ki te whakahaere i tō rātou oranga.",
+    "Our Purpose": "Tō Mātou Whāinga",
+    "We aim to encourage engagement with wellbeing services that meet cultural, social, spiritual, and health needs. This work aligns with Te Whatu Ora Counties Manukau’s vision for equity and service integration.": "Ko tā mātou he whakakipakipa i te hono atu ki ngā ratonga oranga e whakatutuki ana i ngā hiahia ahurea, pāpori, wairua, me te hauora. Ka hono tēnei mahi ki te tirohanga a Te Whatu Ora Counties Manukau mō te ōritetanga me te whakakotahitanga ratonga.",
+    "Guiding Framework": "Te Anga Arataki",
+    "Te Kete Hauora is grounded in": "E ū ana a Te Kete Hauora ki",
+    " a Māori health model developed by Sir Mason Durie. It describes wellbeing through four interconnected pou (pillars):": " tētahi tauira hauora Māori nā Tā Mason Durie i waihanga. Ka whakamārama i te oranga mā roto i ngā pou e whā e hono ana:",
+    "Our Values": "Ō Mātou Uara",
+    "Guided by the values of Te Whatu Ora Counties Manukau:": "E arahina ana e ngā uara o Te Whatu Ora Counties Manukau:",
+    "Disclaimer": "Whakakāhoretanga",
+    "This project was created in partnership with Auckland University of Technology Bachelor of Computer & Information Sciences Research & Development Project.": "I waihangatia tēnei kaupapa mā te mahi ngātahi me te Whare Wānanga Hangarau o Tāmaki Makaurau i raro i te kaupapa Rangahau me te Whanaketanga mō te Paetahi Pūtaiao Rorohiko me te Pārongo.",
+    "While all due care and diligence has been taken by the students and AUT, these projects are undertaken in the course of student instruction. There is no guarantee of success, and clients assume a degree of risk as part of an arrangement intended to be of mutual benefit.": "Ahakoa kua whāia te tūpato me te manawanui e ngā tauira me AUT, ka mahia ēnei kaupapa i roto i te akoranga o ngā tauira. Kāore he pūtāutanga mō te angitū, ā, ka kawea e ngā kiritaki he taumata mōrearea hei wāhanga o te whakaritenga mō te painga tahi.",
+    "On completion, it is hoped that the client will receive a professionally documented and soundly constructed working software application or artefact, while students gain valuable exposure to live environments and real-world problems.": "Ina oti, ko te tūmanako ka whiwhi te kiritaki i tētahi taupānga rorohiko, taonga rānei kua tuhia ā-pūkenga, kua hanga tika hoki, i te wā ka whiwhi ngā tauira i te wheako whaihua ki ngā taiao tūturu me ngā raru o te ao.",
+    "Consequently, the students and AUT disclaim responsibility and offer no warranty regarding the technology solution or services delivered, both in relation to their use and the results from their use.": "Nā reira, ka whakakāhoretia e ngā tauira me AUT te haepapa, ā, kāore e tukuna he pūtāutanga mō te otinga hangarau, ngā ratonga rānei kua tukuna, mō tō rātou whakamahinga me ngā hua ka puta i taua whakamahinga.",
+    "Tutorial Video (Coming Soon)": "Ataata Āwhina (Kei te Heke Mai)",
+    "A short tutorial video will be added here to help you navigate Te Kete Hauora.": "Ka tāpiritia ki konei tētahi ataata āwhina poto hei āwhina i a koe ki te whakatere i Te Kete Hauora.",
+
+
+    "//comment": "Contact.jsx",
+    "Contact page": "Whārangi whakapā",
 
     "//comment": "Filters.jsx",
     "Filters": "Kōwhiringa",
@@ -20,6 +39,7 @@
     "Auckland": "Akarana",
     "Other": "Ētahi atu",
     "Languages": "Ngā reo",
+    "All Languages": "Ngā Reo Katoa",
     "Clear Filters": "Horoi Kōwhiringa",
 
     "//comment": "Login.jsx",

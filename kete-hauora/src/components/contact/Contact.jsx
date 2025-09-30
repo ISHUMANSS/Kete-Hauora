@@ -2,19 +2,19 @@ import './Contact.css';
 
 import Navbar from '../navbar/navbar';
 
-//import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 function ContactPage() {
   
 
-  //const { t } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <div className="home">
       <Navbar />
       
       <div className="center-container">
-        <h1 className='title'>Kete Hauora - Contact page</h1>
+        <h1 className='title'>Kete Hauora - {t("Contact page")}</h1>
 
       </div>
     </div>
