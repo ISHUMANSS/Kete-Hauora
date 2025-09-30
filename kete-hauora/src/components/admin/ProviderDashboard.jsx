@@ -16,16 +16,6 @@ const ProviderDashboard = () => {
             <h2>Edit My Organisation</h2>
             <p>Update your service details and contact info.</p>
           </Link>
-
-          <Link to="/Example1" className='dashboard-card'>
-            <h2>Other feature??</h2>
-            <p></p>
-          </Link>
-
-          <Link to="/Example" className='dashboard-card'>
-            <h2>Example</h2>
-            <p></p>
-          </Link>
         </div>
       </div>
     </div>

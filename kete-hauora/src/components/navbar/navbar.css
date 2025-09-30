@@ -125,4 +125,22 @@
   .overlay {
     display: none;
   }
+
+
+.nav-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px; /* space between icon and text */
+  padding: 10px 30px;
+  border-radius: 40px;      /* rounded */
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.nav-button .material-symbols-outlined {
+  font-size: 20px;
+}
+
 }
