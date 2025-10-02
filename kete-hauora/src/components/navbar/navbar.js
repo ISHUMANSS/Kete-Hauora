@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import i18next from "i18next";
 import { useAuth } from "../../hooks/useAuth";
 import { supabase } from "../../config/supabaseClient";
+import logo from "../../assets/stacked_logo_white.svg";
 
 const Navbar = () => {
   const { t } = useTranslation();
@@ -58,18 +59,31 @@ const Navbar = () => {
           </Link>
         </div>
 
-        <div className="nav-right">
+        {/* Desktop navigation (hidden on mobile) */}
+        <div className="nav-right desktop-only">
           <ul className="nav-links top-row">
             <li>
               <Link to="/about">{t("About")}</Link>
             </li>
             <li>
-              <Link to="/login">
-                <span className="login-icon material-symbols-outlined">
-                  person
-                </span>
-                {t("Login")}
-              </Link>
+              {!user ? (
+                // Login if not logged in
+                <li>
+                  <Link to="/login">
+                    <span className="login-icon material-symbols-outlined">
+                      person
+                    </span>
+                    {t("Login")}
+                  </Link>
+                </li>
+              ) : (
+                // Logout if logged in
+                <li>
+                  <button onClick={handleLogout} className="logout-btn">
+                    {t("Logout")}
+                  </button>
+                </li>
+              )}
             </li>
             <li>
               <div className="language-dropdown">
@@ -94,65 +108,68 @@ const Navbar = () => {
               <Link to="/contact">{t("Contact Us")}</Link>
             </li>
             <li>
-              <Link to="/services">{t("Find A Service")}</Link>
-            </li>
-            <li>
-              <Link to="/admin">Admin</Link>
+              <Link to="/services" className="nav-button">
+                <span className="material-symbols-outlined">search</span>
+                {t("Find A Service")}
+              </Link>
             </li>
           </ul>
         </div>
       </div>
 
-      <div className="hamburger" onClick={toggleSidebar}>
-        ☰
-      </div>
+      {/* Mobile hamburger + sidebar (hidden on desktop) */}
+      <div className="mobile-only">
+        <div className="hamburger" onClick={toggleSidebar}>
+          ☰
+        </div>
 
-      <ul className={`nav-links ${sidebarOpen ? "open" : ""}`}>
-        <li>
-          <Link to="/">{t("Home")}</Link>
-        </li>
-        <li>
-          <Link to="/about">{t("About")}</Link>
-        </li>
-        <li>
-          <Link to="/contact">{t("Contact Us")}</Link>
-        </li>
-        <li>
-          <Link to="/services" className="nav-button">
-            <span className="material-symbols-outlined">search</span>
-            {t("Find A Service")}
-          </Link>
-        </li>
-
-        {!user ? (
-          // Login if not logged in
+        <ul className={`nav-links ${sidebarOpen ? "open" : ""}`}>
           <li>
-            <Link to="/login">
-              <span className="login-icon material-symbols-outlined">
-                person
-              </span>
-              {t("Login")}
+            <Link to="/">{t("Home")}</Link>
+          </li>
+          <li>
+            <Link to="/about">{t("About")}</Link>
+          </li>
+          <li>
+            <Link to="/contact">{t("Contact Us")}</Link>
+          </li>
+          <li>
+            <Link to="/services" className="nav-button">
+              <span className="material-symbols-outlined">search</span>
+              {t("Find A Service")}
             </Link>
           </li>
-        ) : (
-          // Logout if logged in
+
+          {!user ? (
+            // Login if not logged in
+            <li>
+              <Link to="/login">
+                <span className="login-icon material-symbols-outlined">
+                  person
+                </span>
+                {t("Login")}
+              </Link>
+            </li>
+          ) : (
+            // Logout if logged in
+            <li>
+              <button onClick={handleLogout} className="logout-btn">
+                {t("Logout")}
+              </button>
+            </li>
+          )}
+
+          {/* language selector */}
           <li>
-            <button onClick={handleLogout} className="logout-btn">
-              {t("Logout")}
-            </button>
+            <select onChange={handleLanguageChange} value={i18next.language}>
+              <option value="en">English</option>
+              <option value="mi">Maori</option>
+            </select>
           </li>
-        )}
+        </ul>
 
-        {/* language selector */}
-        <li>
-          <select onChange={handleLanguageChange} value={i18next.language}>
-            <option value="en">English</option>
-            <option value="mi">Maori</option>
-          </select>
-        </li>
-      </ul>
-
-      {sidebarOpen && <div className="overlay" onClick={toggleSidebar}></div>}
+        {sidebarOpen && <div className="overlay" onClick={toggleSidebar}></div>}
+      </div>
     </nav>
   );
 };

@@ -1,4 +1,4 @@
-/* Mobile first */
+/* =========== (Default) Mobile first =========== */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -21,6 +21,7 @@
   letter-spacing: 0.5px;
 }
 
+/* Mobile hamburger always shown first */
 .hamburger {
   font-size: 28px;
   cursor: pointer;
@@ -75,29 +76,25 @@
   z-index: 150;
 }
 
-/* Desktop styling */
-@media (min-width: 768px) {
-  .hamburger {
-    display: none;
-  }
+/* Utility classes */
+.mobile-only {
+  display: block;
+}
+.desktop-only {
+  display: none;
+}
 
+/* =========== (≥768px view) Desktop Overrides =========== */
+@media (min-width: 768px) {
+  .hamburger,
   .overlay {
     display: none;
   }
 
   .navbar {
-    display: flex;
     justify-content: center;
-    align-items: center;
     padding: 12px 0;
-    height: auto;
-    width: 100%;
-    position: fixed;
-    top: 0;
     background-color: var(--brand-red);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    z-index: 100;
   }
 
   .nav-container {
@@ -106,9 +103,17 @@
     gap: 40px;
     max-width: 900px;
     width: 100%;
-    padding: 0 20px;
     margin: 0 auto;
     justify-content: space-between;
+  }
+
+  /* Show desktop menu, hide mobile menu */
+  .mobile-only {
+    display: none;
+  }
+
+  .desktop-only {
+    display: block;
   }
 
   .nav-right {
@@ -236,21 +241,19 @@
     transition: color 0.2s ease;
   }
 
+  .nav-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 30px;
+    border-radius: 40px;
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
 
-.nav-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px; /* space between icon and text */
-  padding: 10px 30px;
-  border-radius: 40px;      /* rounded */
-  text-decoration: none;
-  color: white;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.nav-button .material-symbols-outlined {
-  font-size: 20px;
-}
-
+  .nav-button .material-symbols-outlined {
+    font-size: 20px;
+  }
 }
