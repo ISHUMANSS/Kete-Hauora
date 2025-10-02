@@ -1,11 +1,12 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { supabase } from '../../config/supabaseClient';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../navbar/navbar';
 
 function AddOrganisationForm() {
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const [orgData, setOrgData] = useState({
     name: '',
@@ -22,56 +23,17 @@ function AddOrganisationForm() {
     other_notes: '',
   });
 
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
-  const [roleId, setRoleId] = useState(null);
-
   useEffect(() => {
-    async function getUserRole() {
-      setLoading(true);
-
-      // Get logged in user
-      const { data: { user }, error: userError } = await supabase.auth.getUser();
-      if (userError) {
-        console.error(userError);
-        setLoading(false);
-        return;
-      }
-
-      if (!user) {
-        setLoading(false);
-        return;
-      }
-
+    const fetchUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
-
-      // Fetch role_id from profiles table
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('role_id')
-        .eq('id', user.id)
-        .single();
-
-      if (error) {
-        console.error(error);
-      } else {
-        setRoleId(data.role_id);
-      }
-
       setLoading(false);
-    }
-
-    getUserRole();
+    };
+    fetchUser();
   }, []);
 
-  if (roleId !== 1) { // 1 = admin
-    return (
-      <>
-        <p>You must be an admin to add an organisation.</p>
-        <Link to="/">Go to homepage</Link>
-      </>
-    );
-  }
+  if (loading) return <p>Loading...</p>;
+  if (!user) return <p>Please log in to access this page.</p>;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -99,48 +61,63 @@ function AddOrganisationForm() {
     ]);
 
     if (error) {
-      console.error('Insert failed:', error.message);
-      alert('Failed to add organisation.');
+      alert('Failed to add organisation: ' + error.message);
     } else {
       alert('Organisation created!');
       navigate('/admin');
     }
   };
 
+  // Inline styles
+  const pageStyle = { display: 'flex', justifyContent: 'center', padding: '2rem', background: '#f5f7fa', minHeight: '100vh' };
+  const cardStyle = { background: 'white', padding: '2rem', borderRadius: '10px', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', width: '100%', maxWidth: '800px' };
+  const titleStyle = { textAlign: 'center', fontSize: '2rem', marginBottom: '0.5rem', color: '#1f2937' };
+  const subtitleStyle = { textAlign: 'center', marginBottom: '1.5rem', color: '#4b5563' };
+  const formGrid = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' };
+  const formGroup = { display: 'flex', flexDirection: 'column' };
+  const inputStyle = { padding: '0.8rem', border: '1px solid #d1d5db', borderRadius: '6px', fontSize: '1rem' };
+  const buttonStyle = { marginTop: '1.5rem', padding: '12px', width: '100%', background: '#2563eb', color: 'white', fontWeight: '600', border: 'none', borderRadius: '6px', cursor: 'pointer' };
+  const backButtonStyle = { background: 'none', border: 'none', color: '#2563eb', cursor: 'pointer', fontSize: '1rem', marginBottom: '1rem' };
+
   return (
     <>
       <Navbar />
+      <div style={pageStyle}>
+        <div style={cardStyle}>
+          <button style={backButtonStyle} onClick={() => navigate(-1)}>← Back</button>
+          <h1 style={titleStyle}>Add Organisation</h1>
+          <p style={subtitleStyle}>Fill in organisation details below.</p>
 
-      <div style={{ maxWidth: '900px' }}>
-        <button className="back-button" onClick={() => navigate(-1)}>
-          ← Back
-        </button>
-      </div>
-
-      <div className="edit-org-container">
-        <h1 className="edit-org-title">Add Organisation</h1>
-
-        <form className="edit-org-form" onSubmit={handleSubmit}>
-          <input name="name" placeholder="Organisation Name" onChange={handleInputChange} />
-          <input name="phone" placeholder="Phone" onChange={handleInputChange} />
-          <input name="email" placeholder="Email" onChange={handleInputChange} />
-          <input name="website" placeholder="Website" onChange={handleInputChange} />
-          <input name="physical_address" placeholder="Physical Address" onChange={handleInputChange} />
-          <input name="hours" placeholder="Operating Hours" onChange={handleInputChange} />
-          <input name="sites" placeholder="Sites of Service" onChange={handleInputChange} />
-          <input name="languages" placeholder="Languages" onChange={handleInputChange} />
-          <input name="cost" placeholder="Cost" onChange={handleInputChange} />
-          <input name="services_offered" placeholder="Services Offered" onChange={handleInputChange} />
-          <input name="referral" placeholder="Referral" onChange={handleInputChange} />
-          <textarea
-            name="other_notes"
-            placeholder="Other Notes"
-            onChange={handleInputChange}
-            rows="3"
-          ></textarea>
-
-          <button type="submit">Create</button>
-        </form>
+          <form onSubmit={handleSubmit}>
+            <div style={formGrid}>
+              {Object.keys(orgData).map((key) => (
+                <div style={formGroup} key={key}>
+                <label>{key.replace('_', ' ').replace(/\b\w/g, c => c.toUpperCase())}</label>
+                  {key === 'services_offered' || key === 'other_notes' ? (
+                    <textarea
+                      name={key}
+                      value={orgData[key]}
+                      onChange={handleInputChange}
+                      rows={key === 'services_offered' ? 4 : 3}
+                      placeholder={`Enter ${key.replace('_', ' ')}`}
+                      style={inputStyle}
+                    />
+                  ) : (
+                    <input
+                      type="text"
+                      name={key}
+                      value={orgData[key]}
+                      onChange={handleInputChange}
+                      placeholder={`Enter ${key.replace('_', ' ')}`}
+                      style={inputStyle}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+            <button type="submit" style={buttonStyle}>Add Organisation</button>
+          </form>
+        </div>
       </div>
     </>
   );

@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./components/homepage/Homepage.jsx";
 import AboutPage from "./components/about/About.jsx";
 import LoginPage from "./components/login/Login.jsx";
-import AdminPage from "./components/admin/Admin.jsx";
+// import AdminPage from './components/admin/Admin.jsx';
 import RegisterPage from "./components/login/Register.jsx";
 import AddOrganisationForm from "./components/admin/AddOrganisationForm.jsx";
 import EditOrganisationForm from "./components/admin/EditOrganisationForm.jsx";
@@ -18,6 +18,9 @@ import NotFound from "./components/notfound/NotFound.jsx";
 import ManageAccounts from "./components/admin/ManageAccounts.jsx";
 import Services from "./components/services/Services.jsx";
 import { FiltersProvider } from "./context/FiltersContext.jsx";
+import SuperAdminDashboard from "./components/admin/SuperAdminDashboard.jsx";
+import ProviderDashboard from "./components/admin/ProviderDashboard.jsx";
+import ManageCategories from "./components/admin/ManageCategories.jsx";
 import ContactPage from "./components/contact/Contact.jsx";
 
 function App() {
@@ -34,8 +37,6 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
 
-            <Route path="/admin" element={<AdminPage />} />
-            {/*make it so that users have to be loged in to be able to use this with protected routes*/}
             <Route path="/addOrg" element={<AddOrganisationForm />} />
             <Route path="/editOrg" element={<EditOrganisationForm />} />
             <Route path="/manageAccounts" element={<ManageAccounts />} />
@@ -48,6 +49,13 @@ function App() {
               path="/organisation/:companyName"
               element={<Organisation />}
             />
+
+            <Route
+              path="/super-admin-dashboard"
+              element={<SuperAdminDashboard />}
+            />
+            <Route path="/provider-dashboard" element={<ProviderDashboard />} />
+            <Route path="/managecategories" element={<ManageCategories />} />
 
             {/*catch all route for any thing that doesn't exist*/}
             <Route path="*" element={<NotFound />} />

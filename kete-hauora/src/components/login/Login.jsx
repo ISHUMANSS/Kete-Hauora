@@ -23,20 +23,41 @@ function LoginPage() {
 
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    setError('');
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+  e.preventDefault();
+  setError('');
 
-    //if the login worked go to the admin page
-    if (error) {
-      setError(error.message);
-    }else{
-      navigate('/');
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) {
+    setError(error.message);
+  } else if (data?.user) {
+    const userId = data.user.id;  
+
+    // fetch role from profiles 
+    const { data: profile, error: profileError } = await supabase
+      .from("profiles")
+      .select("role_id")
+      .eq("id", userId)
+      .single();
+
+    if (profileError) {
+      console.error("Error fetching role:", profileError.message);
+      navigate("/");
+    } else {
+      if (profile.role_id === 1) {
+        navigate("/super-admin-dashboard");
+      } else if (profile.role_id === 2) {
+        navigate("/provider-dashboard");
+      } else {
+        navigate("/"); 
+      }
     }
-  };
+  }
+};
+
 
 
   return (
