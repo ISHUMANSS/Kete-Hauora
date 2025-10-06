@@ -41,11 +41,6 @@ const ManageFilters = ({ title, tableName, itemName, idField, nameField, joinTab
         if (error) throw error;
       } else {
         const newRecord = { [nameField]: trimmed };
-
-        // 2. Log it to the console to debug.
-        console.log("Attempting to insert:", newRecord);
-
-        // 3. Send the new object to Supabase.
         const { error } = await supabase.from(tableName).insert(newRecord);
 
         if (error) throw error;
