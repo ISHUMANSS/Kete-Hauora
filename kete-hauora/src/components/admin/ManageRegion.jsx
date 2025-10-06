@@ -15,6 +15,7 @@ const ManageRegions = () => {
         <ManageFilters
             title="Manage Regions"
             tableName="region"
+            itemName="Region"
             idField="region_id"
             nameField="region"
             joinTable="service_regions"

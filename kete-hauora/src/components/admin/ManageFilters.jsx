@@ -8,7 +8,7 @@ import "./ManageFilters.css";
 import { useFilters } from "../../context/FiltersContext";
 import FilterAssignmentPanel from "./FilterAssignmentPanel";
 
-const ManageFilters = ({ title, tableName, idField, nameField, joinTable }) => {
+const ManageFilters = ({ title, tableName, itemName, idField, nameField, joinTable }) => {
   const { categories, languages, regions, loading } = useFilters();
   const [newFilter, setNewFilter] = useState("");
   const [editingFilter, setEditingFilter] = useState(null);
@@ -47,7 +47,7 @@ const ManageFilters = ({ title, tableName, idField, nameField, joinTable }) => {
 
         // 3. Send the new object to Supabase.
         const { error } = await supabase.from(tableName).insert(newRecord);
-        
+
         if (error) throw error;
       }
       alert(`${title} saved successfully!`);
@@ -89,18 +89,18 @@ const ManageFilters = ({ title, tableName, idField, nameField, joinTable }) => {
         {/* Add/Edit Form */}
         <div className="form-wrapper">
           <div className="form-card">
-            <h2>{editingFilter ? `Edit ${title.slice(7, -1)}` : `Add ${title.slice(7, -1)}`}</h2>
+            <h2>{editingFilter ? `Edit ${itemName}` : `Add ${itemName}`}</h2>
             <form onSubmit={handleSaveFilter} className="category-form">
               <input
                 type="text"
                 className="input-box"
                 value={newFilter}
                 onChange={(e) => setNewFilter(e.target.value)}
-                placeholder={`Enter ${title.slice(7, -1)} name`}
+                placeholder={`Enter ${itemName} name`}
               />
               <div className="form-buttons">
                 <button type="submit" className="btn-primary">
-                  {editingFilter ? "Update" : "Add"}
+                  {editingFilter ? `Edit ${itemName}` : `Add ${itemName}`}
                 </button>
                 {editingFilter && (
                   <button

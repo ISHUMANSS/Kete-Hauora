@@ -15,6 +15,7 @@ const ManageLanguages = () => {
         <ManageFilters
             title="Manage Languages"
             tableName="languages"
+            itemName="Language"
             idField="language_id"
             nameField="language"
             joinTable="service_languages"

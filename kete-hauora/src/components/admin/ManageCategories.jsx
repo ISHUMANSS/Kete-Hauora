@@ -15,6 +15,7 @@ const ManageCategories = () => {
       <ManageFilters
         title="Manage Categories"
         tableName="categories"
+        itemName="Category"
         idField="category_id"
         nameField="category"
         joinTable="service_categories"
