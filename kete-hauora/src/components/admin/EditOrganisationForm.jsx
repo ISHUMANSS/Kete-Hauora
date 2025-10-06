@@ -87,6 +87,7 @@ function EditOrganisationForm() {
       sites: org.sites || '',
       languages: org.languages || '',
       cost: org.cost || '',
+      cost_tf: org.cost_tf ?? null,
       services_offered: org.services_offered || '',
       referral: org.referral || '',
       other_notes: org.other_notes || '',
@@ -153,6 +154,7 @@ function EditOrganisationForm() {
 
           <form onSubmit={handleUpdate} style={{ marginTop: '2rem' }}>
             <div style={formGrid}>
+              {/* Normal text inputs */}
               {[
                 { label: 'Organisation Name', name: 'company_name' },
                 { label: 'Phone', name: 'phone' },
@@ -177,6 +179,34 @@ function EditOrganisationForm() {
                 </div>
               ))}
 
+              {/* Dropdown for cost_tf */}
+              <div style={formGroup}>
+                <label>Cost Type</label>
+                <select
+                  name="cost_tf"
+                  value={
+                    orgData.cost_tf === true
+                      ? "TRUE"
+                      : orgData.cost_tf === false
+                      ? "FALSE"
+                      : "NULL"
+                  }
+                  onChange={(e) => {
+                    let value = null;
+                    if (e.target.value === "TRUE") value = true;
+                    else if (e.target.value === "FALSE") value = false;
+                    setOrgData({ ...orgData, cost_tf: value });
+                  }}
+                  style={inputStyle}
+                >
+                  <option value="NULL">Other</option>
+                  <option value="FALSE">Free</option>
+                  <option value="TRUE">Paid</option>
+                </select>
+              </div>
+
+
+              {/* Textareas */}
               <div style={formGroup}>
                 <label>Services Offered</label>
                 <textarea
