@@ -22,6 +22,8 @@ import SuperAdminDashboard from './components/admin/SuperAdminDashboard.jsx';
 import ProviderDashboard from './components/admin/ProviderDashboard.jsx';
 import ManageCategories from './components/admin/ManageCategories.jsx';
 import ContactPage from './components/contact/Contact.jsx';
+import ManageRegions from './components/admin/ManageRegion.jsx';
+import ManageLanguages from './components/admin/ManageLanguages.jsx';
 
 
 function App() {
@@ -49,7 +51,11 @@ function App() {
 
             <Route path="/super-admin-dashboard" element={<SuperAdminDashboard />} />
             <Route path="/provider-dashboard" element={<ProviderDashboard />} />
+
+            {/*manage filters*/}
             <Route path="/managecategories" element={<ManageCategories />} />
+            <Route path="/manageregions" element={<ManageRegions />} />
+            <Route path="/managelanguages" element={<ManageLanguages />} />
 
             {/*catch all route for any thing that doesn't exist*/}
             <Route path="*" element={<NotFound />} />
