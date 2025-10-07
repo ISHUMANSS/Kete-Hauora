@@ -37,7 +37,7 @@ const Services = () => {
   return (
     <div className="services">
       <div className="center-container">
-        <h1 className="title">{t("Find A Service")}</h1>
+        <h1>{t("Find A Service")}</h1>
         <SearchBar
           searchInput={searchInput}
           setSearchInput={setSearchInput}
