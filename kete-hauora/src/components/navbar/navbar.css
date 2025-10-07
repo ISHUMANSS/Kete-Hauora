@@ -140,6 +140,12 @@
     gap: 5px;
   }
 
+  .nav-right .bottom-row li a {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
   .divider {
     display: block;
     width: 100%;
@@ -205,6 +211,52 @@
   }
 
   .nav-links li a:hover::after {
+    width: 100%;
+  }
+
+  /* Make button look like link */
+  .logout-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: var(--brand-white);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s ease;
+  }
+
+  .logout-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px; /* space between icon and text */
+  }
+
+  .logout-btn .logout-icon {
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  /* Same hover color and underline effect */
+  .logout-btn:hover {
+    color: var(--brand-black);
+  }
+
+  .logout-btn::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--brand-black);
+    transition: width 0.3s ease;
+  }
+
+  .logout-btn:hover::after {
     width: 100%;
   }
 

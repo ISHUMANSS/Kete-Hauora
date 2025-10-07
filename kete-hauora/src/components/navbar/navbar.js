@@ -63,7 +63,12 @@ const Navbar = () => {
         <div className="nav-right desktop-only">
           <ul className="nav-links top-row">
             <li>
-              <Link to="/about">{t("About")}</Link>
+              <Link to="/about">
+                <span className="material-symbols-outlined logout-icon">
+                  help
+                </span>
+                {t("About")}
+              </Link>
             </li>
             <li>
               {!user ? (
@@ -79,7 +84,13 @@ const Navbar = () => {
               ) : (
                 // Logout if logged in
                 <li>
-                  <button onClick={handleLogout} className="logout-btn">
+                  <button
+                    onClick={handleLogout}
+                    className="nav-link logout-btn"
+                  >
+                    <span className="material-symbols-outlined logout-icon">
+                      logout
+                    </span>
                     {t("Logout")}
                   </button>
                 </li>
@@ -105,7 +116,12 @@ const Navbar = () => {
 
           <ul className="nav-links bottom-row">
             <li>
-              <Link to="/contact">{t("Contact Us")}</Link>
+              <Link to="/contact">
+                <span className="material-symbols-outlined logout-icon">
+                  mail
+                </span>
+                {t("Contact Us")}
+              </Link>
             </li>
             <li>
               <Link to="/services" className="nav-button">

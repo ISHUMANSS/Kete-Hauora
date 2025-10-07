@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { supabase } from '../../config/supabaseClient';
-import './LoginPage.css';
-import Navbar from "../navbar/navbar";
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { supabase } from "../../config/supabaseClient";
+import "./LoginPage.css";
 
-import { useTranslation } from 'react-i18next';
-
+import { useTranslation } from "react-i18next";
 
 //just combineing register and login togther for simplicity for now
 //prob can rename/make the folder auth or somthing because they are working togther to create and login for a user
@@ -14,20 +12,22 @@ import { useTranslation } from 'react-i18next';
 function RegisterPage() {
   const { t } = useTranslation();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     //register the user
-    const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-      email,
-      password,
-    });
+    const { data: signUpData, error: signUpError } = await supabase.auth.signUp(
+      {
+        email,
+        password,
+      }
+    );
 
     //check it worked
     if (signUpError) {
@@ -35,19 +35,17 @@ function RegisterPage() {
       return;
     }
 
-
     const userId = signUpData.user.id;
 
     // Assign default role "company" (or let user select role via dropdown)
     const { error: profileError } = await supabase
-      .from('profiles')
-      .insert([{ id: userId, role: 'company' }]);
+      .from("profiles")
+      .insert([{ id: userId, role: "company" }]);
 
     if (profileError) {
       setError(profileError.message);
       return;
     }
-
 
     //log in the newly created user
     const { error: signInError } = await supabase.auth.signInWithPassword({
@@ -58,10 +56,9 @@ function RegisterPage() {
     if (signInError) {
       setError(signInError.message);
     } else {
-      navigate('/');
+      navigate("/");
     }
   };
-
 
   //ADD A BETTER PASSWORD CHECKING FUNCTION IN JS AND THEN ALSO UPDATE THE SUPABASE REQUIRMENTS FOR A PASSWORD
   /*
@@ -70,14 +67,12 @@ function RegisterPage() {
   }
   */
 
-
   return (
     <div className="login">
-      <Navbar />
       <div className="wrapper">
         <form onSubmit={handleRegister}>
           <h1>{t("Register")}</h1>
-          {error && <p style={{ color: 'red' }}>{error}</p>}
+          {error && <p style={{ color: "red" }}>{error}</p>}
           <div className="input-box">
             <input
               type="email"
@@ -96,10 +91,14 @@ function RegisterPage() {
             />
           </div>
 
-          <button type="submit" className="btn">{t("Register")}</button>
+          <button type="submit" className="btn">
+            {t("Register")}
+          </button>
 
           <div className="register-link">
-            <p>{t("Already have an account?")} <Link to="/login">Login</Link></p>
+            <p>
+              {t("Already have an account?")} <Link to="/login">Login</Link>
+            </p>
           </div>
         </form>
       </div>
