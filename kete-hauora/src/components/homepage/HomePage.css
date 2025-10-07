@@ -31,7 +31,6 @@
 /* Desktop styling */
 @media (min-width: 768px) {
   .homepage {
-    font-family: "Poppins", sans-serif;
     min-height: 100vh;
     color: #3c3c3b;
     background-color: var(--brand-offwhite);
@@ -45,16 +44,23 @@
   }
 
   .homepage-content h1 {
+    font-family: var(--font-primary);
     font-size: 3rem;
-    font-weight: 700;
     margin-bottom: 1.5rem;
-    color: #ee274c;
+    color: var(--brand-red);
   }
 
-  .subtitle {
+  .homepage-content p.subtitle {
+    font-family: var(--font-medium);
     font-size: 1.25rem;
     margin-bottom: 1.5rem;
-    color: #3c3c3b;
+    color: var(--brand-black);
+  }
+
+  .homepage-content p {
+    font-family: var(--font-secondary);
+    margin-bottom: 2rem;
+    color: var(--brand-black);
   }
 
   .why-section {
@@ -73,10 +79,11 @@
   }
 
   .why-section h2 {
+    font-family: var(--font-primary);
     font-size: 2rem;
     margin-bottom: 1rem;
-    color: #ee274c;
-    border-left: 5px solid #ee274c;
+    color: var(--brand-red);
+    border-left: 5px solid var(--brand-red);
     padding-left: 12px;
   }
 
@@ -86,6 +93,7 @@
   }
 
   .why-section ul li {
+    font-family: var(--font-secondary);
     margin-bottom: 0.5rem;
     font-size: 1.05rem;
   }
@@ -96,20 +104,27 @@
   }
 
   .start-section h2 {
+    font-family: var(--font-primary);
     font-size: 2rem;
     margin-bottom: 1rem;
-    color: #ee274c;
+    color: var(--brand-red);
     padding-left: 12px;
   }
 
+  .start-section p {
+    font-family: var(--font-secondary);
+    margin-bottom: 1.5rem;
+    color: var(--brand-black);
+  }
+
   .link-highlight {
-    color: #ee274c;
+    color: var(--brand-red);
     font-weight: 600;
     text-decoration: none;
   }
 
   .link-highlight:hover {
-    color: #fce41a;
+    color: var(--brand-yellow);
     text-decoration: underline;
   }
 }

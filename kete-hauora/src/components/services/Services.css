@@ -23,8 +23,8 @@
 }
 
 .services h1 {
+  font-family: var(--font-primary);
   font-size: 3rem;
-  font-weight: 700;
   margin-bottom: 1.5rem;
   color: var(--brand-red);
 }

@@ -6,7 +6,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: var(--brand-gray);
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-secondary);
 }
 
 .login {
@@ -14,12 +14,12 @@ body {
   justify-content: center;
   align-items: center;
   padding: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-secondary);
   background-color: var(--brand-gray);
   box-sizing: border-box;
 }
 
-/* Login form styles specific to LoginPage */
+/* Login form styles for Login/Register Pages */
 .wrapper {
   width: 100%;
   max-width: 420px;
@@ -33,11 +33,13 @@ body {
 }
 
 .wrapper h1 {
+  font-family: var(--font-primary);
   font-size: 28px;
   text-align: center;
 }
 
 .input-box {
+  font-family: var(--font-secondary);
   width: 100%;
   margin: 15px 0;
   position: relative;
@@ -52,6 +54,7 @@ body {
   background-color: var(--brand-gray);
   outline: none;
   font-size: 14px;
+  font-family: var(--font-secondary);
   color: var(--brand-black);
 }
 
@@ -80,6 +83,7 @@ body {
   color: var(--brand-black);
   cursor: pointer;
   text-decoration: underline;
+  font-family: var(--font-secondary);
   font-size: 13px;
 }
 
@@ -95,6 +99,7 @@ body {
   border-radius: 40px;
   background: var(--brand-gray);
   color: var(--brand-black);
+  font-family: var(--font-medium);
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
@@ -111,6 +116,7 @@ body {
   font-size: 13px;
   text-align: center;
   margin: 20px 0 10px;
+  font-family: var(--font-secondary);
 }
 
 .register-link a {
@@ -118,10 +124,30 @@ body {
   text-decoration: underline;
   font-weight: 600;
   transition: color 0.2s ease;
+  font-family: var(--font-medium);
 }
 
 .register-link a:hover {
   color: var(--brand-red);
+  text-decoration: underline;
+}
+
+.back-link {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.back-link a {
+  color: var(--brand-red);
+  text-decoration: none;
+  font-family: var(--font-medium);
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.back-link a:hover {
+  color: var(--brand-black);
   text-decoration: underline;
 }
 

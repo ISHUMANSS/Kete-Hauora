@@ -1,10 +1,10 @@
 .search-result-card {
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--brand-offwhite);
   border-radius: 12px;
   padding: 16px;
   margin: 10px;
   background-color: var(--brand-white);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 6px var(--brand-black);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -14,12 +14,14 @@
 
 .search-result-card h3 {
   margin-bottom: 8px;
+  font-family: var(--font-primary);
   font-size: 1.4rem;
-  color: var(--brand-black);
+  color: var(--brand-red);
 }
 
 .search-result-card p {
   margin: 4px 0;
+  font-family: var(--font-secondary);
   font-size: 0.9rem;
   color: var(--brand-black);
 }
@@ -35,7 +37,7 @@
 .show-more-btn {
   background: none;
   border: none;
-  color: #2563eb;
+  color: var(--brand-blue);
   font-size: 0.85rem;
   margin-left: 6px;
   cursor: pointer;
@@ -59,6 +61,7 @@
   display: inline-block;
   padding: 2px 8px;
   text-align: center;
+  font-family: var(--font-medium);
   border-radius: 9999px;
   background-color: var(--brand-gray);
   color: var(--brand-black);

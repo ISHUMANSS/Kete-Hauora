@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import supabase from "../../config/supabaseClient";
 import "./Organisation.css";
-import Navbar from "../navbar/navbar";
 import { useTranslation } from "react-i18next";
 
 function Organisation() {
@@ -16,32 +15,45 @@ function Organisation() {
 
   useEffect(() => {
     const fetchService = async () => {
-      const { data, error } = await supabase
-        .from("services")
-        .select("*")
-        .eq("company_name", companyName)
-        .single();
+      try {
+        // Fetch service data by company name
+        const { data, error } = await supabase
+          .from("services")
+          .select("*")
+          .eq("company_name", companyName)
+          .single();
 
-      if (error) {
-        console.error("Error fetching service:", error);
-      } else {
+        if (error) {
+          console.error("Error fetching service:", error);
+          setService(null);
+          setLoading(false);
+          return; // Stop here if no data
+        }
+
         setService(data);
+
+        // ✅ Only fetch translation if service exists
+        if (data && data.service_id) {
+          const { data: translationData, error: translationError } =
+            await supabase
+              .from("service_translations")
+              .select("services_offered_maori")
+              .eq("service_id", data.service_id)
+              .single();
+
+          if (translationError) {
+            console.error("Error fetching translation:", translationError);
+          } else {
+            setServiceTranslation(
+              translationData?.services_offered_maori || null
+            );
+          }
+        }
+      } catch (err) {
+        console.error("Unexpected error:", err);
+      } finally {
+        setLoading(false);
       }
-
-      //new query to get the maori translation of the services offered
-      const { data: translationData, error: translationError } = await supabase
-        .from("service_translations")
-        .select("services_offered_maori")
-        .eq("service_id", data.service_id)
-        .single();
-
-      if (translationError) {
-        console.error("Error fetching translation:", translationError);
-      } else {
-        setServiceTranslation(translationData?.services_offered_maori || null);
-      }
-
-      setLoading(false);
     };
 
     fetchService();
@@ -61,26 +73,30 @@ function Organisation() {
 
   return (
     <div className="organisation-page">
-      <Navbar />
       {/*for if we want to add that sidebar of like related links that we have in the figma
             <aside className="sidebar">
                 
             </aside>
             */}
 
-      <Link to="/" className="back-button">
-        ← {t("Back to Home")}
-      </Link>
+      <div className="back-container">
+        <Link to="/services" className="back-button">
+          ← {t("Back to Services")}
+        </Link>
+      </div>
 
       <main className="organisation-content">
         <header className="organisation-header">
-          {/*im not sure if we will have all the organisation images so currently just using a default one*/}
           <img
-            src="http://www.gravatar.com/avatar/?d=mp"
+            src={
+              service.company_logo
+                ? `/services_logo/${service.company_logo}`
+                : `/services_logo/Default.png`
+            }
             alt={`${service.company_name} logo`}
             className="organisation-logo"
+            onError={(e) => (e.target.src = "/services_logo/Default.png")} // fallback if not found
           />
-
           <h1>{service.company_name}</h1>
         </header>
 

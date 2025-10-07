@@ -1,4 +1,5 @@
 import "./global-colors.css";
+import "./global-fonts.css";
 import "./App.css";
 import {
   BrowserRouter as Router,

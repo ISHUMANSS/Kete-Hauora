@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./Services.css"; // reuse same styles
-import Navbar from "../navbar/navbar";
 import SearchBar from "../searchBar/searchBar";
 import FiltersBox from "../filters/Filters";
 import Search from "../search/search";
@@ -37,8 +36,6 @@ const Services = () => {
 
   return (
     <div className="services">
-      <Navbar />
-
       <div className="center-container">
         <h1 className="title">{t("Find A Service")}</h1>
         <SearchBar

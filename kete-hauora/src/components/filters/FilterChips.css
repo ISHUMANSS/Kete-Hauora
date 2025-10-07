@@ -13,5 +13,5 @@
 }
 
 .chip:hover {
-  background: #ddd;
+  background: var(--brand-white);
 }

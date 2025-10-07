@@ -16,10 +16,16 @@
 
 /* Main heading */
 .about-content h1 {
+  font-family: var(--font-primary);
   font-size: 3rem;
-  font-weight: 700;
   margin-bottom: 1.5rem;
   color: var(--brand-red);
+}
+
+.about-content p {
+  font-family: var(--font-secondary);
+  margin-bottom: 1.5rem;
+  color: var(--brand-black);
 }
 
 /* Sections */
@@ -40,6 +46,7 @@
 
 /* Section titles */
 .about-section h2 {
+  font-family: var(--font-medium);
   font-size: 2rem;
   margin-bottom: 1rem;
   color: var(--brand-red);
@@ -49,7 +56,7 @@
 
 /* Paragraphs */
 .about-section p {
-  font-size: 1.1rem;
+  font-family: var(--font-secondary);
   line-height: 1.7;
   margin-bottom: 1rem;
   color: var(--brand-black);
@@ -62,8 +69,8 @@
 }
 
 .about-section ul li {
+  font-family: var(--font-secondary);
   margin-bottom: 0.5rem;
-  font-size: 1.05rem;
 }
 
 /* Video placeholder */
@@ -91,11 +98,14 @@
 }
 
 .disclaimer h2 {
+  font-family: var(--font-medium);
+  font-size: 2rem;
   color: var(--brand-red);
 }
 
 .disclaimer p {
-  font-size: 1rem;
-  line-height: 1.6;
+  font-family: var(--font-secondary);
+  line-height: 1.7;
   margin-bottom: 1rem;
+  color: var(--brand-black);
 }

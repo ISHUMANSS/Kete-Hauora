@@ -1,6 +1,7 @@
 import "./LoginPage.css";
 
-import React, { useState } from "react";
+import { useState } from "react";
+
 import { useNavigate, Link } from "react-router-dom";
 import supabase from "../../config/supabaseClient";
 import "./LoginPage.css";
@@ -100,6 +101,9 @@ function LoginPage() {
               {t("Don't have an account?")}{" "}
               <Link to="/register">{t("Register")}</Link>
             </p>
+          </div>
+          <div className="back-link">
+            <Link to="/">{t("← Back to Home")}</Link>
           </div>
         </form>
       </div>

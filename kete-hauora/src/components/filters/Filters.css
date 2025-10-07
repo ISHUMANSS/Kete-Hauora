@@ -10,7 +10,7 @@
 }
 
 .filters-box.collapsed {
-  padding: 0.75rem 1.25rem; /* smaller padding */
+  padding: 0.75rem 1.25rem;
 }
 
 .filters-header {
@@ -20,6 +20,8 @@
 }
 
 .filters-header h4 {
+  font-family: var(--font-medium);
+  color: var(--brand-red);
   margin: 0;
 }
 
@@ -32,7 +34,7 @@
   border: none;
   border-radius: 50%;
   background-color: var(--brand-red);
-  color: white; /* make arrow visible */
+  color: var(--brand-white);
   font-size: 1.2rem;
   cursor: pointer;
   transition: background 0.2s ease;
@@ -44,6 +46,7 @@
 }
 
 .clear-btn {
+  font-family: var(--font-medium);
   background-color: var(--brand-red);
 }
 
@@ -55,7 +58,7 @@
 .filters-section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-  gap: 1.5rem; /* consistent spacing */
+  gap: 1.5rem;
 }
 
 .filter-group {
@@ -64,6 +67,7 @@
 }
 
 .filter-group label {
+  font-family: var(--font-secondary);
   font-weight: bold;
   margin-bottom: 0.5rem; /* 8px */
 }
@@ -85,7 +89,7 @@
   border-radius: 0.75rem;
   font-size: 1rem;
   background-color: var(--brand-white);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 6px var(--brand-black);
 
   /* Remove native arrow and add custom one */
   appearance: none;
@@ -100,7 +104,7 @@
 
 .filters-box select:focus {
   border-color: var(--brand-red);
-  box-shadow: 0 0 0 3px rgba(98, 0, 238, 0.25);
+  box-shadow: 0 0 0 3px var(--brand-blue);
   outline: none;
 }
 
