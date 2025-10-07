@@ -1,13 +1,22 @@
 /* LoginPage.css */
 /* Styling for moblie */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--brand-gray);
+  font-family: "Poppins", sans-serif;
+}
+
 .login {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  padding: 20px;
+  padding: 0;
   font-family: "Poppins", sans-serif;
-  background-color: var(--brand-off-white);
+  background-color: var(--brand-gray);
+  box-sizing: border-box;
 }
 
 /* Login form styles specific to LoginPage */
