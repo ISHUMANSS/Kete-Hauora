@@ -1,153 +1,129 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react';
 import { supabase } from '../../config/supabaseClient';
+import Navbar from '../navbar/navbar';
 import { useNavigate } from 'react-router-dom';
-import Navbar from "../navbar/navbar";
 
 function ManageAccounts() {
-  const navigate = useNavigate(); // for back button
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
   const [roleId, setRoleId] = useState(null);
   const [users, setUsers] = useState([]);
-  const [fetchError, setFetchError] = useState(null);
-  const [editingUserId, setEditingUserId] = useState(null);
-  const [editData, setEditData] = useState({ email: '', role_id: 2, organisation_name: '' });
-  const [roleFilter, setRoleFilter] = useState('');
+  const [orgs, setOrgs] = useState([]);
+  const [assignments, setAssignments] = useState({});
 
+  // Get current user role
   useEffect(() => {
-    async function getUserRole() {
-      setLoading(true);
+    async function fetchRole() {
       const { data: { user }, error } = await supabase.auth.getUser();
-      if (error || !user) { setLoading(false); return; }
-      setUser(user);
+      if (error || !user) return setLoading(false);
 
-      const { data: profileData } = await supabase
+      const { data: profileData, error: profileError } = await supabase
         .from('profiles')
         .select('role_id')
         .eq('id', user.id)
         .single();
 
-      if (profileData) setRoleId(profileData.role_id);
+      if (!profileError && profileData) setRoleId(profileData.role_id);
       setLoading(false);
     }
-    getUserRole();
+    fetchRole();
   }, []);
 
-  const fetchUsers = async () => {
-    const { data, error } = await supabase.from('profiles').select('*');
-    if (error) {
-      setFetchError('Could not fetch users');
-      setUsers([]);
-    } else {
-      setUsers(data);
-      setFetchError(null);
-    }
-  };
-
+  // Fetch all users and organisations
   useEffect(() => {
-    if (roleId === 1) fetchUsers();
+    if (roleId !== 1) return; // only super admin
+
+    async function fetchData() {
+      const { data: allUsers, error: usersError } = await supabase
+        .from('profiles')
+        .select('id, email, role_id');
+
+      if (usersError) console.log(usersError);
+      else setUsers(allUsers || []);
+
+      const { data: allOrgs, error: orgsError } = await supabase
+        .from('services')
+        .select('service_id, company_name');
+
+      if (orgsError) console.log(orgsError);
+      else setOrgs(allOrgs || []);
+
+      // Fetch assignments
+      const { data: assignmentsData } = await supabase
+        .from('user_organisation')
+        .select('user_id, organisation_id');
+
+      const map = {};
+      assignmentsData?.forEach(a => {
+        map[a.user_id] = a.organisation_id;
+      });
+      setAssignments(map);
+    }
+
+    fetchData();
   }, [roleId]);
 
   if (loading) return <p>Loading...</p>;
-  if (!user) return <p>Please login to manage accounts</p>;
-  if (roleId !== 1) return <p>You must be an admin to manage accounts</p>;
+  if (roleId !== 1) return <p>Only super admins can access this page.</p>;
 
-  const handleEditClick = (u) => {
-    setEditingUserId(u.id);
-    setEditData({ email: u.email, role_id: u.role_id, organisation_name: u.organisation_name || '' });
-  };
+  // Assign organisation
+  const handleAssignOrg = async (userId, orgId) => {
+    const { error } = await supabase
+      .from('user_organisation')
+      .upsert({ user_id: userId, organisation_id: orgId }, { onConflict: ['user_id'] });
 
-  const handleSave = async (id) => {
-    const { error } = await supabase.from('profiles').update(editData).eq('id', id);
-    if (error) alert('Update failed: ' + error.message);
-    else { alert('User updated!'); setEditingUserId(null); fetchUsers(); }
-  };
-
-  const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this user?')) return;
-    const { error } = await supabase.from('profiles').delete().eq('id', id);
-    if (error) alert('Delete failed: ' + error.message);
-    else { alert('User deleted!'); fetchUsers(); }
-  };
-
-  const handleResetPassword = async (email) => {
-    const { error } = await supabase.auth.resetPasswordForEmail(email);
-    if (error) alert('Reset failed: ' + error.message);
-    else alert('Password reset email sent!');
+    if (error) alert('Failed to assign organisation: ' + error.message);
+    else {
+      setAssignments(prev => ({ ...prev, [userId]: orgId }));
+      alert('Organisation assigned!');
+    }
   };
 
   return (
-    <div className="manage-accounts">
+    <>
       <Navbar />
-      <div className="admin-content">
-        <button className="back-button" onClick={() => navigate(-1)}>← Back</button>
-
+      <div style={{ padding: '2rem' }}>
+        <button onClick={() => navigate(-1)} style={{ marginBottom: '1rem', cursor: 'pointer' }}>
+          ← Back
+        </button>
         <h1>Manage Accounts</h1>
-
-        {fetchError && <p className="error">{fetchError}</p>}
-
-        <div className="filter">
-          <label>Filter by role:</label>
-          <select onChange={(e) => setRoleFilter(e.target.value)}>
-            <option value="">All</option>
-            <option value="1">Admin</option>
-            <option value="2">Company</option>
-          </select>
-        </div>
-
-        <div className="user-table">
-          <table>
-            <thead>
-              <tr>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Organisation</th>
-                <th>Actions</th>
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '1rem' }}>
+          <thead>
+            <tr>
+              <th style={{ border: '1px solid #ccc', padding: '8px' }}>ID</th>
+              <th style={{ border: '1px solid #ccc', padding: '8px' }}>Email</th>
+              <th style={{ border: '1px solid #ccc', padding: '8px' }}>Role</th>
+              <th style={{ border: '1px solid #ccc', padding: '8px' }}>Assign Organisation</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map(user => (
+              <tr key={user.id}>
+                <td style={{ border: '1px solid #ccc', padding: '8px' }}>{user.id}</td>
+                <td style={{ border: '1px solid #ccc', padding: '8px' }}>{user.email}</td>
+                <td style={{ border: '1px solid #ccc', padding: '8px' }}>
+                  {user.role_id === 1 ? 'Admin' : 'Service Provider'}
+                </td>
+                <td style={{ border: '1px solid #ccc', padding: '8px' }}>
+                  <select
+                    value={assignments[user.id] || ''}
+                    onChange={e => handleAssignOrg(user.id, parseInt(e.target.value))}
+                  >
+                    <option value="">-- Select Organisation --</option>
+                    {orgs.map(org => (
+                      <option key={org.service_id} value={org.service_id}>
+                        {org.company_name}
+                      </option>
+                    ))}
+                  </select>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {users.filter(u => !roleFilter || u.role_id.toString() === roleFilter)
-                .map(u => (
-                <tr key={u.id}>
-                  <td data-label="Email">
-                    {editingUserId === u.id ? (
-                      <input value={editData.email} onChange={e => setEditData({ ...editData, email: e.target.value })} />
-                    ) : u.email}
-                  </td>
-                  <td data-label="Role">
-                    {editingUserId === u.id ? (
-                      <select value={editData.role_id} onChange={e => setEditData({ ...editData, role_id: Number(e.target.value) })}>
-                        <option value={1}>Admin</option>
-                        <option value={2}>Company</option>
-                      </select>
-                    ) : u.role_id === 1 ? 'Admin' : 'Company'}
-                  </td>
-                  <td data-label="Organisation">
-                    {editingUserId === u.id ? (
-                      <input value={editData.organisation_name} onChange={e => setEditData({ ...editData, organisation_name: e.target.value })} />
-                    ) : u.organisation_name || '—'}
-                  </td>
-                  <td data-label="Actions" className="action-buttons">
-                    {editingUserId === u.id ? (
-                      <>
-                        <button className="edit" onClick={() => handleSave(u.id)}>Save</button>
-                        <button className="delete" onClick={() => setEditingUserId(null)}>Cancel</button>
-                      </>
-                    ) : (
-                      <>
-                        <button className="edit" onClick={() => handleEditClick(u)}>Edit</button>
-                        <button className="delete" onClick={() => handleDelete(u.id)}>Delete</button>
-                        <button className="reset" onClick={() => handleResetPassword(u.email)}>Reset</button>
-                      </>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
-    </div>
+    </>
   );
 }
 
