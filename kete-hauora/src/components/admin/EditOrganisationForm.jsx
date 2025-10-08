@@ -257,6 +257,26 @@ function EditOrganisationForm() {
                   />
                 </div>
               </div>
+              <div style={formGroup}>
+                <label>Cost Type</label>
+                <select
+                  name="cost_tf"
+                  value={orgData.cost_tf === true ? "TRUE" : orgData.cost_tf === false ? "FALSE" : "NULL"}
+                  onChange={(e) => {
+                    let value = null;
+                    if (e.target.value === "TRUE") value = true;
+                    else if (e.target.value === "FALSE") value = false;
+                    else value = null;
+                    setOrgData({ ...orgData, cost_tf: value });
+                  }}
+                  style={inputStyle}
+                >
+                  <option value="NULL">Other</option>
+                  <option value="FALSE">Free</option>
+                  <option value="TRUE">Paid</option>
+                </select>
+              </div>
+              
 
               <button type="submit" style={buttonStyle}>
                 Save Changes
