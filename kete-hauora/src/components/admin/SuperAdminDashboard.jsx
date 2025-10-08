@@ -29,8 +29,19 @@ const SuperAdminDashboard = () => {
 
           <Link to="/manageCategories" className='dashboard-card'>
             <h2>Manage Categories</h2>
-            <p>Create, edit, and assign categories to services.</p>
+            <p>Create, edit, and assign Categories to services.</p>
           </Link>
+
+          <Link to="/managelanguages" className='dashboard-card'>
+            <h2>Manage Languages</h2>
+            <p>Create, edit, and assign Languages to services.</p>
+          </Link>
+
+          <Link to="/manageregions" className='dashboard-card'>
+            <h2>Manage Regions</h2>
+            <p>Create, edit, and assign Regions to services.</p>
+          </Link>
+
         </div>
       </div>
     </div>

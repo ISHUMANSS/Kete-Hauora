@@ -1,0 +1,298 @@
+/* ----- Page Container ----- */
+
+
+.manage-categories-container,
+.manage-filters-container {
+  width: 100%;           /* take full available width */
+  max-width: 1500px;     /* limit width on very large screens */
+  margin: 3rem auto;     /* vertical margin + center horizontally */
+  padding: 3rem;         /* internal spacing */
+  box-sizing: border-box; /* ensure padding is included in width */
+}
+
+/* ----- Buttons ----- */
+.btn-primary,
+.btn-secondary,
+.btn-delete,
+.btn-edit,
+.btn-assign {
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s ease;
+  padding: 8px 14px;
+}
+
+.btn-primary {
+  background: #0077ff;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #005fd1;
+}
+
+.btn-secondary {
+  background: #eee;
+  color: #333;
+}
+
+.btn-secondary:hover {
+  background: #ddd;
+}
+
+.btn-delete {
+  background: #ff4d4d;
+  color: white;
+}
+
+.btn-delete:hover {
+  background: #d93636;
+}
+
+.btn-edit {
+  background: #ffc107;
+  color: #333;
+}
+
+.btn-edit:hover {
+  background: #e0a800;
+}
+
+.btn-assign {
+  background: #0077ff;
+  color: white;
+}
+
+.btn-assign:hover {
+  background: #005fd1;
+}
+
+/* ----- Grid of Filters ----- */
+.filter-grid {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  width: 95%;
+  margin: 2rem auto;
+  justify-items: stretch;
+  align-items: stretch;
+}
+
+/* Each card looks more like a polished tile */
+.filter-card {
+  background: #f5faff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+  border: 1px solid #e5e7eb;
+}
+
+.filter-card:hover {
+  background: #eaf3ff;
+  transform: translateY(-4px);
+}
+
+/* Title styling inside the card */
+.filter-card h3 {
+  font-size: 1.2rem;
+  color: #111827;
+  text-align: center;
+  margin-bottom: 1rem;
+  word-break: break-word;
+}
+
+/* ----- Buttons inside each card ----- */
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.action-buttons button {
+  flex: 1;
+  padding: 10px;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+
+
+/* ----- Form ----- */
+.form-wrapper {
+  margin: 1rem 0 2rem;
+}
+
+.form-card {
+  background: #fafafa;
+  border-radius: 10px;
+  padding: 1.5rem;
+  border: 1px solid #eee;
+}
+
+.input-box {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+/* ----- Table ----- */
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.dashboard-table th,
+.dashboard-table td {
+  text-align: left;
+  padding: 12px 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.dashboard-table th {
+  background: #f0f4ff;
+  color: #333;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+/* ----- Assignment Panel ----- */
+.assign-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.assign-content {
+  overflow-y: auto;
+  max-height: calc(80vh - 80px); /* leave space for the save button */
+  padding-bottom: 1rem;         /* extra space at bottom */
+}
+
+.assign-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-close {
+  background: #ff4d4d;
+  color: white;
+}
+
+/* Assigned tags */
+.assigned-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 20px;
+}
+
+.tag {
+  background: #e0f0ff;
+  color: #0077ff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tag button {
+  background: transparent;
+  border: none;
+  font-weight: bold;
+  color: #0077ff;
+  cursor: pointer;
+}
+
+/* ----- Search & Results Grid ----- */
+.search-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+}
+
+.service-results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.service-card {
+  background: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: 0.2s ease;
+}
+
+.service-card:hover {
+  background: #eef5ff;
+}
+
+/* Save section */
+.save-section {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Overlay for assignment panel */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.overlay-content {
+  width: 90%;
+  max-width: 800px;
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  
+}
+
+

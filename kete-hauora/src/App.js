@@ -67,7 +67,11 @@ function App() {
               element={<SuperAdminDashboard />}
             />
             <Route path="/provider-dashboard" element={<ProviderDashboard />} />
+
+            {/*manage filters*/}
             <Route path="/managecategories" element={<ManageCategories />} />
+            <Route path="/manageregions" element={<ManageRegions />} />
+            <Route path="/managelanguages" element={<ManageLanguages />} />
 
             {/*catch all route for any thing that doesn't exist*/}
             <Route path="*" element={<NotFound />} />

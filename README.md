@@ -15,7 +15,7 @@ This version is a digital version of the orginal Te Kete Hauora Wellness Service
 - [Demo](#demo)
 - [Screenshots / UI Preview](#screenshots--ui-preview)
 - [Tech Stack](#tech-stack)
-- [Color Reference](#color-reference)
+- [Colour Reference](#colour-reference)
 - [Deployment](#deployment)
 - [Run Locally](#run-locally)
 - [Environment Variables](#environment-variables)
@@ -24,7 +24,8 @@ This version is a digital version of the orginal Te Kete Hauora Wellness Service
 - [Contact / Support](#contact--support)
 
 ## Credits / Partnerships
-
+- **Middlemore Foundation** – Project Sponsor  
+- **Auckland University of Technology (AUT)** – BCIS Research & Development Project
 
 ## Project Goals / Problem Statement
 
@@ -44,8 +45,7 @@ This project aims to solve these issues by creating a "dynamic", digital version
 
 This project is used by the following companies:
 
-- Company 1
-- Company 2
+- Middlemore Foundation
 
 
 ## Features
@@ -53,13 +53,21 @@ This project is used by the following companies:
 - Search by name
 - Search by category
 - Filter by category, Cost (paid or free), Language, Region
-- Fuzzy match search by catagory (spell check)
+- Fuzzy match search by category (spell check)
 
-### Lanugage Translation
-- 
+### Language Translation
+- Translation for static site-based words to Māori
+- Translation for some dynamic database features, like the services offered
 
 ### Admin
-- 
+- Add New Organisations (Super Admin)
+- Edit Existing Organisations (Super Admin and Service Provider)
+- Manage users (Super Admin)
+- Manage Filters (Super Admin)
+  - Catagories
+  - Languages
+  - Regions
+ 
 
 ## Demo
 
@@ -86,13 +94,15 @@ coming soon
 
 ## Colour Reference
 
-This will be where the colour reference from tui goes
-| Color             | Hex                                                                |
-| ----------------- | ------------------------------------------------------------------ |
-| Example Color | ![#0a192f](https://via.placeholder.com/10/0a192f?text=+) #0a192f |
-| Example Color | ![#f8f8f8](https://via.placeholder.com/10/f8f8f8?text=+) #f8f8f8 |
-| Example Color | ![#00b48a](https://via.placeholder.com/10/00b48a?text=+) #00b48a |
-| Example Color | ![#00d1a0](https://via.placeholder.com/10/00b48a?text=+) #00d1a0 |
+Colour Reference from the Middlemore Foundations Branding Guidelines
+
+  - Primary | ![#ee274c](https://placehold.co/15x15/ee274c/ee274c.png) `#ee274c`
+  - Secondary | ![#3C3C3B](https://placehold.co/15x15/3C3C3B/3C3C3B.png) `#3C3C3B`
+  - Secondary | ![#019963](https://placehold.co/15x15/019963/019963.png) `#019963`
+  - Secondary | ![#3f4488](https://placehold.co/15x15/3f4488/3f4488.png) `#3f4488`
+  - Secondary | ![#f1a8ca](https://placehold.co/15x15/f1a8ca/f1a8ca.png) `#f1a8ca`
+  - Secondary | ![#fce41a](https://placehold.co/15x15/fce41a/fce41a.png) `#fce41a`
+
 
 ## Deployment
 
@@ -103,7 +113,7 @@ This project is currently deployed on [Netlify](https://ketehauora.netlify.app/)
 - **Publish Directory:** `/kete-hauora/build`  
 - **Environment Variables:** Make sure all `.env` variables are set in the Netlify dashboard for production  
 
-To redeploy: (currently not active as development is still on going)
+To redeploy: (currently not active as development is still ongoing)
 - Push changes to the `main` branch, or  
 - Trigger a manual deploy via the Netlify dashboard  
 
@@ -161,8 +171,11 @@ The current version was created as the result of an Rearch and Development full 
 Future development could include:
 
 - **Multilingual Support**  
-  - Full support for Pacific languages and Te Reo Māori  
-  - User-selectable language preferences  
+  - Full support site for Pacific languages and Te Reo Māori  
+  - User-selectable language preferences
+
+-**Batch Admin Service Uploads**
+  - Allow Super Admins to upload many listings at once, from a CSV to streamline the addition process
 
 - **Service Provider Portal**  
   - Allow providers to submit and manage their own listings  
