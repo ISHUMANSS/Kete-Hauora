@@ -82,7 +82,7 @@ const Navbar = () => {
 
         {/* language selector */}
         <li>
-          <select onChange={handleLanguageChange} value={i18next.language}>
+          <select className="langselect" onChange={handleLanguageChange} value={i18next.language}>
             <option value="en">English</option>
             <option value="mi">Maori</option>
           </select>

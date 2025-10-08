@@ -121,6 +121,7 @@ function EditOrganisationForm() {
       sites: org.sites || '',
       languages: org.languages || '',
       cost: org.cost || '',
+      cost_tf: org.cost_tf ?? null,
       services_offered: org.services_offered || '',
       referral: org.referral || '',
       other_notes: org.other_notes || '',

@@ -54,6 +54,7 @@ function AddOrganisationForm() {
         sites: orgData.sites,
         languages: orgData.languages,
         cost: orgData.cost,
+        cost_tf: orgData.cost_tf,
         services_offered: orgData.services_offered,
         referral: orgData.referral,
         other_notes: orgData.other_notes,
@@ -64,7 +65,7 @@ function AddOrganisationForm() {
       alert('Failed to add organisation: ' + error.message);
     } else {
       alert('Organisation created!');
-      navigate('/admin');
+      navigate('/super-admin-dashboard');
     }
   };
 
@@ -90,7 +91,7 @@ function AddOrganisationForm() {
 
           <form onSubmit={handleSubmit}>
             <div style={formGrid}>
-              {Object.keys(orgData).map((key) => (
+              {Object.keys(orgData).filter(key => key !== "cost_tf").map((key) => (
                 <div style={formGroup} key={key}>
                 <label>{key.replace('_', ' ').replace(/\b\w/g, c => c.toUpperCase())}</label>
                   {key === 'services_offered' || key === 'other_notes' ? (
@@ -114,6 +115,25 @@ function AddOrganisationForm() {
                   )}
                 </div>
               ))}
+              <div style={formGroup}>
+                <label>Cost Type</label>
+                <select
+                  name="cost_tf"
+                  value={orgData.cost_tf === true ? "TRUE" : orgData.cost_tf === false ? "FALSE" : "NULL"}
+                  onChange={(e) => {
+                    let value = null;
+                    if (e.target.value === "TRUE") value = true;
+                    else if (e.target.value === "FALSE") value = false;
+                    else value = null;
+                    setOrgData({ ...orgData, cost_tf: value });
+                  }}
+                  style={inputStyle}
+                >
+                  <option value="NULL">Other</option>
+                  <option value="FALSE">Free</option>
+                  <option value="TRUE">Paid</option>
+                </select>
+              </div>
             </div>
             <button type="submit" style={buttonStyle}>Add Organisation</button>
           </form>
