@@ -24,7 +24,7 @@ const SuperAdminDashboard = () => {
 
           <Link to="/manageAccounts" className='dashboard-card'>
             <h2>Manage Accounts</h2>
-            <p>View, edit, and reset password.</p>
+            <p>View, and assign Organisations.</p>
           </Link>
 
           <Link to="/manageCategories" className='dashboard-card'>
