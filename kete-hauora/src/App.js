@@ -23,6 +23,8 @@ import { FiltersProvider } from "./context/FiltersContext.jsx";
 import SuperAdminDashboard from "./components/admin/SuperAdminDashboard.jsx";
 import ProviderDashboard from "./components/admin/ProviderDashboard.jsx";
 import ManageCategories from "./components/admin/ManageCategories.jsx";
+import ManageRegions from "./components/admin/ManageRegion.jsx";
+import ManageLanguages from "./components/admin/ManageLanguages.jsx";
 import ContactPage from "./components/contact/Contact.jsx";
 
 // Wrapper component to conditionally show Navbar
