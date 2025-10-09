@@ -19,6 +19,7 @@ const Navbar = () => {
 
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
 
+  // Fetch the user's role
   useEffect(() => {
     const fetchProfile = async () => {
       if (user) {
@@ -28,13 +29,11 @@ const Navbar = () => {
           .eq("id", user.id)
           .single();
 
-        if (!error) {
-          setProfile(data);
-        }
+        if (!error) setProfile(data);
       }
     };
     fetchProfile();
-  }, [user, navigate]);
+  }, [user]);
 
   const handleLanguageChange = (e) => {
     const selectedLang = e.target.value;
