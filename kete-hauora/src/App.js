@@ -24,6 +24,8 @@ import SuperAdminDashboard from "./components/admin/SuperAdminDashboard.jsx";
 import ProviderDashboard from "./components/admin/ProviderDashboard.jsx";
 import ManageCategories from "./components/admin/ManageCategories.jsx";
 import ContactPage from "./components/contact/Contact.jsx";
+import ManageRegions from "./components/admin/ManageRegions.jsx";
+import ManageLanguages from "./components/admin/ManageLanguages.jsx";
 
 // Wrapper component to conditionally show Navbar
 function AppLayout({ children }) {
