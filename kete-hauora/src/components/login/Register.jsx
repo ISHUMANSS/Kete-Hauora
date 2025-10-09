@@ -38,10 +38,10 @@ function RegisterPage() {
 
     const userId = signUpData.user.id;
 
-    // Assign default role "company" (or let user select role via dropdown)
+    // Assign default role "company"
     const { error: profileError } = await supabase
       .from('profiles')
-      .insert([{ id: userId, role: 'company' }]);
+      .insert([{ id: userId, email: email, role_id: '2' }]);
 
     if (profileError) {
       setError(profileError.message);
