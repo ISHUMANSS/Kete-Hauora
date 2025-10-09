@@ -7,7 +7,7 @@
   position: fixed;
   width: 100%;
   top: 0;
-  background-color: rgba(255, 255, 255, 0.75);
+  background-color: var(--brand-red);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   z-index: 100;
@@ -30,7 +30,7 @@
 }
 
 .hamburger:hover {
-  background: rgba(153, 0, 255, 0.08);
+  background: rgba(255, 0, 0, 0.11);
   color: #000000;
   border-radius: 8px;
   transition: background 0.2s ease, color 0.2s ease;
@@ -38,11 +38,11 @@
 /* Mobile sidebar */
 .nav-links {
   position: fixed;
-  top: 67px;
-  right: -250px;
+  top: 116px;
+  right: -260px;
   width: 250px;
   margin: 0px;
-  background: linear-gradient(135deg, #ffffff, #e6f0ff);
+  background: white;
   flex-direction: column;
   padding-left: 0px;
   display: flex;
@@ -71,7 +71,7 @@
   height: 100%;
   padding: 10px 20px;
   text-decoration: none;
-  color: #003366;
+  color: var(--brand-red);
   font-weight: 600;
   font-size: 18px;
   transition: color 0.2s ease;
@@ -92,7 +92,7 @@
 }
 
 .nav-links li a:hover {
-  background: rgba(153, 0, 255, 0.08);
+  background: rgba(255, 0, 0, 0.08);
   color: #000000;
   border-radius: 8px;
   transition: background 0.2s ease, color 0.2s ease;
