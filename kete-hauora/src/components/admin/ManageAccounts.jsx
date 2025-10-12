@@ -8,15 +8,25 @@ function ManageAccounts() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [roleId, setRoleId] = useState(null);
+
+  const [currentUser, setCurrentUser] = useState(null);
+
   const [users, setUsers] = useState([]);
   const [orgs, setOrgs] = useState([]);
   const [assignments, setAssignments] = useState({});
 
-  // Get current user role
+  
+
+  //get current user role
   useEffect(() => {
-    async function fetchRole() {
-      const { data: { user }, error } = await supabase.auth.getUser();
-      if (error || !user) return setLoading(false);
+    async function fetchUserAndRole() {
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      if (userError || !user) {
+        setLoading(false);
+        return;
+      }
+
+      setCurrentUser(user);
 
       const { data: profileData, error: profileError } = await supabase
         .from('profiles')
@@ -27,60 +37,91 @@ function ManageAccounts() {
       if (!profileError && profileData) setRoleId(profileData.role_id);
       setLoading(false);
     }
-    fetchRole();
+
+    fetchUserAndRole();
   }, []);
+
+
 
   // Fetch all users, organisations, and assignments
   useEffect(() => {
     if (roleId !== 1) return; // Only for super admin
-
-    async function fetchData() {
-      // Fetch all user profiles
-      const { data: allUsers, error: usersError } = await supabase
-        .from('profiles')
-        .select('id, email, role_id');
-
-      if (usersError) console.log(usersError);
-      else setUsers(allUsers || []);
-
-      // Fetch all organisations
-      const { data: allOrgs, error: orgsError } = await supabase
-        .from('services')
-        .select('service_id, company_name');
-
-      if (orgsError) console.log(orgsError);
-      else setOrgs(allOrgs || []);
-
-      // Fetch current user-organisation assignments
-      const { data: assignmentsData } = await supabase
-        .from('user_organisation')
-        .select('user_id, organisation_id');
-
-      const map = {};
-      assignmentsData?.forEach(a => {
-        map[a.user_id] = a.organisation_id;
-      });
-      setAssignments(map);
-    }
-
     fetchData();
   }, [roleId]);
 
-  if (loading) return <p>Loading...</p>;
-  if (roleId !== 1) return <p>Only super admins can access this page.</p>;
+  // Reusable function to refresh users/orgs/assignments
+  async function fetchData() {
+    const { data: allUsers, error: usersError } = await supabase
+      .from('profiles')
+      .select('id, email, role_id');
 
-  // Assign organisation to a user
+    if (!usersError) setUsers(allUsers || []);
+
+    const { data: allOrgs, error: orgsError } = await supabase
+      .from('services')
+      .select('service_id, company_name');
+
+    if (!orgsError) setOrgs(allOrgs || []);
+
+    const { data: assignmentsData } = await supabase
+      .from('user_organisation')
+      .select('user_id, organisation_id');
+
+    const map = {};
+    assignmentsData?.forEach(a => {
+      map[a.user_id] = a.organisation_id;
+    });
+    setAssignments(map);
+  }
+
+
+  //Change user role
+  const handleRoleChange = async (userId, newRoleId) => {
+    try {
+      console.log("Updating role for:", userId, "to:", newRoleId);
+
+      const { data, error } = await supabase
+        .from('profiles')
+        .update({ role_id: parseInt(newRoleId) })
+        .eq('id', userId)
+        .select();
+
+      if (error) {
+        console.error("Supabase error:", error);
+        alert('Failed to update role: ' + error.message);
+        return;
+      }
+
+      if (data.length === 0) {
+        alert("No profile found for this user ID.");
+        return;
+      }
+
+      alert('Role updated successfully!');
+      await fetchData(); // Refresh data
+    } catch (err) {
+      console.error("Unexpected error:", err);
+      alert("Unexpected error updating role.");
+    }
+  };
+
+
+  // Assign organisation to a user and refresh UI
   const handleAssignOrg = async (userId, orgId) => {
     const { error } = await supabase
       .from('user_organisation')
       .upsert({ user_id: userId, organisation_id: orgId }, { onConflict: ['user_id'] });
 
-    if (error) alert('Failed to assign organisation: ' + error.message);
-    else {
-      setAssignments(prev => ({ ...prev, [userId]: orgId }));
+    if (error) {
+      alert('Failed to assign organisation: ' + error.message);
+    } else {
       alert('Organisation assigned!');
+      await fetchData(); // 🔁 Refresh data from DB
     }
   };
+
+  if (loading) return <p>Loading...</p>;
+  if (roleId !== 1) return <p>Only super admins can access this page.</p>;
 
   return (
     <>
@@ -105,8 +146,16 @@ function ManageAccounts() {
               <tr key={user.id}>
                 <td style={{ border: '1px solid #ccc', padding: '8px' }}>{user.email}</td>
                 <td style={{ border: '1px solid #ccc', padding: '8px' }}>
-                  {user.role_id === 1 ? 'Admin' : 'Service Provider'}
+                  <select
+                    value={user.role_id}
+                    onChange={(e) => handleRoleChange(user.id, parseInt(e.target.value))}
+                    disabled={user.id === currentUser?.id}
+                  >
+                    <option value={1}>Admin</option>
+                    <option value={2}>Service Provider</option>
+                  </select>
                 </td>
+
                 <td style={{ border: '1px solid #ccc', padding: '8px' }}>
                   {user.role_id === 1 ? (
                     <span style={{ color: '#888' }}>Full Access</span>
