@@ -1,13 +1,20 @@
 /* ----- Page Container ----- */
 
-
 .manage-categories-container,
 .manage-filters-container {
-  width: 100%;           /* take full available width */
-  max-width: 1500px;     /* limit width on very large screens */
-  margin: 3rem auto;     /* vertical margin + center horizontally */
-  padding: 3rem;         /* internal spacing */
+  width: 100%; /* take full available width */
+  max-width: 1500px; /* limit width on very large screens */
+  margin: 3rem auto; /* vertical margin + center horizontally */
+  padding: 3rem; /* internal spacing */
   box-sizing: border-box; /* ensure padding is included in width */
+}
+
+.manage-categories-container h1,
+.manage-filters-container h1 {
+  font-family: var(--font-primary);
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--brand-red);
 }
 
 /* ----- Buttons ----- */
@@ -24,49 +31,82 @@
   padding: 8px 14px;
 }
 
+/* ----- Form ----- */
+.form-wrapper {
+  margin: 1rem 0 2rem;
+}
+
+.form-card h2 {
+  font-family: var(--font-primary);
+  text-align: left;
+  margin-bottom: 1rem;
+  color: var(--brand-red);
+}
+
+.form-card {
+  font-family: var(--font-medium);
+  background: var(--brand-white);
+  border-radius: 10px;
+  padding: 1.5rem;
+  border: 1px solid var(--brand-offwhite);
+}
+
+/* Primary button style */
 .btn-primary {
-  background: #0077ff;
-  color: white;
+  border: 1px solid var(--brand-red);
+  background: var(--brand-white);
+  color: var(--brand-red);
 }
 
 .btn-primary:hover {
-  background: #005fd1;
+  background: var(--brand-red);
+  color: var(--brand-white);
 }
 
+/* Secondary Buttn style */
 .btn-secondary {
-  background: #eee;
-  color: #333;
+  border: 1px solid var(--brand-red);
+  background: var(--brand-white);
+  color: var(--brand-red);
 }
 
 .btn-secondary:hover {
-  background: #ddd;
+  background: var(--brand-red);
+  color: var(--brand-white);
 }
 
-.btn-delete {
-  background: #ff4d4d;
-  color: white;
-}
-
-.btn-delete:hover {
-  background: #d93636;
-}
-
+/* Edit, Delete, Assign Buttons */
 .btn-edit {
-  background: #ffc107;
-  color: #333;
+  border: 1px solid var(--brand-yellow);
+  background: var(--brand-offwhite);
+  color: var(--brand-black);
 }
 
 .btn-edit:hover {
-  background: #e0a800;
+  background: var(--brand-yellow);
+  color: var(--brand-white);
+}
+
+.btn-delete {
+  border: 1px solid var(--brand-red);
+  background: var(--brand-white);
+  color: var(--brand-black);
+}
+
+.btn-delete:hover {
+  background: var(--brand-red);
+  color: var(--brand-white);
 }
 
 .btn-assign {
-  background: #0077ff;
-  color: white;
+  border: 1px solid var(--brand-blue);
+  background: var(--brand-white);
+  color: var(--brand-black);
 }
 
 .btn-assign:hover {
-  background: #005fd1;
+  background: var(--brand-blue);
+  color: var(--brand-white);
 }
 
 /* ----- Grid of Filters ----- */
@@ -82,7 +122,7 @@
 
 /* Each card looks more like a polished tile */
 .filter-card {
-  background: #f5faff;
+  background: var(--brand-white);
   border-radius: 12px;
   padding: 1.5rem;
   display: flex;
@@ -94,14 +134,13 @@
 }
 
 .filter-card:hover {
-  background: #eaf3ff;
   transform: translateY(-4px);
 }
 
 /* Title styling inside the card */
 .filter-card h3 {
   font-size: 1.2rem;
-  color: #111827;
+  color: var(--brand-red);
   text-align: center;
   margin-bottom: 1rem;
   word-break: break-word;
@@ -124,21 +163,8 @@
   font-weight: 500;
 }
 
-
-
-/* ----- Form ----- */
-.form-wrapper {
-  margin: 1rem 0 2rem;
-}
-
-.form-card {
-  background: #fafafa;
-  border-radius: 10px;
-  padding: 1.5rem;
-  border: 1px solid #eee;
-}
-
 .input-box {
+  font-family: var(--font-secondary);
   width: 100%;
   padding: 10px;
   border-radius: 8px;
@@ -179,7 +205,7 @@
 .assign-panel {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; 
+  justify-content: space-between;
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 12px;
@@ -189,10 +215,11 @@
   max-height: 80vh;
   overflow-y: auto;
 }
+
 .assign-content {
   overflow-y: auto;
   max-height: calc(80vh - 80px); /* leave space for the save button */
-  padding-bottom: 1rem;         /* extra space at bottom */
+  padding-bottom: 1rem; /* extra space at bottom */
 }
 
 .assign-header {
@@ -292,7 +319,4 @@
   border-radius: 12px;
   padding: 2rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  
 }
-
-
