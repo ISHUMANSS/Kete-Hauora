@@ -26,18 +26,18 @@
 }
 
 .dashboard-card {
-  background: #fff;
+  background: var(--brand-white);
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px var(--brand-black);
   padding: 25px;
   text-decoration: none;
-  color: #333;
+  color: var(--brand-gray);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .dashboard-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 20px var(--brand-black);
 }
 
 .dashboard-card h2 {
