@@ -174,7 +174,7 @@ Future development could include:
   - Full support site for Pacific languages and Te Reo Māori  
   - User-selectable language preferences
 
--**Batch Admin Service Uploads**
+- **Batch Admin Service Uploads**
   - Allow Super Admins to upload many listings at once, from a CSV to streamline the addition process
 
 - **Service Provider Portal**  
