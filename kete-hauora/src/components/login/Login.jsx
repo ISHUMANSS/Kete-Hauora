@@ -103,7 +103,7 @@ function LoginPage() {
             </p>
           </div>
           <div className="back-link">
-            <Link to="/">{t("← Back to Home")}</Link>
+            <Link to="/">← {t("Back to Home")}</Link>
           </div>
         </form>
       </div>
