@@ -1,0 +1,148 @@
+.add-org-page {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  background: var(--brand-offwhite);
+  min-height: 100vh;
+  font-family: var(--font-secondary);
+  color: var(--brand-black);
+}
+
+/* Card */
+.add-org-card {
+  background: var(--brand-white);
+  padding: 2.25rem;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px var(--brand-offwhite);
+  width: 100%;
+  max-width: 820px;
+  border-top: 6px solid var(--brand-red);
+}
+
+/* Back button (secondary action) */
+.add-org-back-button {
+  background: none;
+  border: none;
+  border-radius: 5px;
+  color: var(--brand-red);
+  cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-medium);
+  transition: color 0.2s ease;
+}
+.add-org-back-button:hover {
+  color: var(--brand-white);
+  background-color: var(--brand-red);
+  text-decoration: underline;
+}
+
+/* Title & subtitle */
+.add-org-title {
+  text-align: center;
+  font-size: 1.9rem;
+  margin: 0.25rem 0 0.5rem 0;
+  color: var(--brand-red);
+  font-family: var(--font-primary);
+  line-height: 1.05;
+}
+
+.add-org-subtitle {
+  text-align: center;
+  margin-bottom: 1.4rem;
+  color: var(--brand-black);
+  opacity: 0.75;
+  font-family: var(--font-medium);
+}
+
+/* Form grid */
+.add-org-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+/* Form group */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+.form-group label {
+  margin-bottom: 0.35rem;
+  font-weight: 500;
+  color: var(--brand-black);
+  font-family: var(--font-secondary);
+}
+
+/* Inputs, selects, textareas */
+.form-input,
+.form-select,
+.form-textarea {
+  padding: 0.85rem;
+  border: 1px solid var(--brand-gray);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: var(--font-secondary);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  background: var(--brand-white);
+  color: var(--brand-black);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--brand-green);
+  box-shadow: 0 0 0 4px rgba(1, 153, 99, 0.08);
+}
+
+/* Textarea specific */
+.form-textarea {
+  resize: vertical;
+  min-height: 84px;
+}
+
+/* Submit button (primary action) */
+.add-org-submit {
+  margin-top: 1.5rem;
+  padding: 12px;
+  width: 100%;
+  background: var(--brand-red);
+  color: var(--brand-white);
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: var(--font-medium);
+  transition: background 0.18s ease, transform 0.06s ease;
+}
+
+.add-org-submit:hover {
+  color: var(--brand-red);
+  background: var(--brand-white);
+  border: 1px solid var(--brand-red);
+  transform: translateY(-1px);
+}
+
+.add-org-submit:active {
+  transform: translateY(0);
+}
+
+/* Make submit button full-width under grid */
+.add-org-form > .form-group:last-child {
+  grid-column: 1 / -1;
+}
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .add-org-card {
+    padding: 1.25rem;
+    border-radius: 8px;
+  }
+  .add-org-title {
+    font-size: 1.4rem;
+  }
+  .add-org-form {
+    gap: 0.75rem;
+  }
+}

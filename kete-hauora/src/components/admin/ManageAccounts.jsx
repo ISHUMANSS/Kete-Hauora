@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react';
-import { supabase } from '../../config/supabaseClient';
-import Navbar from '../navbar/navbar';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { supabase } from "../../config/supabaseClient";
+import Navbar from "../navbar/navbar";
+import { useNavigate } from "react-router-dom";
+import "./ManageAccounts.css";
 
 function ManageAccounts() {
   const navigate = useNavigate();
@@ -15,12 +16,13 @@ function ManageAccounts() {
   const [orgs, setOrgs] = useState([]);
   const [assignments, setAssignments] = useState({});
 
-  
-
   //get current user role
   useEffect(() => {
     async function fetchUserAndRole() {
-      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
       if (userError || !user) {
         setLoading(false);
         return;
@@ -29,9 +31,9 @@ function ManageAccounts() {
       setCurrentUser(user);
 
       const { data: profileData, error: profileError } = await supabase
-        .from('profiles')
-        .select('role_id')
-        .eq('id', user.id)
+        .from("profiles")
+        .select("role_id")
+        .eq("id", user.id)
         .single();
 
       if (!profileError && profileData) setRoleId(profileData.role_id);
@@ -40,8 +42,6 @@ function ManageAccounts() {
 
     fetchUserAndRole();
   }, []);
-
-
 
   // Fetch all users, organisations, and assignments
   useEffect(() => {
@@ -52,28 +52,27 @@ function ManageAccounts() {
   // Reusable function to refresh users/orgs/assignments
   async function fetchData() {
     const { data: allUsers, error: usersError } = await supabase
-      .from('profiles')
-      .select('id, email, role_id');
+      .from("profiles")
+      .select("id, email, role_id");
 
     if (!usersError) setUsers(allUsers || []);
 
     const { data: allOrgs, error: orgsError } = await supabase
-      .from('services')
-      .select('service_id, company_name');
+      .from("services")
+      .select("service_id, company_name");
 
     if (!orgsError) setOrgs(allOrgs || []);
 
     const { data: assignmentsData } = await supabase
-      .from('user_organisation')
-      .select('user_id, organisation_id');
+      .from("user_organisation")
+      .select("user_id, organisation_id");
 
     const map = {};
-    assignmentsData?.forEach(a => {
+    assignmentsData?.forEach((a) => {
       map[a.user_id] = a.organisation_id;
     });
     setAssignments(map);
   }
-
 
   //Change user role
   const handleRoleChange = async (userId, newRoleId) => {
@@ -81,14 +80,14 @@ function ManageAccounts() {
       console.log("Updating role for:", userId, "to:", newRoleId);
 
       const { data, error } = await supabase
-        .from('profiles')
+        .from("profiles")
         .update({ role_id: parseInt(newRoleId) })
-        .eq('id', userId)
+        .eq("id", userId)
         .select();
 
       if (error) {
         console.error("Supabase error:", error);
-        alert('Failed to update role: ' + error.message);
+        alert("Failed to update role: " + error.message);
         return;
       }
 
@@ -97,7 +96,7 @@ function ManageAccounts() {
         return;
       }
 
-      alert('Role updated successfully!');
+      alert("Role updated successfully!");
       await fetchData(); // Refresh data
     } catch (err) {
       console.error("Unexpected error:", err);
@@ -105,17 +104,19 @@ function ManageAccounts() {
     }
   };
 
-
   // Assign organisation to a user and refresh UI
   const handleAssignOrg = async (userId, orgId) => {
     const { error } = await supabase
-      .from('user_organisation')
-      .upsert({ user_id: userId, organisation_id: orgId }, { onConflict: ['user_id'] });
+      .from("user_organisation")
+      .upsert(
+        { user_id: userId, organisation_id: orgId },
+        { onConflict: ["user_id"] }
+      );
 
     if (error) {
-      alert('Failed to assign organisation: ' + error.message);
+      alert("Failed to assign organisation: " + error.message);
     } else {
-      alert('Organisation assigned!');
+      alert("Organisation assigned!");
       await fetchData(); // 🔁 Refresh data from DB
     }
   };
@@ -126,29 +127,37 @@ function ManageAccounts() {
   return (
     <>
       <Navbar />
-      <div style={{ padding: '2rem' }}>
-        <button onClick={() => navigate(-1)} style={{ marginBottom: '1rem', cursor: 'pointer' }}>
+      <div className="manage-accounts-container">
+        <button onClick={() => navigate(-1)} className="back-button">
           ← Back
         </button>
 
         <h1>Manage Accounts</h1>
 
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '1rem' }}>
+        <table className="accounts-table">
           <thead>
             <tr>
-              <th style={{ border: '1px solid #ccc', padding: '8px' }}>Email</th>
-              <th style={{ border: '1px solid #ccc', padding: '8px' }}>Role</th>
-              <th style={{ border: '1px solid #ccc', padding: '8px' }}>Assigned Organisation</th>
+              <th style={{ border: "1px solid #ccc", padding: "8px" }}>
+                Email
+              </th>
+              <th style={{ border: "1px solid #ccc", padding: "8px" }}>Role</th>
+              <th style={{ border: "1px solid #ccc", padding: "8px" }}>
+                Assigned Organisation
+              </th>
             </tr>
           </thead>
           <tbody>
-            {users.map(user => (
+            {users.map((user) => (
               <tr key={user.id}>
-                <td style={{ border: '1px solid #ccc', padding: '8px' }}>{user.email}</td>
-                <td style={{ border: '1px solid #ccc', padding: '8px' }}>
+                <td style={{ border: "1px solid #ccc", padding: "8px" }}>
+                  {user.email}
+                </td>
+                <td style={{ border: "1px solid #ccc", padding: "8px" }}>
                   <select
                     value={user.role_id}
-                    onChange={(e) => handleRoleChange(user.id, parseInt(e.target.value))}
+                    onChange={(e) =>
+                      handleRoleChange(user.id, parseInt(e.target.value))
+                    }
                     disabled={user.id === currentUser?.id}
                   >
                     <option value={1}>Admin</option>
@@ -156,16 +165,18 @@ function ManageAccounts() {
                   </select>
                 </td>
 
-                <td style={{ border: '1px solid #ccc', padding: '8px' }}>
+                <td style={{ border: "1px solid #ccc", padding: "8px" }}>
                   {user.role_id === 1 ? (
-                    <span style={{ color: '#888' }}>Full Access</span>
+                    <span style={{ color: "#888" }}>Full Access</span>
                   ) : (
                     <select
-                      value={assignments[user.id] || ''}
-                      onChange={e => handleAssignOrg(user.id, parseInt(e.target.value))}
+                      value={assignments[user.id] || ""}
+                      onChange={(e) =>
+                        handleAssignOrg(user.id, parseInt(e.target.value))
+                      }
                     >
                       <option value="">-- Select Organisation --</option>
-                      {orgs.map(org => (
+                      {orgs.map((org) => (
                         <option key={org.service_id} value={org.service_id}>
                           {org.company_name}
                         </option>
