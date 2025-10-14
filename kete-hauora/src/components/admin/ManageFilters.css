@@ -1,13 +1,20 @@
 /* ----- Page Container ----- */
 
-
 .manage-categories-container,
 .manage-filters-container {
-  width: 100%;           /* take full available width */
-  max-width: 1500px;     /* limit width on very large screens */
-  margin: 3rem auto;     /* vertical margin + center horizontally */
-  padding: 3rem;         /* internal spacing */
+  width: 100%; /* take full available width */
+  max-width: 1500px; /* limit width on very large screens */
+  margin: 3rem auto; /* vertical margin + center horizontally */
+  padding: 3rem; /* internal spacing */
   box-sizing: border-box; /* ensure padding is included in width */
+}
+
+.manage-categories-container h1,
+.manage-filters-container h1 {
+  font-family: var(--font-primary);
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--brand-red);
 }
 
 /* ----- Buttons ----- */
@@ -24,49 +31,82 @@
   padding: 8px 14px;
 }
 
+/* ----- Form ----- */
+.form-wrapper {
+  margin: 1rem 0 2rem;
+}
+
+.form-card h2 {
+  font-family: var(--font-primary);
+  text-align: left;
+  margin-bottom: 1rem;
+  color: var(--brand-red);
+}
+
+.form-card {
+  font-family: var(--font-medium);
+  background: var(--brand-white);
+  border-radius: 10px;
+  padding: 1.5rem;
+  border: 1px solid var(--brand-offwhite);
+}
+
+/* Primary button style */
 .btn-primary {
-  background: #0077ff;
-  color: white;
+  border: 1px solid var(--brand-red);
+  background: var(--brand-white);
+  color: var(--brand-red);
 }
 
 .btn-primary:hover {
-  background: #005fd1;
+  background: var(--brand-red);
+  color: var(--brand-white);
 }
 
+/* Secondary Buttn style */
 .btn-secondary {
-  background: #eee;
-  color: #333;
+  border: 1px solid var(--brand-red);
+  background: var(--brand-white);
+  color: var(--brand-red);
 }
 
 .btn-secondary:hover {
-  background: #ddd;
+  background: var(--brand-red);
+  color: var(--brand-white);
 }
 
-.btn-delete {
-  background: #ff4d4d;
-  color: white;
-}
-
-.btn-delete:hover {
-  background: #d93636;
-}
-
+/* Edit, Delete, Assign Buttons */
 .btn-edit {
-  background: #ffc107;
-  color: #333;
+  border: 1px solid var(--brand-yellow);
+  background: var(--brand-offwhite);
+  color: var(--brand-black);
 }
 
 .btn-edit:hover {
-  background: #e0a800;
+  background: var(--brand-yellow);
+  color: var(--brand-white);
+}
+
+.btn-delete {
+  border: 1px solid var(--brand-red);
+  background: var(--brand-white);
+  color: var(--brand-black);
+}
+
+.btn-delete:hover {
+  background: var(--brand-red);
+  color: var(--brand-white);
 }
 
 .btn-assign {
-  background: #0077ff;
-  color: white;
+  border: 1px solid var(--brand-blue);
+  background: var(--brand-white);
+  color: var(--brand-black);
 }
 
 .btn-assign:hover {
-  background: #005fd1;
+  background: var(--brand-blue);
+  color: var(--brand-white);
 }
 
 /* ----- Grid of Filters ----- */
@@ -82,26 +122,25 @@
 
 /* Each card looks more like a polished tile */
 .filter-card {
-  background: #f5faff;
+  background: var(--brand-white);
   border-radius: 12px;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 3px 8px var(--brand-black);
   transition: all 0.2s ease;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--brand-offwhite);
 }
 
 .filter-card:hover {
-  background: #eaf3ff;
   transform: translateY(-4px);
 }
 
 /* Title styling inside the card */
 .filter-card h3 {
   font-size: 1.2rem;
-  color: #111827;
+  color: var(--brand-red);
   text-align: center;
   margin-bottom: 1rem;
   word-break: break-word;
@@ -124,25 +163,12 @@
   font-weight: 500;
 }
 
-
-
-/* ----- Form ----- */
-.form-wrapper {
-  margin: 1rem 0 2rem;
-}
-
-.form-card {
-  background: #fafafa;
-  border-radius: 10px;
-  padding: 1.5rem;
-  border: 1px solid #eee;
-}
-
 .input-box {
+  font-family: var(--font-secondary);
   width: 100%;
   padding: 10px;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--brand-offwhite);
   margin-bottom: 1rem;
 }
 
@@ -155,19 +181,19 @@
 .dashboard-table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
+  background: var(--brand-white);
 }
 
 .dashboard-table th,
 .dashboard-table td {
   text-align: left;
   padding: 12px 10px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--brand-offwhite);
 }
 
 .dashboard-table th {
-  background: #f0f4ff;
-  color: #333;
+  background: var(--brand-offwhite);
+  color: var(--brand-red);
 }
 
 .action-buttons {
@@ -179,20 +205,21 @@
 .assign-panel {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; 
-  background: #fff;
-  border: 1px solid #ddd;
+  justify-content: space-between;
+  background: var(--brand-white);
+  border: 1px solid var(--brand-offwhite);
   border-radius: 12px;
   padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px var(--brand-black);
   margin-top: 1rem;
   max-height: 80vh;
   overflow-y: auto;
 }
+
 .assign-content {
   overflow-y: auto;
   max-height: calc(80vh - 80px); /* leave space for the save button */
-  padding-bottom: 1rem;         /* extra space at bottom */
+  padding-bottom: 1rem; /* extra space at bottom */
 }
 
 .assign-header {
@@ -202,7 +229,7 @@
 }
 
 .btn-close {
-  background: #ff4d4d;
+  background: var(--brand-red);
   color: white;
 }
 
@@ -215,8 +242,8 @@
 }
 
 .tag {
-  background: #e0f0ff;
-  color: #0077ff;
+  background: var(--brand-offwhite);
+  color: var(--brand-blue);
   padding: 6px 10px;
   border-radius: 6px;
   display: inline-flex;
@@ -228,7 +255,7 @@
   background: transparent;
   border: none;
   font-weight: bold;
-  color: #0077ff;
+  color: var(--brand-blue);
   cursor: pointer;
 }
 
@@ -237,7 +264,7 @@
   width: 100%;
   padding: 10px;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--brand-offwhite);
   margin-bottom: 1rem;
 }
 
@@ -250,8 +277,8 @@
 }
 
 .service-card {
-  background: #f9f9f9;
-  border: 1px solid #eee;
+  background: var(--brand-white);
+  border: 1px solid var(--brand-offwhite);
   border-radius: 8px;
   padding: 10px;
   display: flex;
@@ -261,7 +288,7 @@
 }
 
 .service-card:hover {
-  background: #eef5ff;
+  background: var(--brand-offwhite);
 }
 
 /* Save section */
@@ -278,7 +305,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--brand-black);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -291,8 +318,5 @@
   background: white;
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  
+  box-shadow: 0 4px 12px var(--brand-black);
 }
-
-

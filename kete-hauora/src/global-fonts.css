@@ -1,0 +1,27 @@
+@font-face {
+  font-family: "Buendia ExtraBold";
+  src: url("./assets/fonts/Buendia-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Azo Sans Regular";
+  src: url("./assets/fonts/AzoSans-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Azo Sans Medium";
+  src: url("./assets/fonts/AzoSans-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+/* Alternative fonts if the brand fonts don't load */
+:root {
+  --font-primary: "Buendia ExtraBold", Arial, sans-serif;
+  --font-secondary: "Azo Sans Regular", Arial, sans-serif;
+  --font-medium: "Azo Sans Medium", Arial, sans-serif;
+}

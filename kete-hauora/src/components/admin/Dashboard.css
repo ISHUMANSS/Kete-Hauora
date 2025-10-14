@@ -1,9 +1,3 @@
-.dashboard-page {
-  padding-top: 80px; /* space for navbar */
-  min-height: 100vh;
-  background-color: #f9f9f9;
-}
-
 .dashboard-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -11,16 +5,18 @@
 }
 
 .dashboard-title {
+  font-family: var(--font-primary);
   font-size: 2.5rem;
   margin-bottom: 10px;
   text-align: center;
-  color: #333;
+  color: var(--brand-red);
 }
 
 .dashboard-subtitle {
+  font-family: var(--font-medium);
   text-align: center;
   margin-bottom: 40px;
-  color: #666;
+  color: var(--brand-black);
 }
 
 .dashboard-grid {
@@ -30,26 +26,28 @@
 }
 
 .dashboard-card {
-  background: #fff;
+  background: var(--brand-white);
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px var(--brand-black);
   padding: 25px;
   text-decoration: none;
-  color: #333;
+  color: var(--brand-gray);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .dashboard-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 20px var(--brand-black);
 }
 
 .dashboard-card h2 {
+  font-family: var(--font-medium);
+  color: var(--brand-red);
   margin-bottom: 12px;
   font-size: 1.5rem;
 }
 
 .dashboard-card p {
-  color: #555;
-  font-size: 1rem;
+  font-family: var(--font-secondary);
+  color: var(--brand-black);
 }

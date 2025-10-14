@@ -19,9 +19,11 @@
     "Tutorial Video (Coming Soon)": "Ataata Āwhina (Kei te Heke Mai)",
     "A short tutorial video will be added here to help you navigate Te Kete Hauora.": "Ka tāpiritia ki konei tētahi ataata āwhina poto hei āwhina i a koe ki te whakatere i Te Kete Hauora.",
 
-
     "//comment": "Contact.jsx",
-    "Contact page": "Whārangi whakapā",
+    "Reach out to the Kete Hauora team for any queries or support.": "Whakapā atu ki te tīma o Te Kete Hauora mō ngā pātai, mō te tautoko rānei.",
+    "Contact Information": "Ngā pārongo whakapā",
+    "Other Info": "Ētahi atu pārongo",
+    "Additional information or instructions for contacting the team can go here.": "Ka taea te tāpiri pārongo anō, tohutohu rānei mō te whakapā atu ki te tīma ki konei.",
 
     "//comment": "Filters.jsx",
     "Filters": "Kōwhiringa",
@@ -42,6 +44,19 @@
     "All Languages": "Ngā Reo Katoa",
     "Clear Filters": "Horoi Kōwhiringa",
 
+    "//comment": "Homepage.jsx",
+    "Your community health and wellbeing directory.": "Tō aratohu hauora me te oranga hapori.",
+    "Te Kete Hauora makes it simple to find local health and community services across Counties Manukau. Whether you’re looking for medical care, mental health support, social services, or community programs, this platform helps you connect with the right services quickly and easily.": "He mea ngawari e Te Kete Hauora te kimi ratonga hauora me ngā ratonga hapori puta noa i Counties Manukau. Ahakoa e rapu ana koe i te tiaki hauora, te tautoko hauora hinengaro, ngā ratonga pāpori, rānei i ngā hōtaka hapori, mā tēnei papa ka hono wawe koe ki ngā ratonga tika mōu.",
+    "Why use Te Kete Hauora?": "He aha koe e whakamahi ai i Te Kete Hauora?",
+    "Up-to-date information – no more outdated PDFs": "Ngā pārongo hou tonu – kāore he kōnae PDF tawhito anō.",
+    "Simple search – find services by category, cost, or location": "Rapunga māmā – kimi ratonga mā te kāwai, te utu, rānei te wāhi",
+    "Accessible to everyone – on mobile, desktop, and in multiple languages": "Ka wātea ki te katoa – i runga waea pūkoro, rorohiko papamahi, ā, i roto i ngā reo maha.",
+    "Community-driven – providers can update their details directly": "Nā te hapori e whakahaere – ka taea e ngā kaiwhakarato te whakahou tika i ō rātou pārongo.",
+    "Start exploring today": "Tīmata te torotoro i tēnei rā.",
+    "Go to the": "Haere ki te",
+    "Find a Service": "Kimihia he Ratonga",
+    "page on the navigation bar to search by category or discover services available in your community.": "whārangi kei runga i te pae whakatere hei rapu mā te kāwai, hei kimi rānei i ngā ratonga kei tō hapori.",
+
     "//comment": "Login.jsx",
     "Login": "Takiuru",
     "Email": "Īmēra",
@@ -50,6 +65,7 @@
     "Forgot password": "Kua wareware te kupuhipa",
     "Don't have an account?": "Kāore ō pūkete?",
     "Register": "Rehita",
+    
 
     "//comment": "Register.jsx",
     "Already have an account?": "He pūkete kē?",

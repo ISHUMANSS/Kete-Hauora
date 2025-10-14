@@ -5,7 +5,7 @@
 }
 
 .chip {
-  background: #cac8c8;
+  background: var(--brand-gray);
   border-radius: 2rem;
   padding: 0.4rem 0.8rem;
   cursor: pointer;
@@ -13,5 +13,5 @@
 }
 
 .chip:hover {
-  background: #ddd;
+  background: var(--brand-gray);
 }

@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import "./Services.css"; // reuse same styles
-import Navbar from "../navbar/navbar";
 import SearchBar from "../searchBar/searchBar";
 import FiltersBox from "../filters/Filters";
 import Search from "../search/search";
 import SearchAll from "../searchall/searchall";
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const Services = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -29,7 +28,6 @@ const Services = () => {
     setSearchTrigger((prev) => prev + 1); // rerun search
   };
 
-
   const isAnyFilterActive = Object.values(filters).some(
     (val) => val !== null && val !== "" && String(val).trim() !== ""
   );
@@ -37,11 +35,9 @@ const Services = () => {
   const shouldShowSearch = searchInput.trim() || isAnyFilterActive;
 
   return (
-    <div className="home">
-      <Navbar />
-
+    <div className="services">
       <div className="center-container">
-        <h1 className="title">{t("Find A Service")}</h1>
+        <h1>{t("Find A Service")}</h1>
         <SearchBar
           searchInput={searchInput}
           setSearchInput={setSearchInput}

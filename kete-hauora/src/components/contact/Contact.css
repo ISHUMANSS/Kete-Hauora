@@ -1,34 +1,86 @@
-.home {
+.contact {
+  background-color: var(--brand-offwhite);
+  font-family: var(--font-secondary);
+  color: var(--brand-black);
+  min-height: 100vh;
   margin: 0;
   padding: 0;
-  background-color: aliceblue;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  min-height: 100vh;
-  font-family: 'Poppins', sans-serif;
-  color: #1f2937;
 }
 
-
-.center-container {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem;
-  margin: 0 auto;
-  max-width: 900px;
+.contact-hero {
   text-align: center;
+  padding: 4rem 2rem 3rem;
+  background-color: var(--brand-offwhite);
+  color: var(--brand-black);
 }
 
-.title {
-  color: #000000;
-  font-size: 2.5rem;
+.contact-hero h1 {
+  font-family: var(--font-primary);
+  font-size: 3rem;
+  color: var(--brand-red);
   margin-bottom: 1rem;
 }
 
+.contact-hero p {
+  font-family: var(--font-medium);
+  font-size: 1.2rem;
+  opacity: 0.85;
+  margin: 0 auto;
+  max-width: 600px;
+}
 
+.contact-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
 
+.contact-info,
+.contact-extra {
+  background-color: var(--brand-white);
+  padding: 2rem;
+  border-radius: 1.25rem;
+  box-shadow: 0 0.25rem 0.75rem var(--brand-black);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
+.contact-info:hover,
+.contact-extra:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px var(--brand-black);
+}
+
+.contact-info h2,
+.contact-extra h2 {
+  font-family: var(--font-medium);
+  font-size: 1.8rem;
+  color: var(--brand-red);
+  margin-bottom: 1rem;
+  padding-left: 1rem;
+  border-left: 5px solid var(--brand-red);
+}
+
+.contact-info p,
+.contact-extra p {
+  font-family: var(--font-secondary);
+  margin: 0.5rem 0;
+  line-height: 1.7;
+  color: var(--brand-black);
+}
+
+/* Responsive layout for desktop */
+@media (min-width: 768px) {
+  .contact-content {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .contact-info,
+  .contact-extra {
+    flex: 1;
+  }
+}

@@ -1,9 +1,9 @@
 /* General page styles */
 .about {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   min-height: 100vh;
-  background: #fafafa; /* subtle background */
-  color: #333;
+  background: var(--brand-offwhite); /* subtle background */
+  color: var(--brand-black);
 }
 
 /* Content container */
@@ -16,15 +16,21 @@
 
 /* Main heading */
 .about-content h1 {
+  font-family: var(--font-primary);
   font-size: 3rem;
-  font-weight: 700;
   margin-bottom: 1.5rem;
-  color: #00695c; /* deep teal */
+  color: var(--brand-red);
+}
+
+.about-content p {
+  font-family: var(--font-secondary);
+  margin-bottom: 1.5rem;
+  color: var(--brand-black);
 }
 
 /* Sections */
 .about-section {
-  background: #fff;
+  background: var(--brand-white);
   margin: 2rem 0;
   padding: 2rem;
   border-radius: 16px;
@@ -40,19 +46,20 @@
 
 /* Section titles */
 .about-section h2 {
+  font-family: var(--font-medium);
   font-size: 2rem;
   margin-bottom: 1rem;
-  color: #004d40;
-  border-left: 5px solid #26a69a;
+  color: var(--brand-red);
+  border-left: 5px solid var(--brand-red);
   padding-left: 12px;
 }
 
 /* Paragraphs */
 .about-section p {
-  font-size: 1.1rem;
+  font-family: var(--font-secondary);
   line-height: 1.7;
   margin-bottom: 1rem;
-  color: #555;
+  color: var(--brand-black);
 }
 
 /* Lists */
@@ -62,37 +69,43 @@
 }
 
 .about-section ul li {
+  font-family: var(--font-secondary);
   margin-bottom: 0.5rem;
-  font-size: 1.05rem;
 }
 
 /* Video placeholder */
 .video-placeholder {
-  background: linear-gradient(135deg, #e0f2f1, #b2dfdb);
+  background: linear-gradient(
+    135deg,
+    var(--brand-offwhite),
+    var(--brand-green)
+  );
   border-radius: 12px;
   padding: 2rem;
   text-align: center;
   font-size: 1.1rem;
-  color: #004d40;
+  color: var(--brand-green);
   font-weight: 500;
 }
 
-
 /*disclaimer styling */
 .disclaimer {
-  background: #fff3cd; /* soft amber */
-  border-left: 6px solid #ffca28;
+  background: #fff3cd;
+  border-left: 6px solid var(--brand-yellow);
   padding: 2rem;
   border-radius: 12px;
-  color: #5c3d00;
+  color: var(--brand-yellow);
 }
 
 .disclaimer h2 {
-  color: #8a6000;
+  font-family: var(--font-medium);
+  font-size: 2rem;
+  color: var(--brand-red);
 }
 
 .disclaimer p {
-  font-size: 1rem;
-  line-height: 1.6;
+  font-family: var(--font-secondary);
+  line-height: 1.7;
   margin-bottom: 1rem;
+  color: var(--brand-black);
 }

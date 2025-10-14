@@ -1,145 +1,176 @@
 /* LoginPage.css */
 /* Styling for moblie */
-.login {
-    background-image: url("blue2.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 100vh;
-    font-family: 'Poppins', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--brand-gray);
+  font-family: var(--font-secondary);
 }
 
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  font-family: var(--font-secondary);
+  background-color: var(--brand-gray);
+  box-sizing: border-box;
+}
 
-/* Login form styles specific to LoginPage */
+/* Login form styles for Login/Register Pages */
 .wrapper {
-    width: 420px;
-    max-width: 420px;
-    background: transparent;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(20px);
-    color: #fff;
-    border-radius: 10px;
-    padding: 25px 20px;
-    margin-top: 60px; /* Adjust depending on navbar height */
-    box-sizing: border-box;
+  width: 100%;
+  max-width: 420px;
+  padding: 25px 20px;
+  margin-top: 60px;
+  border-radius: 10px;
+  background: var(--brand-white);
+  box-shadow: 0 0 10px var(--brand-red);
+  color: var(--brand-red);
+  box-sizing: border-box;
 }
 
 .wrapper h1 {
-    font-size: 28px;
-    text-align: center;
+  font-family: var(--font-primary);
+  font-size: 28px;
+  text-align: center;
 }
 
-.wrapper .input-box {
-    width: 100%;
-    margin: 15px 0;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.input-box {
+  font-family: var(--font-secondary);
+  width: 100%;
+  margin: 15px 0;
+  position: relative;
 }
 
 .input-box input {
-    width: 100%;
-    height: 40px;
-    background: transparent;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 40px;
-    outline: none;
-    font-size: 14px;
-    color: #fff;
-    padding: 10px 45px 10px 15px;
+  width: 100%;
+  height: 40px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 40px;
+  background-color: var(--brand-gray);
+  outline: none;
+  font-size: 14px;
+  font-family: var(--font-secondary);
+  color: var(--brand-black);
 }
 
 .input-box input::placeholder {
-    color: #fff;
-}
-
-.input-box i {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 18px;
+  color: var(--brand-off-white);
 }
 
 .wrapper .remember-forgot {
-    display: flex;
-    justify-content: space-between;
-    font-size: 13x;
-    margin: -10px 0 15px;
-    gap: 10px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13x;
+  margin: -10px 0 15px;
+  gap: 10px;
 }
 
 .remember-forgot label input {
-    accent-color: #fff;
-    margin-right: 3px;
+  accent-color: var(--brand-black);
+  margin-right: 3px;
 }
 
-.remember-forgot a {
-    color: #fff;
-    text-decoration: none;
+/* Forgot password as link style */
+.forgot-password-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--brand-black);
+  cursor: pointer;
+  text-decoration: underline;
+  font-family: var(--font-secondary);
+  font-size: 13px;
 }
 
-.remember-forgot a:hover {
-    text-decoration: underline;
+.forgot-password-link:hover {
+  color: var(--brand-red);
 }
 
+/* Login Button */
 .wrapper .btn {
-    width: 100%;
-    height: 45px;
-    background: #fff;
-    border: none;
-    outline: none;
-    border-radius: 40px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    font-size: 16px;
-    color: #333;
-    font-weight: 600;
+  width: 100%;
+  height: 45px;
+  border: none;
+  border-radius: 40px;
+  background: var(--brand-gray);
+  color: var(--brand-black);
+  font-family: var(--font-medium);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
 }
 
-.wrapper .register-link {
-    font-size: 13px;
-    text-align: center;
-    margin: 20px 0 10px;
+.wrapper .btn:hover {
+  background: var(--brand-red);
+  color: var(--brand-white);
 }
 
-.register-link p a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
+/* Register link */
+.register-link {
+  font-size: 13px;
+  text-align: center;
+  margin: 20px 0 10px;
+  font-family: var(--font-secondary);
 }
 
-.register-link p a:hover {
-    text-decoration: underline;
+.register-link a {
+  color: var(--brand-black);
+  text-decoration: underline;
+  font-weight: 600;
+  transition: color 0.2s ease;
+  font-family: var(--font-medium);
+}
+
+.register-link a:hover {
+  color: var(--brand-red);
+  text-decoration: underline;
+}
+
+.back-link {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.back-link a {
+  color: var(--brand-red);
+  text-decoration: none;
+  font-family: var(--font-medium);
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.back-link a:hover {
+  color: var(--brand-black);
+  text-decoration: underline;
 }
 
 /* Desktop styling */
 @media (min-width: 768px) {
-    .wrapper {
-        padding: 30px 40px;
-        margin-top: 100px;
-    }
+  .wrapper {
+    padding: 30px 40px;
+    margin-top: 100px;
+  }
 
-    .wrapper h1 {
-        font-size: 36px;
-    }
+  .wrapper h1 {
+    font-size: 36px;
+  }
 
-    .input-box i {
-        font-size: 20px;
-    }
+  .remember-forgot {
+    font-size: 14.5px;
+  }
 
-    .wrapper .remember-forgot {
-        flex-direction: row;
-        justify-content: space-between;
-        font-size: 14.5px;
-    }
+  .register-link {
+    font-size: 14.5px;
+  }
 
-    .wrapper .register-link {
-        font-size: 14.5px;
-    }
+  .forgot-password-link {
+    font-size: 14.5px;
+  }
 }

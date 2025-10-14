@@ -1,30 +1,32 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import './navbar.css';
-import { useTranslation } from 'react-i18next';
-import i18next from 'i18next';
-import { useAuth } from '../../hooks/useAuth';
-import { supabase } from '../../config/supabaseClient';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "./navbar.css";
+import { useTranslation } from "react-i18next";
+import i18next from "i18next";
+import { useAuth } from "../../hooks/useAuth";
+import { supabase } from "../../config/supabaseClient";
+import logo from "../../assets/stacked_logo_white.svg";
 
 const Navbar = () => {
   const { t } = useTranslation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { user } = useAuth();   
+
+  const { user } = useAuth();
   const [profile, setProfile] = useState(null);
   const navigate = useNavigate();
 
-  const toggleSidebar = () => setSidebarOpen(prev => !prev);
+  const toggleSidebar = () => setSidebarOpen((prev) => !prev);
 
   // Fetch the user's role
   useEffect(() => {
     const fetchProfile = async () => {
       if (user) {
         const { data, error } = await supabase
-          .from('profiles')
-          .select('role_id')
-          .eq('id', user.id)
+          .from("profiles")
+          .select("role_id")
+          .eq("id", user.id)
           .single();
 
         if (!error) setProfile(data);
@@ -40,68 +42,149 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    navigate('/'); // back to home
+    navigate("/"); // back to home
   };
 
   return (
     <nav className="navbar">
-      <div className="logo">
-        <Link to="/">LOGO</Link>
-      </div>
-
-      <div className="hamburger" onClick={toggleSidebar}>
-        ☰
-      </div>
-
-      <ul className={`nav-links ${sidebarOpen ? 'open' : ''}`}>
-        <li><Link to="/">{t("Home")}</Link></li>
-        <li><Link to="/about">{t("About")}</Link></li>
-        <li><Link to="/contact">{t("Contact Us")}</Link></li>
-        <li>
-          <Link to="/services" className="nav-button">
-            <span className="material-symbols-outlined">search</span>
-            {t("Find A Service")}
+      <div className="nav-container">
+        <div className="logo">
+          <Link to="/">
+            <img
+              src={logo}
+              alt="Middlemore Foundation Logo"
+              className="logo-img"
+            />
           </Link>
-        </li>
+        </div>
 
-        {/* Admin tab - visible to super admin and providers */}
-        {user && profile && (
+        {/* Desktop navigation (hidden on mobile) */}
+        <div className="nav-right desktop-only">
+          <ul className="nav-links top-row">
+            <li>
+              <Link to="/about">
+                <span className="material-symbols-outlined logout-icon">
+                  help
+                </span>
+                {t("About")}
+              </Link>
+            </li>
+            <li>
+              {!user ? (
+                // Login if not logged in
+                <li>
+                  <Link to="/login">
+                    <span className="login-icon material-symbols-outlined">
+                      person
+                    </span>
+                    {t("Login")}
+                  </Link>
+                </li>
+              ) : (
+                // Logout if logged in
+                <li>
+                  <button
+                    onClick={handleLogout}
+                    className="nav-link logout-btn"
+                  >
+                    <span className="material-symbols-outlined logout-icon">
+                      logout
+                    </span>
+                    {t("Logout")}
+                  </button>
+                </li>
+              )}
+            </li>
+            <li>
+              <div className="language-dropdown">
+                <select
+                  onChange={handleLanguageChange}
+                  value={i18next.language}
+                >
+                  <option value="en">English</option>
+                  <option value="mi">Maori</option>
+                </select>
+                <span className="dropdown-icon material-symbols-outlined">
+                  arrow_drop_down
+                </span>
+              </div>
+            </li>
+          </ul>
+
+          <div className="divider"></div>
+
+          <ul className="nav-links bottom-row">
+            <li>
+              <Link to="/contact">
+                <span className="material-symbols-outlined logout-icon">
+                  mail
+                </span>
+                {t("Contact Us")}
+              </Link>
+            </li>
+            <li>
+              <Link to="/services" className="nav-button">
+                <span className="material-symbols-outlined">search</span>
+                {t("Find A Service")}
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      {/* Mobile hamburger + sidebar (hidden on desktop) */}
+      <div className="mobile-only">
+        <div className="hamburger" onClick={toggleSidebar}>
+          ☰
+        </div>
+
+        <ul className={`nav-links ${sidebarOpen ? "open" : ""}`}>
           <li>
-            <Link
-              to={profile.role_id === 1 ? '/super-admin-dashboard' : '/provider-dashboard'}
-              className="admin-link"
-            >
-              <span className="material-symbols-outlined">admin_panel_settings</span>
-              Admin
+            <Link to="/">{t("Home")}</Link>
+          </li>
+          <li>
+            <Link to="/about">{t("About")}</Link>
+          </li>
+          <li>
+            <Link to="/contact">{t("Contact Us")}</Link>
+          </li>
+          <li>
+            <Link to="/services" className="nav-button">
+              <span className="material-symbols-outlined">search</span>
+              {t("Find A Service")}
             </Link>
           </li>
-        )}
 
-        {!user ? (
+          {!user ? (
+            // Login if not logged in
+            <li>
+              <Link to="/login">
+                <span className="login-icon material-symbols-outlined">
+                  person
+                </span>
+                {t("Login")}
+              </Link>
+            </li>
+          ) : (
+            // Logout if logged in
+            <li>
+              <button onClick={handleLogout} className="logout-btn">
+                {t("Logout")}
+              </button>
+            </li>
+          )}
+
+          {/* language selector */}
           <li>
-            <Link to="/login">
-              <span className="login-icon material-symbols-outlined">person</span>
-              {t("Login")}
-            </Link>
+            <select onChange={handleLanguageChange} value={i18next.language}>
+              <option value="en">English</option>
+              <option value="mi">Maori</option>
+            </select>
           </li>
-        ) : (
-          <li>
-            <button onClick={handleLogout} className="logout-btn">
-              {t("Logout")}
-            </button>
-          </li>
-        )}
+        </ul>
 
-        {/* Language selector */}
-        <li>
-          <select className="langselect" onChange={handleLanguageChange} value={i18next.language}>
-            <option value="en">English</option>
-            <option value="mi">Maori</option>
-          </select>
-        </li>
-      </ul>
-
-      {sidebarOpen && <div className="overlay" onClick={toggleSidebar}></div>}
+        {sidebarOpen && <div className="overlay" onClick={toggleSidebar}></div>}
+      </div>
     </nav>
   );
 };

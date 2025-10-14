@@ -1,17 +1,16 @@
 .home {
   margin: 0;
   padding: 0;
-  background-color: aliceblue;
+  background-color: var(--brand-offwhite);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   min-height: 100vh;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   color: #1f2937;
 }
 
-
-.center-container {
+.home-content {
   position: relative;
   z-index: 1;
   display: flex;
@@ -29,6 +28,103 @@
   margin-bottom: 1rem;
 }
 
+/* Desktop styling */
+@media (min-width: 768px) {
+  .homepage {
+    min-height: 100vh;
+    color: #3c3c3b;
+    background-color: var(--brand-offwhite);
+  }
 
+  .homepage-content {
+    padding: 100px 20px 60px;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
 
+  .homepage-content h1 {
+    font-family: var(--font-primary);
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    color: var(--brand-red);
+  }
 
+  .homepage-content p.subtitle {
+    font-family: var(--font-medium);
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    color: var(--brand-black);
+  }
+
+  .homepage-content p {
+    font-family: var(--font-secondary);
+    margin-bottom: 2rem;
+    color: var(--brand-black);
+  }
+
+  .why-section {
+    background: var(--brand-white);
+    margin: 2rem 2rem 0rem 2rem;
+    padding: 2rem 2rem 1rem 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    text-align: left;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .why-section:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  }
+
+  .why-section h2 {
+    font-family: var(--font-primary);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--brand-red);
+    border-left: 5px solid var(--brand-red);
+    padding-left: 12px;
+  }
+
+  .why-section ul {
+    padding-left: 1.5rem;
+    margin: 1rem 0;
+  }
+
+  .why-section ul li {
+    font-family: var(--font-secondary);
+    margin-bottom: 0.5rem;
+    font-size: 1.05rem;
+  }
+
+  .start-section {
+    margin-top: 3rem;
+    text-align: center;
+  }
+
+  .start-section h2 {
+    font-family: var(--font-primary);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--brand-red);
+    padding-left: 12px;
+  }
+
+  .start-section p {
+    font-family: var(--font-secondary);
+    margin-bottom: 1.5rem;
+    color: var(--brand-black);
+  }
+
+  .link-highlight {
+    color: var(--brand-red);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .link-highlight:hover {
+    color: var(--brand-yellow);
+    text-decoration: underline;
+  }
+}

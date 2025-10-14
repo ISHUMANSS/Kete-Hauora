@@ -1,5 +1,5 @@
 .filters-box {
-  background: #fff;
+  background: var(--brand-white);
   border-radius: 1.25rem;
   padding: 1.25rem;
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.15);
@@ -10,7 +10,7 @@
 }
 
 .filters-box.collapsed {
-  padding: 0.75rem 1.25rem; /* smaller padding */
+  padding: 0.75rem 1.25rem;
 }
 
 .filters-header {
@@ -20,6 +20,8 @@
 }
 
 .filters-header h4 {
+  font-family: var(--font-medium);
+  color: var(--brand-red);
   margin: 0;
 }
 
@@ -31,21 +33,32 @@
   height: 2.5rem;
   border: none;
   border-radius: 50%;
-  background-color: #6200ee;
-  color: white; /* make arrow visible */
+  background-color: var(--brand-red);
+  color: var(--brand-white);
   font-size: 1.2rem;
   cursor: pointer;
   transition: background 0.2s ease;
 }
 
 .collapse-btn:hover {
-  background-color: #4b00b5;
+  background-color: var(--brand-red);
+  filter: brightness(0.8);
+}
+
+.clear-btn {
+  font-family: var(--font-medium);
+  background-color: var(--brand-red);
+}
+
+.clear-btn:hover {
+  background-color: var(--brand-red);
+  filter: brightness(0.8);
 }
 
 .filters-section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-  gap: 1.5rem; /* consistent spacing */
+  gap: 1.5rem;
 }
 
 .filter-group {
@@ -53,9 +66,8 @@
   flex-direction: column;
 }
 
-
-
 .filter-group label {
+  font-family: var(--font-secondary);
   font-weight: bold;
   margin-bottom: 0.5rem; /* 8px */
 }
@@ -64,8 +76,8 @@
   margin-top: 1.25rem; /* 20px */
   padding: 0.625rem 1.25rem; /* 10px 20px */
   border: none;
-  background-color: #6200ee;
-  color: white;
+  background-color: var(--brand-red);
+  color: var(--brand-white);
   border-radius: 0.5rem; /* 8px */
   cursor: pointer;
 }
@@ -76,8 +88,8 @@
   border: 1px solid #ccc;
   border-radius: 0.75rem;
   font-size: 1rem;
-  background-color: #fff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  background-color: var(--brand-white);
+  box-shadow: 0 2px 6px var(--brand-black);
 
   /* Remove native arrow and add custom one */
   appearance: none;
@@ -91,14 +103,14 @@
 }
 
 .filters-box select:focus {
-  border-color: #6200ee;
-  box-shadow: 0 0 0 3px rgba(98, 0, 238, 0.25);
+  border-color: var(--brand-red);
+  box-shadow: 0 0 0 3px var(--brand-blue);
   outline: none;
 }
 
-
 /* Desktop styling */
-@media (min-width: 50rem) { /* 800px */
+@media (min-width: 50rem) {
+  /* 800px */
   .filters-box {
     padding: 1.25rem;
     max-width: 60rem; /* 960px */

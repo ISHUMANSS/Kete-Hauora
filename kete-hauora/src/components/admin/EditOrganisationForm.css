@@ -1,0 +1,169 @@
+/* ============ EditOrganisationForm.css ============ */
+
+/* Global font usage */
+.edit-org-page {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  background-color: var(--brand-offwhite);
+  font-family: var(--font-secondary);
+  min-height: 100vh;
+}
+
+/* Main container */
+.edit-org-card {
+  background-color: var(--brand-white);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 8px 20px rgba(60, 60, 59, 0.15);
+  width: 100%;
+  max-width: 850px;
+}
+
+/* Back button */
+.edit-org-back {
+  background: none;
+  border: none;
+  color: var(--brand-red);
+  font-family: var(--font-medium);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.edit-org-back:hover {
+  border-radius: 5px;
+  color: var(--brand-white);
+  background-color: var(--brand-red);
+}
+
+/* Title + subtitle */
+.edit-org-title {
+  text-align: center;
+  font-family: var(--font-primary);
+  color: var(--brand-red);
+  font-size: 2rem;
+  margin-bottom: 0.3rem;
+}
+
+.edit-org-subtitle {
+  text-align: center;
+  color: var(--brand-black);
+  font-family: var(--font-medium);
+  margin-bottom: 2rem;
+}
+
+/* Search area */
+.edit-org-search input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--brand-gray);
+  border-radius: 8px;
+  font-family: var(--font-secondary);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.edit-org-search ul {
+  list-style: none;
+  padding: 0;
+  border: 1px solid var(--brand-gray);
+  border-radius: 8px;
+  background: var(--brand-white);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.edit-org-search li {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid var(--brand-gray);
+  transition: background 0.2s ease;
+}
+
+.edit-org-search li:hover {
+  background-color: var(--brand-green);
+  color: var(--brand-white);
+}
+
+/* Form layout */
+.edit-org-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+/* Form labels & inputs */
+.edit-org-form label {
+  font-family: var(--font-medium);
+  color: var(--brand-black);
+  margin-bottom: 0.4rem;
+}
+
+.edit-org-form input,
+.edit-org-form select,
+.edit-org-form textarea {
+  padding: 0.8rem;
+  border: 1px solid var(--brand-gray);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: var(--font-secondary);
+  background-color: var(--brand-offwhite);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.edit-org-form input:focus,
+.edit-org-form select:focus,
+.edit-org-form textarea:focus {
+  border-color: var(--brand-blue);
+  box-shadow: 0 0 0 2px rgba(63, 68, 136, 0.15);
+  outline: none;
+}
+
+/* Textareas */
+.edit-org-form textarea {
+  resize: vertical;
+}
+
+/* Buttons */
+.edit-org-submit,
+.edit-org-clear {
+  width: 100%;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  font-family: var(--font-medium);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.edit-org-submit {
+  background-color: var(--brand-red);
+  color: var(--brand-white);
+  margin-top: 1.5rem;
+}
+
+.edit-org-submit:hover {
+  color: var(--brand-red);
+  background-color: var(--brand-white);
+  border: 1px solid var(--brand-red);
+  transform: translateY(-2px);
+}
+
+.edit-org-clear {
+  background-color: var(--brand-blue);
+  color: var(--brand-white);
+  margin-top: 1rem;
+}
+
+.edit-org-clear:hover {
+  color: var(--brand-blue);
+  background-color: var(--brand-white);
+  border: 1px solid var(--brand-blue);
+  transform: translateY(-2px);
+}

@@ -20,13 +20,15 @@
     "A short tutorial video will be added here to help you navigate Te Kete Hauora.": "A short tutorial video will be added here to help you navigate Te Kete Hauora.",
 
     "//comment": "Contact.jsx",
-    "Contact page": "Contact page",
-
+    "Reach out to the Kete Hauora team for any queries or support.": "Reach out to the Kete Hauora team for any queries or support.",
+    "Contact Information": "Contact Information",
+    "Other Info": "Other Info",
+    "Additional information or instructions for contacting the team can go here.": "Additional information or instructions for contacting the team can go here.",
+    
     "//comment": "Filters.jsx",
     "Filters": "Filters",
     "Category": "Category",
     "All Categories": "All Categories",
-
     "Health": "Health",
     "Education": "Education",
     "Community": "Community",
@@ -41,6 +43,19 @@
     "Languages": "Languages",
     "All Languages": "All Languages",
     "Clear Filters": "Clear Filters",
+
+    "//comment": "Homepage.jsx",
+    "Your community health and wellbeing directory.": "Your community health and wellbeing directory.",
+    "Te Kete Hauora makes it simple to find local health and community services across Counties Manukau. Whether you’re looking for medical care, mental health support, social services, or community programs, this platform helps you connect with the right services quickly and easily.": "Te Kete Hauora makes it simple to find local health and community services across Counties Manukau. Whether you’re looking for medical care, mental health support, social services, or community programs, this platform helps you connect with the right services quickly and easily.",
+    "Why use Te Kete Hauora?": "Why use Te Kete Hauora?",
+    "Up-to-date information – no more outdated PDFs": "Up-to-date information – no more outdated PDFs",
+    "Simple search – find services by category, cost, or location": "Simple search – find services by category, cost, or location",
+    "Accessible to everyone – on mobile, desktop, and in multiple languages": "Accessible to everyone – on mobile, desktop, and in multiple languages",
+    "Community-driven – providers can update their details directly": "Community-driven – providers can update their details directly",
+    "Start exploring today": "Start exploring today",
+    "Go to the": "Go to the",
+    "Find a Service": "Find a Service",
+    "page on the navigation bar to search by category or discover services available in your community.": "page on the navigation bar to search by category or discover services available in your community.",
 
     "//comment": "Login.jsx",
     "Login": "Login",
