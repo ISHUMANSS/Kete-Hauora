@@ -45,6 +45,18 @@ const Navbar = () => {
     navigate("/"); // back to home
   };
 
+  //Take an admin to the correct dash board
+  const handleDashboardRedirect = () => {
+    if (!profile?.role_id) return;
+    if (profile.role_id === 1) {
+      navigate("/super-admin-dashboard");
+    } else if (profile.role_id === 2) {
+      navigate("/provider-dashboard");
+    } else {
+      toast.info("No dashboard assigned for your role.");
+    }
+  };
+
   return (
     <nav className="navbar">
       <div className="nav-container">
@@ -128,6 +140,17 @@ const Navbar = () => {
                 {t("Find A Service")}
               </Link>
             </li>
+            {user && profile?.role_id && (
+              <li>
+                <button
+                  onClick={handleDashboardRedirect}
+                  className="nav-button dashboard-btn"
+                >
+                  <span className="material-symbols-outlined">dashboard</span>
+                  {t("Admin")}
+                </button>
+              </li>
+            )}
           </ul>
         </div>
       </div>
@@ -173,6 +196,17 @@ const Navbar = () => {
               </button>
             </li>
           )}
+          {user && profile?.role_id && (
+              <li>
+                <button
+                  onClick={handleDashboardRedirect}
+                  className="nav-button dashboard-btn"
+                >
+                  <span className="material-symbols-outlined">dashboard</span>
+                  {t("Admin")}
+                </button>
+              </li>
+            )}
 
           {/* language selector */}
           <li>

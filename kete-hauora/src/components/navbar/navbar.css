@@ -342,4 +342,30 @@
   .nav-button .material-symbols-outlined {
     font-size: 20px;
   }
+  /* Dashboard button (same style as Find a Service) */
+  .dashboard-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 30px;
+    border-radius: 40px;
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    background-color: var(--brand-black); /* Match the Find a Service style */
+    border: none;
+    cursor: pointer;
+  }
+
+  .dashboard-btn .material-symbols-outlined {
+    font-size: 20px;
+  }
+
+  .dashboard-btn:hover {
+    background-color: var(--brand-white);
+    color: var(--brand-black);
+    transform: scale(1.05);
+  }
+
 }
