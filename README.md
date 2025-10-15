@@ -148,6 +148,9 @@ Install dependencies (as of 12/09/25)
 ```bash
    npm install fuse.js
 ```
+```bash
+  npm install react-toastify
+```
 
 Start the server
 

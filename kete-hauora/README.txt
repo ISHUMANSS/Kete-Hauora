@@ -19,6 +19,7 @@ needed dependencys: (please add to this list when ever you add any more dependen
 - supabase = npm i @supabase/supabase-js
 
 - fuse for spell check - npm install fuse.js
+- toast - npm install react-toastify
 
 
 - if you have issues with the typescript: 

@@ -3,6 +3,7 @@
 
 import React, { useState, useEffect } from "react";
 import supabase from "../../config/supabaseClient";
+import { toast } from "react-toastify";
 
 const FilterAssignmentPanel = ({ title, table, idField, selectedFilter, onClose }) => {
   const [services, setServices] = useState([]);
@@ -52,11 +53,11 @@ const FilterAssignmentPanel = ({ title, table, idField, selectedFilter, onClose 
         }));
         await supabase.from(table).insert(rows);
       }
-      alert("Assignments saved!");
+      toast.success("Assignments saved!");
       onClose();
     } catch (err) {
       console.error(err);
-      alert("Failed to save assignments: " + err.message);
+      toast.error("Failed to save assignments: " + err.message);
     } finally {
       setSaving(false);
     }

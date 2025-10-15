@@ -7,6 +7,7 @@ import Navbar from "../navbar/navbar";
 import "./ManageFilters.css";
 import { useFilters } from "../../context/FiltersContext";
 import FilterAssignmentPanel from "./FilterAssignmentPanel";
+import { toast } from "react-toastify";
 
 const ManageFilters = ({ title, tableName, itemName, idField, nameField, joinTable }) => {
   const { categories, languages, regions, loading } = useFilters();
@@ -30,7 +31,7 @@ const ManageFilters = ({ title, tableName, itemName, idField, nameField, joinTab
   const handleSaveFilter = async (e) => {
     e.preventDefault();
     const trimmed = newFilter.trim();
-    if (!trimmed) return alert("Name is required");
+    if (!trimmed) return toast.warn("Name is required");
 
     try {
       if (editingFilter) {
@@ -45,14 +46,14 @@ const ManageFilters = ({ title, tableName, itemName, idField, nameField, joinTab
 
         if (error) throw error;
       }
-      alert(`${title} saved successfully!`);
+      toast.success(`${title} saved successfully!`);
       setNewFilter("");
       setEditingFilter(null);
       //trigger a manual refresh in your context would be better but for now we just reload
       window.location.reload(); //this re fetchs the context data
     } catch (err) {
       console.error("Error saving:", err.message);
-      alert("Error saving: " + err.message);
+      toString.error("Error saving: " + err.message);
     }
   };
 
@@ -62,11 +63,11 @@ const ManageFilters = ({ title, tableName, itemName, idField, nameField, joinTab
     try {
       await supabase.from(joinTable).delete().eq(idField, id);
       await supabase.from(tableName).delete().eq(idField, id);
-      alert(`${title} deleted successfully.`);
+      toast.success(`${title} deleted successfully.`);
       window.location.reload(); //re fetch context data on reload
     } catch (err) {
       console.error("Error deleting:", err.message);
-      alert("Error deleting: " + err.message);
+      toast.error("Error deleting: " + err.message);
     }
   };
 

@@ -4,6 +4,7 @@ import { supabase } from "../../config/supabaseClient";
 import Navbar from "../navbar/navbar";
 import { useNavigate } from "react-router-dom";
 import "./ManageAccounts.css";
+import { toast } from "react-toastify";
 
 function ManageAccounts() {
   const navigate = useNavigate();
@@ -87,20 +88,20 @@ function ManageAccounts() {
 
       if (error) {
         console.error("Supabase error:", error);
-        alert("Failed to update role: " + error.message);
+        toast.error("Failed to update role: " + error.message);
         return;
       }
 
       if (data.length === 0) {
-        alert("No profile found for this user ID.");
+        toast.error("No profile found for this user ID.");
         return;
       }
 
-      alert("Role updated successfully!");
+      toast.success("Role updated successfully!");
       await fetchData(); // Refresh data
     } catch (err) {
       console.error("Unexpected error:", err);
-      alert("Unexpected error updating role.");
+      toast.error("Unexpected error updating role.");
     }
   };
 
@@ -114,9 +115,9 @@ function ManageAccounts() {
       );
 
     if (error) {
-      alert("Failed to assign organisation: " + error.message);
+      toast.error("Failed to assign organisation: " + error.message);
     } else {
-      alert("Organisation assigned!");
+      toast.success("Organisation assigned!");
       await fetchData(); // 🔁 Refresh data from DB
     }
   };

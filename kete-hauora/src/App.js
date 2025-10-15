@@ -27,6 +27,9 @@ import ManageRegions from "./components/admin/ManageRegions.jsx";
 import ManageLanguages from "./components/admin/ManageLanguages.jsx";
 import ContactPage from "./components/contact/Contact.jsx";
 
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+
 // Wrapper component to conditionally show Navbar
 function AppLayout({ children }) {
   const location = useLocation();
@@ -80,6 +83,17 @@ function App() {
           </Routes>
         </AppLayout>
       </Router>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </FiltersProvider>
   );
 }

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "../../config/supabaseClient";
 import { useNavigate } from "react-router-dom";
 import "./AddOrganisationForm.css";
+import { toast } from "react-toastify";
 
 function AddOrganisationForm() {
   const navigate = useNavigate();
@@ -64,9 +65,9 @@ function AddOrganisationForm() {
     ]);
 
     if (error) {
-      alert("Failed to add organisation: " + error.message);
+      toast.error("Failed to add organisation: " + error.message);
     } else {
-      alert("Organisation created!");
+      toast.success("Organisation created!");
       navigate("/super-admin-dashboard");
     }
   };

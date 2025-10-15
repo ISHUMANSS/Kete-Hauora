@@ -124,8 +124,6 @@ const SearchBar = ({ searchInput, setSearchInput, onSearch, filters, setFilters}
       />
       <FilterChips filters={filters} setFilters={setFilters}/>
 
-      {/*<button onClick={onSearch}>{t("Search")}</button>*/}
-      
       {/* suggestions dropdown */}
       {showSuggestions && suggestions.length > 0 && (
         <ul className="suggestions-dropdown">

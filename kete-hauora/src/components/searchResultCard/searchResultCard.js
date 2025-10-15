@@ -17,7 +17,10 @@ const SearchResultCard = ({ service, filters }) => {
 
   //when service_id changes, fetch the Māori translation and saves it into serviceTranslation state
   useEffect(() => {
-    if (i18n.language !== "mi") return;
+    if (i18n.language !== "mi"){
+      setServiceTranslation(null);
+      return;
+    } 
 
     const fetchTranslation = async () => {
       const { data, error } = await supabase
@@ -36,7 +39,7 @@ const SearchResultCard = ({ service, filters }) => {
     if (service?.service_id) {
       fetchTranslation();
     }
-  }, [service?.service_id]);
+  }, [service?.service_id, i18n.language]);
 
   //format the websites so they always open as the website rather then as in the site
   const formatWebsite = (url) => {

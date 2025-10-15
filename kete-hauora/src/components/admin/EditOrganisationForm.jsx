@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { supabase } from "../../config/supabaseClient";
 import { useNavigate, Link } from "react-router-dom";
 import "./EditOrganisationForm.css";
+import { toast } from "react-toastify";
 
 function EditOrganisationForm() {
   const navigate = useNavigate();
@@ -138,15 +139,15 @@ function EditOrganisationForm() {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    if (!selectedOrg) return alert("No organisation selected.");
+    if (!selectedOrg) return toast.warn("No organisation selected.");
 
     const { error } = await supabase
       .from("services")
       .update(orgData)
       .eq("service_id", selectedOrg.service_id);
 
-    if (error) alert("Update failed: " + error.message);
-    else alert("Organisation updated!");
+    if (error) toast.error("Update failed: " + error.message);
+    else toast.success("Organisation updated!");
   };
 
   const handleClearSelection = () => {
