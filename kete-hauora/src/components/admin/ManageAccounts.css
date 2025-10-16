@@ -76,6 +76,7 @@
   background-color: var(--brand-white);
   transition: border-color 0.2s;
   cursor: pointer;
+  width: 100%;
 }
 
 .accounts-table select:hover,
