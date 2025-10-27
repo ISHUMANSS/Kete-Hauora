@@ -26,6 +26,6 @@ needed dependencies: (Please add to this list any additional dependencies)
 npm install --legacy-peer-deps
 
 
+- language translation - npm install i18next react-i18next i18next-browser-languagedetector --legacy-peer-deps
 
-npm install i18next react-i18next i18next-browser-languagedetector --legacy-peer-deps
-
+- cypress/testing - npm install cypress - npx cypress open
