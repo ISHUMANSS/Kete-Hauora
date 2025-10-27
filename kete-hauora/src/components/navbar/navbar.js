@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./navbar.css";
 import { useTranslation } from "react-i18next";
@@ -18,6 +18,23 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
+  const navbarRef = useRef(null);
+
+  //be able to click off the navbar in phone to close
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        sidebarOpen &&
+        navbarRef.current &&
+        !navbarRef.current.contains(event.target)
+      ) {
+        setSidebarOpen(false);//close sidebar if clicked outside
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [sidebarOpen]);
 
   // Fetch the user's role
   useEffect(() => {
@@ -58,7 +75,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar">
+    <nav ref={navbarRef} className="navbar">
       <div className="nav-container">
         <div className="logo">
           <Link to="/">
@@ -217,7 +234,6 @@ const Navbar = () => {
           </li>
         </ul>
 
-        {sidebarOpen && <div className="overlay" onClick={toggleSidebar}></div>}
       </div>
     </nav>
   );

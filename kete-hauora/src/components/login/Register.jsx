@@ -21,6 +21,13 @@ function RegisterPage() {
     e.preventDefault();
     setError("");
 
+    //tests the password against the regex
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      setError("Password must be at least 8 characters long and contain at least one special character.");
+      return;
+    }
+
     //register the user
     const { data: signUpData, error: signUpError } = await supabase.auth.signUp(
       {
@@ -60,12 +67,6 @@ function RegisterPage() {
     }
   };
 
-  //ADD A BETTER PASSWORD CHECKING FUNCTION IN JS AND THEN ALSO UPDATE THE SUPABASE REQUIRMENTS FOR A PASSWORD
-  /*
-  function checkPassword() {
-    //add like patterns and such
-  }
-  */
 
   return (
     <div className="login">

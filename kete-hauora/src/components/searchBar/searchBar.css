@@ -2,7 +2,7 @@
 .search {
   position: relative; /* important for dropdown positioning */
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: center;
   margin: 0 auto 1.25rem; /* 20px bottom */
   padding: 0.7rem 0.75rem; /* 8px 12px */
@@ -25,6 +25,7 @@
   width: 100%;
   flex: 1;
   min-width: 0;
+  
 }
 
 .search-icon {

@@ -10,7 +10,7 @@
   background-color: var(--brand-red);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  z-index: 100;
+  z-index: 300;
 }
 
 .logo a {
@@ -105,8 +105,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.1);
-  z-index: 150;
+  background: transparent;
+  z-index: 100;
 }
 
 /* Utility classes */
@@ -369,3 +369,5 @@
   }
 
 }
+
+
