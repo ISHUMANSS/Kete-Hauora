@@ -83,13 +83,16 @@ function LoginPage() {
               <input type="checkbox" />
               {t("Remember me")}
             </label>
-            <button
+            
+            {/*Our forgot password like doesn't work casue supabase so like just don't forget the password
+              <button
               type="button"
               className="forgot-password-link"
               onClick={() => alert("Forgot password clicked!")}
             >
               {t("Forgot password")}?
             </button>
+            */}
           </div>
 
           <button type="submit" className="btn">
