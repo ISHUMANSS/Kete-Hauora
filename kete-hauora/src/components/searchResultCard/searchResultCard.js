@@ -2,14 +2,13 @@
 //used to replace the table system we had before
 
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+
 import "./searchResultCard.css";
 import supabase from "../../config/supabaseClient";
 import { useTranslation } from "react-i18next";
 
 const SearchResultCard = ({ service, filters }) => {
   const { t, i18n } = useTranslation();
-  const navigate = useNavigate();
   const [serviceTranslation, setServiceTranslation] = useState(null);
 
   //shorten the services offered section
