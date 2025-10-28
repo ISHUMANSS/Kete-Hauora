@@ -29,6 +29,7 @@ import ContactPage from "./components/contact/Contact.jsx";
 
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import ScrollToTop from "./scrolltotop.js";
 
 // Wrapper component to conditionally show Navbar
 function AppLayout({ children }) {
@@ -49,6 +50,7 @@ function App() {
     <FiltersProvider>
       {/*get all of the filters needed*/}
       <Router>
+        <ScrollToTop />{/*make it so all the pages start at the top rather then like not*/}
         <AppLayout>
           {/*did this so that the everything would be shifted down from the navbar*/}
           <Routes>
