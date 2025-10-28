@@ -70,9 +70,8 @@ function AboutPage() {
         <section className="about-section tutorial">
           <h2>{t("Tutorial Video")}</h2>
 
-          <div className="video-placeholder">
-            <p>{t("A short tutorial video will be added here to help you navigate Te Kete Hauora.")}</p>
-          </div>
+            <p>{t("A short interactive tutorial to help you navigate Te Kete Hauora.")}</p>
+          
           {/* interactive iframe tutorial */}
 
             <div style={{ position: 'relative', paddingBottom: 'calc(47.864583333333336% + 41px)', height: '0', width: '100%' }}>
