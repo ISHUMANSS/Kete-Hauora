@@ -171,14 +171,13 @@ const SearchResultCard = ({ service, filters }) => {
         </div>
       )}
 
-      <button
+      <a
+        href={`/organisation/${encodeURIComponent(service.company_name)}`}
+        rel="noopener noreferrer"
         className="info-btn"
-        onClick={() =>
-          navigate(`/organisation/${encodeURIComponent(service.company_name)}`)
-        }
       >
         {t("More info")}
-      </button>
+      </a>
     </div>
   );
 };

@@ -44,7 +44,9 @@ function HomePage() {
         </div>
 
         <div className="start-section">
-          <h2>{t("Start exploring today")}</h2>
+          <Link to="/services" className="link-highlight">
+            <h2>{t("Start exploring today")}</h2>
+          </Link>
           <p>
             Go to the{" "}
             <Link to="/services" className="link-highlight">

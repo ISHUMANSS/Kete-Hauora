@@ -68,10 +68,25 @@ function AboutPage() {
 
 
         <section className="about-section tutorial">
-          <h2>{t("Tutorial Video (Coming Soon)")}</h2>
+          <h2>{t("Tutorial Video")}</h2>
+
           <div className="video-placeholder">
             <p>{t("A short tutorial video will be added here to help you navigate Te Kete Hauora.")}</p>
           </div>
+          {/* interactive iframe tutorial */}
+
+            <div style={{ position: 'relative', paddingBottom: 'calc(47.864583333333336% + 41px)', height: '0', width: '100%' }}>
+            <iframe
+              src="https://demo.arcade.software/TzGnZ1QQTBHBoReuu8Yp?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true"
+              title="Search and Filter for Health Services in Te Kete Hauora"
+              frameBorder="0"
+              loading="lazy"
+              allowFullScreen
+              allow="clipboard-write"
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', colorScheme: 'light' }}
+            />
+          </div>
+          
         </section>
       </div>
     </div>
