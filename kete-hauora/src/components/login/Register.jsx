@@ -14,6 +14,8 @@ function RegisterPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -85,11 +87,19 @@ function RegisterPage() {
 
           <div className="input-box">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder={t("Password")}
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <button
+              type="button"
+              className="show-password-btn"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? t("Hide") : t("Show")}
+            </button>
           </div>
 
           <button type="submit" className="btn">
@@ -100,6 +110,9 @@ function RegisterPage() {
             <p>
               {t("Already have an account?")} <Link to="/login">Login</Link>
             </p>
+          </div>
+          <div className="back-link">
+            <Link to="/">← {t("Back to Home")}</Link>
           </div>
         </form>
       </div>

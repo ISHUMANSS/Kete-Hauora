@@ -13,6 +13,8 @@ function LoginPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -70,19 +72,28 @@ function LoginPage() {
 
           <div className="input-box">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder={t("Password")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <button
+              type="button"
+              className="show-password-btn"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? t("Hide") : t("Show")}
+            </button>
           </div>
 
           <div className="remember-forgot">
+            {/*does not exist idk they just didn't make it
             <label>
               <input type="checkbox" />
               {t("Remember me")}
             </label>
+            */}
             
             {/*Our forgot password like doesn't work casue supabase so like just don't forget the password
               <button

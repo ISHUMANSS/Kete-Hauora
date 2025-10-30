@@ -45,6 +45,26 @@ body {
   position: relative;
 }
 
+.show-password-btn {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--brand-black);
+  font-size: 14px;
+  font-family: var(--font-medium);
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s ease;
+  padding: 0;
+}
+
+.show-password-btn:hover {
+  color: var(--brand-red);
+}
+
 .input-box input {
   width: 100%;
   height: 40px;
