@@ -146,3 +146,11 @@
     gap: 0.75rem;
   }
 }
+
+
+.field-description {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 4px;
+  line-height: 1.4;
+}

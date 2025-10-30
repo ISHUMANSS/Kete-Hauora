@@ -27,6 +27,22 @@ function EditOrganisationForm() {
     other_notes: "",
   });
 
+  const fieldDescriptions = {
+    company_name: "The official name of the organisation or service provider.",
+    phone: "Include full phone number with area code (e.g., 09 123 4567).",
+    email: "Enter the primary contact email for this organisation.",
+    website: "Include the full website link (e.g., https://www.example.com).",
+    physical_address: "Full physical address of the organisation.",
+    hours: "Provide opening hours (e.g., Mon–Fri 9am–5pm, Sat 10am–2pm).",
+    sites: "Describe all locations where the service is offered. Multiple lines are allowed (e.g., offices, client homes, community centres).",
+    languages: "List all available languages separated by commas.",
+    cost: "Enter cost as a range or note (e.g., Free, $10–$30 per session).",
+    services_offered: "Enter each service on a new line — each line becomes a bullet point on the service page.",
+    referral: "State whether clients can self-refer or if a referral is required.",
+    other_notes: "Add any additional details about the organisation.",
+    cost_tf: "Used for filtering services by type — select whether the service is Free, Paid, or Other."
+  };
+
   // Get user role
   useEffect(() => {
     async function getUserRole() {
@@ -148,6 +164,7 @@ function EditOrganisationForm() {
 
     if (error) toast.error("Update failed: " + error.message);
     else toast.success("Organisation updated!");
+    
   };
 
   const handleClearSelection = () => {
@@ -219,22 +236,37 @@ function EditOrganisationForm() {
                   { label: "Website", name: "website" },
                   { label: "Physical Address", name: "physical_address" },
                   { label: "Hours", name: "hours" },
-                  { label: "Sites", name: "sites" },
+                  { label: "Sites", name: "sites", textarea: true },
                   { label: "Languages", name: "languages" },
                   { label: "Cost", name: "cost" },
                   { label: "Referral", name: "referral" },
                 ].map((field) => (
                   <div className="form-group" key={field.name}>
                     <label>{field.label}</label>
-                    <input
-                      className="form-input"
-                      name={field.name}
-                      value={orgData[field.name]}
-                      onChange={handleChange}
-                      placeholder={`Enter ${field.label.toLowerCase()}`}
-                    />
+                    {field.textarea ? (
+                      <textarea
+                        className="form-textarea"
+                        name={field.name}
+                        value={orgData[field.name]}
+                        onChange={handleChange}
+                        rows={field.name === "sites" ? 3 : 2}
+                        placeholder={`Enter ${field.label.toLowerCase()}`}
+                      />
+                    ) : (
+                      <input
+                        className="form-input"
+                        name={field.name}
+                        value={orgData[field.name]}
+                        onChange={handleChange}
+                        placeholder={`Enter ${field.label.toLowerCase()}`}
+                      />
+                    )}
+                    {fieldDescriptions[field.name] && (
+                      <p className="field-description">{fieldDescriptions[field.name]}</p>
+                    )}
                   </div>
                 ))}
+
 
                 <div className="form-group">
                   <label>Services Offered</label>
@@ -246,6 +278,7 @@ function EditOrganisationForm() {
                     rows={5}
                     placeholder="Enter services offered"
                   />
+                  <p className="field-description">{fieldDescriptions.services_offered}</p>
                 </div>
 
                 <div className="form-group">
@@ -258,6 +291,7 @@ function EditOrganisationForm() {
                     rows={3}
                     placeholder="Enter any other notes"
                   />
+                  <p className="field-description">{fieldDescriptions.other_notes}</p>
                 </div>
               </div>
               <div className="form-group">
@@ -284,6 +318,7 @@ function EditOrganisationForm() {
                   <option value="FALSE">Free</option>
                   <option value="TRUE">Paid</option>
                 </select>
+                <p className="field-description">{fieldDescriptions.cost_tf}</p>
               </div>
 
               <button className="edit-org-submit" type="submit">

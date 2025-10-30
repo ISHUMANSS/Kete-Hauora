@@ -1,9 +1,58 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../navbar/navbar';
 import './Dashboard.css';
+import supabase from '../../config/supabaseClient';
 
 const SuperAdminDashboard = () => {
+
+  //check the user is allowed to be there
+  const [loading, setLoading] = useState(true);
+  const [roleId, setRoleId] = useState(null);
+
+  // Get current user role
+  useEffect(() => {
+    async function fetchUserAndRole() {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+      
+      if (userError || !user) {
+        setLoading(false);
+        return;
+      }
+
+      const { data: profileData, error: profileError } = await supabase
+        .from("profiles")
+        .select("role_id")
+        .eq("id", user.id)
+        .single();
+
+      if (!profileError && profileData) {
+        setRoleId(profileData.role_id);
+      }
+      setLoading(false);
+    }
+
+    fetchUserAndRole();
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+  
+  if (roleId !== 1) {
+    return (
+      <>
+        <Navbar />
+        <div className="dashboard-container">
+          <p>You must be a super admin to access this page.</p>
+          <Link to="/">Go to homepage</Link>
+        </div>
+      </>
+    );
+  }
+
+
   return (
     <div className="dashboard-page">
       <Navbar />

@@ -18,7 +18,7 @@
 
 */
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
 import supabase from "../config/supabaseClient";
 
 const FiltersContext = createContext();
@@ -29,44 +29,45 @@ export const FiltersProvider = ({ children }) => {
   const [regions, setRegions] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchFilters = async () => {
-      try {
-        //fetch categories
-        const { data: catData, error: catError } = await supabase
-          .from("categories")
-          .select("category_id, category")
-          .order("category", { ascending: true });
-        if (catError) throw catError;
-        setCategories(catData || []);
+  const fetchFilters = useCallback(async () => {
+    setLoading(true);
+    try {
+      //fetch categories
+      const { data: catData, error: catError } = await supabase
+        .from("categories")
+        .select("category_id, category")
+        .order("category", { ascending: true });
+      if (catError) throw catError;
+      setCategories(catData || []);
 
-        //fetch languages
-        const { data: langData, error: langError } = await supabase
-          .from("languages")
-          .select("language_id, language")
-          .order("language", { ascending: true });
-        if (langError) throw langError;
-        setLanguages(langData || []);
+      //fetch languages
+      const { data: langData, error: langError } = await supabase
+        .from("languages")
+        .select("language_id, language")
+        .order("language", { ascending: true });
+      if (langError) throw langError;
+      setLanguages(langData || []);
 
-        //fetch regions
-        const { data: regionData, error: regionError } = await supabase
-          .from("region")
-          .select("region_id, region")
-          .order("region", { ascending: true });
-        if (regionError) throw regionError;
-        setRegions(regionData || []);
-      } catch (err) {
-        console.error("Error fetching filters:", err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchFilters();
+      //fetch regions
+      const { data: regionData, error: regionError } = await supabase
+        .from("region")
+        .select("region_id, region")
+        .order("region", { ascending: true });
+      if (regionError) throw regionError;
+      setRegions(regionData || []);
+    } catch (err) {
+      console.error("Error fetching filters:", err.message);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
+  useEffect(() => {
+    fetchFilters();
+  }, [fetchFilters]);
+
   return (
-    <FiltersContext.Provider value={{ categories, languages, regions, loading }}>
+    <FiltersContext.Provider value={{ categories, languages, regions, loading, refreshFilters: fetchFilters }}>
       {children}
     </FiltersContext.Provider>
   );

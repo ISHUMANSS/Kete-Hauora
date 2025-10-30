@@ -1,7 +1,7 @@
 //reusable compoent for adding and deleting filters
 
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../../config/supabaseClient";
 import Navbar from "../navbar/navbar";
 import "./ManageFilters.css";
@@ -10,12 +10,63 @@ import FilterAssignmentPanel from "./FilterAssignmentPanel";
 import { toast } from "react-toastify";
 
 const ManageFilters = ({ title, tableName, itemName, idField, nameField, joinTable }) => {
-  const { categories, languages, regions, loading } = useFilters();
+  //allows for the scroll
+  const formRef = useRef(null);
+
+  const { categories, languages, regions, loading: filtersLoading, refreshFilters  } = useFilters();
   const [newFilter, setNewFilter] = useState("");
   const [editingFilter, setEditingFilter] = useState(null);
   const [assigningFilter, setAssigningFilter] = useState(null);
 
+  
+
   const navigate = useNavigate();
+
+
+  //Auth state
+  const [loading, setLoading] = useState(true);
+  const [roleId, setRoleId] = useState(null);
+
+  //Get current user role
+  useEffect(() => {
+    async function fetchUserAndRole() {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+      
+      if (userError || !user) {
+        setLoading(false);
+        return;
+      }
+
+      const { data: profileData, error: profileError } = await supabase
+        .from("profiles")
+        .select("role_id")
+        .eq("id", user.id)
+        .single();
+
+      if (!profileError && profileData) {
+        setRoleId(profileData.role_id);
+      }
+      setLoading(false);
+    }
+
+    fetchUserAndRole();
+  }, []);
+
+  //go to the top when editing
+  const scrollToForm = () => {
+    if (!formRef.current) return;
+    const topOffset = 300; //adjust for navbar height
+    const elementPosition = formRef.current.getBoundingClientRect().top + window.pageYOffset;
+    const offsetPosition = elementPosition - topOffset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth",
+    });
+  };
 
   //pick which filters to show based on the table name
   const filters =
@@ -49,8 +100,8 @@ const ManageFilters = ({ title, tableName, itemName, idField, nameField, joinTab
       toast.success(`${title} saved successfully!`);
       setNewFilter("");
       setEditingFilter(null);
-      //trigger a manual refresh in your context would be better but for now we just reload
-      window.location.reload(); //this re fetchs the context data
+      //refresh filters without page reload
+      await refreshFilters();
     } catch (err) {
       console.error("Error saving:", err.message);
       toString.error("Error saving: " + err.message);
@@ -64,14 +115,28 @@ const ManageFilters = ({ title, tableName, itemName, idField, nameField, joinTab
       await supabase.from(joinTable).delete().eq(idField, id);
       await supabase.from(tableName).delete().eq(idField, id);
       toast.success(`${title} deleted successfully.`);
-      window.location.reload(); //re fetch context data on reload
+      await refreshFilters();
     } catch (err) {
       console.error("Error deleting:", err.message);
       toast.error("Error deleting: " + err.message);
     }
   };
 
-  if (loading) return <p>Loading {title}...</p>;
+  
+  // Auth checks
+  if (loading || filtersLoading) return <p>Loading {title}...</p>;
+  
+  if (roleId !== 1) {
+    return (
+      <>
+        <Navbar />
+        <div className="manage-categories-container">
+          <p>You must be a super admin to access this page.</p>
+          <Link to="/">Go to homepage</Link>
+        </div>
+      </>
+    );
+  }
 
   return (
     <div className="manage-categories-page">
@@ -83,7 +148,7 @@ const ManageFilters = ({ title, tableName, itemName, idField, nameField, joinTab
         <h1 className="page-title">{title}</h1>
 
         {/* Add/Edit Form */}
-        <div className="form-wrapper">
+        <div className="form-wrapper" ref={formRef}>
           <div className="form-card">
             <h2>{editingFilter ? `Edit ${itemName}` : `Add ${itemName}`}</h2>
             <form onSubmit={handleSaveFilter} className="category-form">
@@ -129,6 +194,8 @@ const ManageFilters = ({ title, tableName, itemName, idField, nameField, joinTab
                         onClick={() => {
                         setEditingFilter(item);
                         setNewFilter(item[nameField]);
+
+                        scrollToForm();
                         }}
                     >
                         Edit

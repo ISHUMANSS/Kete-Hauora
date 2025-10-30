@@ -24,6 +24,22 @@ function AddOrganisationForm() {
     other_notes: "",
   });
 
+  //idk who ever is reading this the person who did this one just did it really weirdly and like i'm not gonna change their work i'm just making it worse
+  const fieldDescriptions = {
+    name: "The official name of the organisation or service provider.",
+    phone: "Include full phone number with area code (e.g., 09 123 4567).",
+    website: "Website for the service.",
+    hours: "Provide opening hours (e.g., Mon–Fri 9am–5pm, Sat 10am–2pm).",
+    languages: "List all available languages separated by commas.",
+    cost: "Enter cost as a range or note (e.g., Free, $10–$30 per session).",
+    services_offered:
+      "Enter each service on a new line (enter) - each line becomes a bullet point on the service page.",
+    referral:
+      "State whether clients can self-refer or if a referral is required.",
+    other_notes: "Add any additional details about the organisation.",
+    sites: "Describe the locations where the service is offered. You can include offices, client homes, community centres, and other venues. Use multiple lines if needed.",
+  };
+
   useEffect(() => {
     const fetchUser = async () => {
       const {
@@ -113,6 +129,11 @@ function AddOrganisationForm() {
                       className="form-input"
                     />
                   )}
+                  {/* Description under specific fields */}
+                  {fieldDescriptions[key] && (
+                    <p className="field-description">{fieldDescriptions[key]}</p>
+                  )}
+
                 </div>
               ))}
 
@@ -140,6 +161,10 @@ function AddOrganisationForm() {
                 <option value="FALSE">Free</option>
                 <option value="TRUE">Paid</option>
               </select>
+               <p className="field-description">
+                Used for filtering services by type - select whether the service
+                is Free, Paid, or Other.
+              </p>
             </div>
 
             <button type="submit" className="add-org-submit">

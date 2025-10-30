@@ -167,3 +167,11 @@
   border: 1px solid var(--brand-blue);
   transform: translateY(-2px);
 }
+
+
+.field-description {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 4px;
+  line-height: 1.4;
+}

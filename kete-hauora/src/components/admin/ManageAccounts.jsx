@@ -135,6 +135,20 @@ function ManageAccounts() {
 
         <h1>Manage Accounts</h1>
 
+        <p style={{ marginBottom: "1.5rem", color: "#333", fontSize: "1rem" }}>
+          This page allows super admins to manage all user accounts. You can view each 
+          user's email and role, change their role between Admin and Service Provider, 
+          and assign a specific organisation to service providers. Changes are saved 
+          automatically and take effect immediately. Only update accounts you are sure 
+          are correct to Admins, as this gives them full control over the site.  
+          <br></br>
+          <br></br>
+          Note: Due to current limitations, service providers have a restricted dashboard. 
+          They can only update details about their assigned service and cannot assign 
+          filters beyond the cost filter at this time.
+        </p>
+
+
         <table className="accounts-table">
           <thead>
             <tr>
