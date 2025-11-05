@@ -1,8 +1,12 @@
+body{
+  background-color: var(--brand-offwhite);
+}
 .dashboard-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
+
 
 .dashboard-title {
   font-family: var(--font-primary);
