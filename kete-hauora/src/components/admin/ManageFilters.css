@@ -1,5 +1,6 @@
 /* ----- Page Container ----- */
 
+
 .manage-categories-container,
 .manage-filters-container {
   width: 100%; /* take full available width */
@@ -7,6 +8,7 @@
   margin: 3rem auto; /* vertical margin + center horizontally */
   padding: 3rem; /* internal spacing */
   box-sizing: border-box; /* ensure padding is included in width */
+  background-color: var(--brand-offwhite);
 }
 
 .manage-categories-container h1,
