@@ -71,6 +71,30 @@
   color: var(--brand-black);
 }
 
+.creator-block {
+  margin-top: 1.5rem;
+}
+
+.creator {
+  background-color: var(--brand-offwhite);
+  padding: 1rem;
+  border-radius: 0.8rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid var(--brand-red);
+}
+
+.contact-link {
+  color: var(--brand-red);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.contact-link:hover {
+  text-decoration: underline;
+}
+
+
+
 /* Responsive layout for desktop */
 @media (min-width: 768px) {
   .contact-content {
@@ -79,8 +103,15 @@
     gap: 2rem;
   }
 
+  .contact-info {
+    flex: 1;
+  }
+
+  .contact-extra {
+    flex: 0 0 auto;
+  }
   .contact-info,
   .contact-extra {
-    flex: 1;
+    align-self: flex-start;
   }
 }

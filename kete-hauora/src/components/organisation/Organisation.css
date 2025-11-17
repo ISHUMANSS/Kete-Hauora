@@ -115,6 +115,32 @@
   color: var(--brand-white);
 }
 
+/* --- MOBILE FIXES FOR OVERFLOW ISSUES --- */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.organisation-page,
+.organisation-content {
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* Prevent long text / URLs breaking layout */
+p, a, .services-list p {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Prevent logo scaling overflow */
+.organisation-logo {
+  max-width: 100%;
+  height: auto;
+}
+
+
 /* Responsive Desktop Layout */
 @media (min-width: 768px) {
   .organisation-page {
