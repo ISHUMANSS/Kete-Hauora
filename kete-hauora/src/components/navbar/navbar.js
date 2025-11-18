@@ -158,7 +158,7 @@ const Navbar = () => {
               </Link>
             </li>
             {user && profile?.role_id && (
-              <li>
+              <ul>
                 <button
                   onClick={handleDashboardRedirect}
                   className="nav-button dashboard-btn"
@@ -166,7 +166,7 @@ const Navbar = () => {
                   <span className="material-symbols-outlined">dashboard</span>
                   {t("Admin")}
                 </button>
-              </li>
+              </ul>
             )}
           </ul>
         </div>

@@ -100,12 +100,12 @@ function ContactPage() {
               <p>
                 <strong>LinkedIn:</strong>{" "}
                 <a
-                  href="https://www.linkedin.com/in/flynn-b-925944236/"
+                  href="https://www.linkedin.com/in/kimju-teung-a0027b399/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="contact-link"
                 >
-                kimju linkedin
+                https://www.linkedin.com/in/kimju-teung-a0027b399/
                 </a>
               </p>
             </div>

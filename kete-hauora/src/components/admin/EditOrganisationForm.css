@@ -130,7 +130,7 @@
 
 /* Buttons */
 .edit-org-submit,
-.edit-org-clear {
+.edit-org-clear, .edit-org-delete {
   width: 100%;
   padding: 0.9rem;
   border: none;
@@ -165,6 +165,18 @@
   color: var(--brand-blue);
   background-color: var(--brand-white);
   border: 1px solid var(--brand-blue);
+  transform: translateY(-2px);
+}
+
+.edit-org-delete{
+  background-color: #ff8f00;
+  color: var(--brand-white);
+  margin-top: 1.5rem;
+}
+.edit-org-delete:hover {
+  color: #ff8f00;
+  background-color: var(--brand-white);
+  border: 1px solid #ff8f00;
   transform: translateY(-2px);
 }
 

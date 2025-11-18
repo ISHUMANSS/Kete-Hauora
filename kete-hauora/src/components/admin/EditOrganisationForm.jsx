@@ -153,6 +153,37 @@ function EditOrganisationForm() {
     setSearchInput("");
   };
 
+
+  //handle deleting a service
+  const handleDelete = async (serviceId) => {
+  if (!window.confirm("Are you sure you want to delete this organisation? This cannot be undone.")) {
+    return;
+  }
+
+  try {
+    //delete child tables
+    //gets rid of the foreign keys
+    await supabase.from("service_regions").delete().eq("service_id", serviceId);
+    await supabase.from("service_languages").delete().eq("service_id", serviceId);
+    await supabase.from("service_categories").delete().eq("service_id", serviceId);
+    await supabase.from("service_translations").delete().eq("service_id", serviceId);
+
+    //delete the service
+    const { error } = await supabase
+      .from("services")
+      .delete()
+      .eq("service_id", serviceId);
+
+    if (error) throw error;
+
+    toast.success("Organisation deleted successfully!");
+    navigate("/");
+  } catch (err) {
+    toast.error("Delete failed: " + err.message);
+  }
+};
+
+
   const handleUpdate = async (e) => {
     e.preventDefault();
     if (!selectedOrg) return toast.warn("No organisation selected.");
@@ -207,19 +238,19 @@ function EditOrganisationForm() {
               {results.length > 0 && searchInput && (
                 <ul>
                   {results
-                    .filter((org) =>
-                      org.company_name
-                        .toLowerCase()
-                        .includes(searchInput.toLowerCase())
-                    )
-                    .map((org) => (
-                      <li
-                        key={org.service_id}
-                        onClick={() => handleSelectOrg(org)}
-                      >
-                        {org.company_name}
-                      </li>
-                    ))}
+                  .filter((org) =>
+                    org.company_name
+                      .toLowerCase()
+                      .startsWith(searchInput.toLowerCase())
+                  )
+                  .map((org) => (
+                    <li
+                      key={org.service_id}
+                      onClick={() => handleSelectOrg(org)}
+                    >
+                      {org.company_name}
+                    </li>
+                  ))}
                 </ul>
               )}
             </div>
@@ -333,7 +364,15 @@ function EditOrganisationForm() {
                   Clear Selection
                 </button>
               )}
+              <button
+                className="edit-org-delete"
+                type="button"
+                onClick={() => handleDelete(selectedOrg.service_id)}
+              >
+                Delete Organisation
+              </button>
             </form>
+            
           )}
         </div>
       </div>

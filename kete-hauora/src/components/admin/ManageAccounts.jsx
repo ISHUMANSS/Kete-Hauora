@@ -60,7 +60,8 @@ function ManageAccounts() {
 
     const { data: allOrgs, error: orgsError } = await supabase
       .from("services")
-      .select("service_id, company_name");
+      .select("service_id, company_name")
+      .order("company_name", { ascending: true });
 
     if (!orgsError) setOrgs(allOrgs || []);
 
@@ -110,17 +111,18 @@ function ManageAccounts() {
     const { error } = await supabase
       .from("user_organisation")
       .upsert(
-        { user_id: userId, organisation_id: orgId },
+        { user_id: userId, organisation_id: orgId || null },
         { onConflict: ["user_id"] }
       );
 
     if (error) {
-      toast.error("Failed to assign organisation: " + error.message);
+      toast.error("Failed to assign/unassign organisation: " + error.message);
     } else {
-      toast.success("Organisation assigned!");
-      await fetchData(); // 🔁 Refresh data from DB
+      toast.success(orgId ? "Organisation assigned!" : "Organisation unassigned!");
+      await fetchData(); // refresh UI
     }
   };
+
 
   if (loading) return <p>Loading...</p>;
   if (roleId !== 1) return <p>Only super admins can access this page.</p>;
