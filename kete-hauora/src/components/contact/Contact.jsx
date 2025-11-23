@@ -114,12 +114,12 @@ function ContactPage() {
               <p>
                 <strong>LinkedIn:</strong>{" "}
                 <a
-                  href="https://www.linkedin.com/in/flynn-b-925944236/"
+                  href="https://www.linkedin.com/in/christopher-miller-7457a0392/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="contact-link"
                 >
-                Chris Linkedin
+                https://www.linkedin.com/in/christopher-miller-7457a0392/
                 </a>
               </p>
             </div>
