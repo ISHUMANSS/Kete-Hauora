@@ -4,6 +4,7 @@ import { supabase } from "../../config/supabaseClient";
 import { useNavigate, Link } from "react-router-dom";
 import "./EditOrganisationForm.css";
 import { toast } from "react-toastify";
+import { useFilters } from "../../context/FiltersContext";
 
 function EditOrganisationForm() {
   const navigate = useNavigate();
@@ -26,6 +27,22 @@ function EditOrganisationForm() {
     referral: "",
     other_notes: "",
   });
+
+
+  //set up the edit filters for that service
+  const { categories, languages, regions} = useFilters();
+
+  //set what filters are selected 
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedRegions, setSelectedRegions] = useState([]);
+  const [selectedLanguages, setSelectedLanguages] = useState([]);
+
+  //collapsible states for filter sections
+  const [categoriesOpen, setCategoriesOpen] = useState(false);
+  const [regionsOpen, setRegionsOpen] = useState(false);
+  const [languagesOpen, setLanguagesOpen] = useState(false);
+
+
 
   const fieldDescriptions = {
     company_name: "The official name of the organisation or service provider.",
@@ -108,10 +125,31 @@ function EditOrganisationForm() {
               referral: orgs[0].referral || "",
               other_notes: orgs[0].other_notes || "",
             });
+
+            //get the curret filters assigned
+            loadFilterSelections(orgs[0].service_id);
           }
         }
       }
     }
+
+    //get the assigned filters for this service
+    async function loadFilterSelections(serviceId) {
+      try {
+        const [{ data: cats }, { data: regs }, { data: langs }] = await Promise.all([
+          supabase.from("service_categories").select("category_id").eq("service_id", serviceId),
+          supabase.from("service_regions").select("region_id").eq("service_id", serviceId),
+          supabase.from("service_languages").select("language_id").eq("service_id", serviceId),
+        ]);
+
+        setSelectedCategories(cats.map((x) => x.category_id));
+        setSelectedRegions(regs.map((x) => x.region_id));
+        setSelectedLanguages(langs.map((x) => x.language_id));
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
     if (roleId) fetchOrgs();
   }, [roleId]);
 
@@ -156,34 +194,49 @@ function EditOrganisationForm() {
 
   //handle deleting a service
   const handleDelete = async (serviceId) => {
-  if (!window.confirm("Are you sure you want to delete this organisation? This cannot be undone.")) {
-    return;
-  }
 
-  try {
-    //delete child tables
-    //gets rid of the foreign keys
-    await supabase.from("service_regions").delete().eq("service_id", serviceId);
-    await supabase.from("service_languages").delete().eq("service_id", serviceId);
-    await supabase.from("service_categories").delete().eq("service_id", serviceId);
-    await supabase.from("service_translations").delete().eq("service_id", serviceId);
+    //set up diffrent messages depending on role;
+    const message = roleId === 1
+      ? "Are you sure you want to delete this organisation? This will permanently delete the organisation and all related data. This cannot be undone."
+      : "Are you sure you want to delete this organisation? You will no longer be able to access it. This cannot be undone.";
 
-    //delete the service
-    const { error } = await supabase
-      .from("services")
-      .delete()
-      .eq("service_id", serviceId);
+    if (!window.confirm(message)) {
+      return;
+    }
 
-    if (error) throw error;
+    try {
+      //delete child tables
+      //gets rid of the foreign keys
+      await supabase.from("service_regions").delete().eq("service_id", serviceId);
+      await supabase.from("service_languages").delete().eq("service_id", serviceId);
+      await supabase.from("service_categories").delete().eq("service_id", serviceId);
+      await supabase.from("service_translations").delete().eq("service_id", serviceId);
 
-    toast.success("Organisation deleted successfully!");
-    navigate("/");
-  } catch (err) {
-    toast.error("Delete failed: " + err.message);
-  }
-};
+      //delete the service
+      const { error } = await supabase
+        .from("services")
+        .delete()
+        .eq("service_id", serviceId);
+
+      if (error) throw error;
+
+      toast.success("Organisation deleted successfully!");
+      //navigate to the correct admin dashboard
+      goToDashboard(roleId);
+    } catch (err) {
+      toast.error("Delete failed: " + err.message);
+    }
+  };
 
 
+  //navigate to the correct dash depending on role
+  const goToDashboard = (roleId) => {
+    if (roleId === 1) navigate("/super-admin-dashboard");
+    else if (roleId === 2) navigate("/provider-dashboard");
+    else navigate("/");
+  };
+
+  //allow for edits in the service
   const handleUpdate = async (e) => {
     e.preventDefault();
     if (!selectedOrg) return toast.warn("No organisation selected.");
@@ -193,11 +246,64 @@ function EditOrganisationForm() {
       .update(orgData)
       .eq("service_id", selectedOrg.service_id);
 
-    if (error) toast.error("Update failed: " + error.message);
-    else toast.success("Organisation updated!");
-    
+    if (error) {
+      toast.error("Update failed: " + error.message);
+      return;
+    }
+
+    //update filter relationships
+    await updateFilters(selectedOrg.service_id);
+
+    toast.success("Organisation updated!");
+        
   };
 
+  async function updateFilters(serviceId) {
+    try {
+      //delete existing
+      await supabase.from("service_categories").delete().eq("service_id", serviceId);
+      await supabase.from("service_regions").delete().eq("service_id", serviceId);
+      await supabase.from("service_languages").delete().eq("service_id", serviceId);
+
+      //insert categories
+      if (selectedCategories.length > 0) {
+        await supabase.from("service_categories").insert(
+          selectedCategories.map((id) => ({
+            service_id: serviceId,
+            category_id: id,
+          }))
+        );
+      }
+
+      //insert regions
+      if (selectedRegions.length > 0) {
+        await supabase.from("service_regions").insert(
+          selectedRegions.map((id) => ({
+            service_id: serviceId,
+            region_id: id,
+          }))
+        );
+      }
+
+      //insert languages
+      if (selectedLanguages.length > 0) {
+        await supabase.from("service_languages").insert(
+          selectedLanguages.map((id) => ({
+            service_id: serviceId,
+            language_id: id,
+          }))
+        );
+      }
+
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to update filters.");
+    }
+  }
+
+
+
+  //rest the form
   const handleClearSelection = () => {
     setSelectedOrg(null);
     setOrgData({
@@ -215,6 +321,30 @@ function EditOrganisationForm() {
       other_notes: "",
     });
   };
+
+  //change the assiged filters by toggling them on and off
+  //toggle category
+  const toggleCategory = (id) => {
+    setSelectedCategories((prev) =>
+      prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]
+    );
+  };
+
+  //toggle region
+  const toggleRegion = (id) => {
+    setSelectedRegions((prev) =>
+      prev.includes(id) ? prev.filter((r) => r !== id) : [...prev, id]
+    );
+  };
+
+  //toggle language
+  const toggleLanguage = (id) => {
+    setSelectedLanguages((prev) =>
+      prev.includes(id) ? prev.filter((l) => l !== id) : [...prev, id]
+    );
+  };
+
+
 
   return (
     <>
@@ -351,6 +481,97 @@ function EditOrganisationForm() {
                 </select>
                 <p className="field-description">{fieldDescriptions.cost_tf}</p>
               </div>
+              
+
+
+                {/*Still need to assign it so it works for the super and alaso assign it for the add*/}
+                {roleId === 2 && (
+                <div className="edit-org-filters-container">
+                  <label>Assign filters</label>
+                  {/* Categories */}
+                  <div className="edit-org-filter-section">
+                    <div 
+                      className="edit-org-filter-header"
+                      onClick={() => setCategoriesOpen(!categoriesOpen)}
+                    >
+                      <h3 className="edit-org-filter-title">Categories</h3>
+                      <span className="edit-org-toggle-icon">
+                        {categoriesOpen ? "−" : "+"}
+                      </span>
+                    </div>
+                    {categoriesOpen && (
+                      <div className="edit-org-filter-box">
+                        {categories.map((c) => (
+                          <label key={c.category_id} className="edit-org-checkbox">
+                            <input
+                              type="checkbox"
+                              checked={selectedCategories.includes(c.category_id)}
+                              onChange={() => toggleCategory(c.category_id)}
+                            />
+                            {c.category}
+                          </label>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Regions */}
+                  <div className="edit-org-filter-section">
+                    <div 
+                      className="edit-org-filter-header"
+                      onClick={() => setRegionsOpen(!regionsOpen)}
+                    >
+                      <h3 className="edit-org-filter-title">Regions</h3>
+                      <span className="edit-org-toggle-icon">
+                        {regionsOpen ? "−" : "+"}
+                      </span>
+                    </div>
+                    {regionsOpen && (
+                      <div className="edit-org-filter-box">
+                        {regions.map((r) => (
+                          <label key={r.region_id} className="edit-org-checkbox">
+                            <input
+                              type="checkbox"
+                              checked={selectedRegions.includes(r.region_id)}
+                              onChange={() => toggleRegion(r.region_id)}
+                            />
+                            {r.region}
+                          </label>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Languages */}
+                  <div className="edit-org-filter-section">
+                    <div 
+                      className="edit-org-filter-header"
+                      onClick={() => setLanguagesOpen(!languagesOpen)}
+                    >
+                      <h3 className="edit-org-filter-title">Languages</h3>
+                      <span className="edit-org-toggle-icon">
+                        {languagesOpen ? "−" : "+"}
+                      </span>
+                    </div>
+                    {languagesOpen && (
+                      <div className="edit-org-filter-box">
+                        {languages.map((l) => (
+                          <label key={l.language_id} className="edit-org-checkbox">
+                            <input
+                              type="checkbox"
+                              checked={selectedLanguages.includes(l.language_id)}
+                              onChange={() => toggleLanguage(l.language_id)}
+                            />
+                            {l.language}
+                          </label>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                </div>
+              )}
+              
 
               <button className="edit-org-submit" type="submit">
                 Save Changes

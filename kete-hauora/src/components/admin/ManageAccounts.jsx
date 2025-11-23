@@ -123,6 +123,12 @@ function ManageAccounts() {
     }
   };
 
+  //delete a user
+  const handleDeleteUser = async (userId) => {
+      return 0;
+  }
+
+
 
   if (loading) return <p>Loading...</p>;
   if (roleId !== 1) return <p>Only super admins can access this page.</p>;
