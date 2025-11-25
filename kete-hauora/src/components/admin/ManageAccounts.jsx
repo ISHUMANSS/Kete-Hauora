@@ -54,7 +54,8 @@ function ManageAccounts() {
   async function fetchData() {
     const { data: allUsers, error: usersError } = await supabase
       .from("profiles")
-      .select("id, email, role_id");
+      .select("id, email, role_id")
+      .order('email');
 
     if (!usersError) setUsers(allUsers || []);
 
@@ -98,6 +99,19 @@ function ManageAccounts() {
         return;
       }
 
+      //remove any listing for this user when they are made admin
+      if (parseInt(newRoleId) === 1) {
+        const { error: deleteError } = await supabase
+          .from("user_organisation")
+          .delete()
+          .eq("user_id", userId);
+
+        if (deleteError) {
+          console.error("Error removing organisation assignment:", deleteError);
+          toast.warning("Role updated but failed to remove organisation assignment.");
+        }
+      }
+
       toast.success("Role updated successfully!");
       await fetchData(); // Refresh data
     } catch (err) {
@@ -108,18 +122,41 @@ function ManageAccounts() {
 
   // Assign organisation to a user and refresh UI
   const handleAssignOrg = async (userId, orgId) => {
-    const { error } = await supabase
-      .from("user_organisation")
-      .upsert(
-        { user_id: userId, organisation_id: orgId || null },
-        { onConflict: ["user_id"] }
-      );
+    try {
+      if (!orgId || orgId === "") {
+        //if no org is selected, delete the assignment
+        const { error } = await supabase
+          .from("user_organisation")
+          .delete()
+          .eq("user_id", userId);
 
-    if (error) {
-      toast.error("Failed to assign/unassign organisation: " + error.message);
-    } else {
-      toast.success(orgId ? "Organisation assigned!" : "Organisation unassigned!");
+        if (error) {
+          toast.error("Failed to unassign organisation: " + error.message);
+          return;
+        }
+        
+        toast.success("Organisation unassigned!");
+      } else {
+        // If org is selected, upsert the assignment
+        const { error } = await supabase
+          .from("user_organisation")
+          .upsert(
+            { user_id: userId, organisation_id: parseInt(orgId) },
+            { onConflict: "user_id" }
+          );
+
+        if (error) {
+          toast.error("Failed to assign organisation: " + error.message);
+          return;
+        }
+        
+        toast.success("Organisation assigned!");
+      }
+
       await fetchData(); // refresh UI
+    } catch (err) {
+      console.error("Unexpected error:", err);
+      toast.error("Unexpected error managing organisation assignment.");
     }
   };
 

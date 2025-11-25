@@ -57,8 +57,8 @@ const SuperAdminDashboard = () => {
     <div className="dashboard-page">
       <Navbar />
       <div className="dashboard-container">
-        <h1 className="dashboard-title">Super Admin Dashboard</h1>
-        <p className="dashboard-subtitle">Full access to manage organisations, users, roles, and categories.</p>
+        <h1 className="dashboard-title">Admin Dashboard</h1>
+        <p className="dashboard-subtitle">Full access to create/manage organisations, users, roles, and filters.</p>
 
         <div className="dashboard-grid">
           <Link to="/addOrg" className='dashboard-card'>

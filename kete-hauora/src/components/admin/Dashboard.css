@@ -55,3 +55,33 @@ body{
   font-family: var(--font-secondary);
   color: var(--brand-black);
 }
+
+
+.dashboard-card-disabled {
+  cursor: default;
+  opacity: 0.9;
+}
+
+.dashboard-card-disabled:hover {
+  transform: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contact-info {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 0.5rem;
+}
+
+.contact-info p {
+  margin: 0.25rem 0;
+  font-size: 0.875rem;
+  color: #1e40af;
+}
+
+.contact-email {
+  font-weight: 600;
+  color: #2563eb;
+}
