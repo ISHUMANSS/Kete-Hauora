@@ -91,11 +91,12 @@ function EditOrganisationForm() {
       if (error || !user) return;
 
       if (roleId === 1) {
-        // Super admin all access
+        // Super admin all access - just load the list for searching
         const { data: orgs, error: orgError } = await supabase
           .from("services")
           .select("*");
         if (!orgError) setResults(orgs);
+        // Super admins don't pre-select an org, they search and select
       } else if (roleId === 2) {
         // Service provider only sees assigned org
         const { data: assigned, error: assignError } = await supabase
@@ -126,32 +127,32 @@ function EditOrganisationForm() {
               other_notes: orgs[0].other_notes || "",
             });
 
-            //get the curret filters assigned
+            //get the current filters assigned
             loadFilterSelections(orgs[0].service_id);
           }
         }
       }
     }
 
-    //get the assigned filters for this service
-    async function loadFilterSelections(serviceId) {
-      try {
-        const [{ data: cats }, { data: regs }, { data: langs }] = await Promise.all([
-          supabase.from("service_categories").select("category_id").eq("service_id", serviceId),
-          supabase.from("service_regions").select("region_id").eq("service_id", serviceId),
-          supabase.from("service_languages").select("language_id").eq("service_id", serviceId),
-        ]);
-
-        setSelectedCategories(cats.map((x) => x.category_id));
-        setSelectedRegions(regs.map((x) => x.region_id));
-        setSelectedLanguages(langs.map((x) => x.language_id));
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
     if (roleId) fetchOrgs();
   }, [roleId]);
+
+  //get the assigned filters for this service
+  async function loadFilterSelections(serviceId) {
+    try {
+      const [{ data: cats }, { data: regs }, { data: langs }] = await Promise.all([
+        supabase.from("service_categories").select("category_id").eq("service_id", serviceId),
+        supabase.from("service_regions").select("region_id").eq("service_id", serviceId),
+        supabase.from("service_languages").select("language_id").eq("service_id", serviceId),
+      ]);
+
+      setSelectedCategories(cats?.map((x) => x.category_id) || []);
+      setSelectedRegions(regs?.map((x) => x.region_id) || []);
+      setSelectedLanguages(langs?.map((x) => x.language_id) || []);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   if (loading) return <p>Loading...</p>;
   if (![1, 2].includes(roleId)) {
@@ -187,6 +188,8 @@ function EditOrganisationForm() {
       referral: org.referral || "",
       other_notes: org.other_notes || "",
     });
+    // Load filters for the selected organisation
+    loadFilterSelections(org.service_id);
     // Keep searchInput visible, but clear the search text
     setSearchInput("");
   };
@@ -195,7 +198,7 @@ function EditOrganisationForm() {
   //handle deleting a service
   const handleDelete = async (serviceId) => {
 
-    //set up diffrent messages depending on role;
+    //set up different messages depending on role;
     const message = roleId === 1
       ? "Are you sure you want to delete this organisation? This will permanently delete the organisation and all related data. This cannot be undone."
       : "Are you sure you want to delete this organisation? You will no longer be able to access it. This cannot be undone.";
@@ -303,7 +306,7 @@ function EditOrganisationForm() {
 
 
 
-  //rest the form
+  //reset the form
   const handleClearSelection = () => {
     setSelectedOrg(null);
     setOrgData({
@@ -320,9 +323,13 @@ function EditOrganisationForm() {
       referral: "",
       other_notes: "",
     });
+    // Clear filter selections
+    setSelectedCategories([]);
+    setSelectedRegions([]);
+    setSelectedLanguages([]);
   };
 
-  //change the assiged filters by toggling them on and off
+  //change the assigned filters by toggling them on and off
   //toggle category
   const toggleCategory = (id) => {
     setSelectedCategories((prev) =>
@@ -484,8 +491,8 @@ function EditOrganisationForm() {
               
 
 
-                {/*Still need to assign it so it works for the super and alaso assign it for the add*/}
-                {roleId === 2 && (
+                {/* Filter assignment for both super admins and service providers */}
+                {[1, 2].includes(roleId) && (
                 <div className="edit-org-filters-container">
                   <label>Assign filters</label>
                   {/* Categories */}

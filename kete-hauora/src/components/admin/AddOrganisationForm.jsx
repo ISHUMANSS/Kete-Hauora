@@ -3,6 +3,7 @@ import { supabase } from "../../config/supabaseClient";
 import { useNavigate } from "react-router-dom";
 import "./AddOrganisationForm.css";
 import { toast } from "react-toastify";
+import { useFilters } from "../../context/FiltersContext";
 
 function AddOrganisationForm() {
   const navigate = useNavigate();
@@ -23,6 +24,20 @@ function AddOrganisationForm() {
     referral: "",
     other_notes: "",
   });
+
+  //get filters from context
+  const { categories, languages, regions } = useFilters();
+
+  //filter selections
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedRegions, setSelectedRegions] = useState([]);
+  const [selectedLanguages, setSelectedLanguages] = useState([]);
+
+  //collapsible states for filter sections
+  const [categoriesOpen, setCategoriesOpen] = useState(false);
+  const [regionsOpen, setRegionsOpen] = useState(false);
+  const [languagesOpen, setLanguagesOpen] = useState(false);
+
 
   //idk who ever is reading this the person who did this one just did it really weirdly and like i'm not gonna change their work i'm just making it worse
   const fieldDescriptions = {
@@ -59,10 +74,32 @@ function AddOrganisationForm() {
     setOrgData({ ...orgData, [name]: value });
   };
 
+  //toggle functions for filters
+  const toggleCategory = (id) => {
+    setSelectedCategories((prev) =>
+      prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]
+    );
+  };
+
+  const toggleRegion = (id) => {
+    setSelectedRegions((prev) =>
+      prev.includes(id) ? prev.filter((r) => r !== id) : [...prev, id]
+    );
+  };
+
+  const toggleLanguage = (id) => {
+    setSelectedLanguages((prev) =>
+      prev.includes(id) ? prev.filter((l) => l !== id) : [...prev, id]
+    );
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { error } = await supabase.from("services").insert([
+    const { data: newService, error } = await supabase
+      .from("services")
+      .insert([
       {
         company_name: orgData.name,
         phone: orgData.phone,
@@ -78,12 +115,51 @@ function AddOrganisationForm() {
         referral: orgData.referral,
         other_notes: orgData.other_notes,
       },
-    ]);
-
+    ])
+    .select();
     if (error) {
       toast.error("Failed to add organisation: " + error.message);
-    } else {
-      toast.success("Organisation created!");
+      return;
+    }
+    //get the newly created service ID
+    const serviceId = newService[0].service_id;
+
+    //insert the filters to the new service
+    try {
+      //insert categories
+      if (selectedCategories.length > 0) {
+        await supabase.from("service_categories").insert(
+          selectedCategories.map((id) => ({
+            service_id: serviceId,
+            category_id: id,
+          }))
+        );
+      }
+
+      //insert regions
+      if (selectedRegions.length > 0) {
+        await supabase.from("service_regions").insert(
+          selectedRegions.map((id) => ({
+            service_id: serviceId,
+            region_id: id,
+          }))
+        );
+      }
+
+      //insert languages
+      if (selectedLanguages.length > 0) {
+        await supabase.from("service_languages").insert(
+          selectedLanguages.map((id) => ({
+            service_id: serviceId,
+            language_id: id,
+          }))
+        );
+      }
+
+      toast.success("Organisation created with filters!");
+      navigate("/super-admin-dashboard");
+    } catch (filterError) {
+      toast.error("Organisation created but failed to add filters: " + filterError.message);
       navigate("/super-admin-dashboard");
     }
   };
@@ -165,6 +241,92 @@ function AddOrganisationForm() {
                 Used for filtering services by type - select whether the service
                 is Free, Paid, or Other.
               </p>
+            </div>
+
+            {/* Filter Assignment Section */}
+            <div className="add-org-filters-container">
+              <label>Assign Filters</label>
+              
+              {/* Categories */}
+              <div className="add-org-filter-section">
+                <div 
+                  className="add-org-filter-header"
+                  onClick={() => setCategoriesOpen(!categoriesOpen)}
+                >
+                  <h3 className="add-org-filter-title">Categories</h3>
+                  <span className="add-org-toggle-icon">
+                    {categoriesOpen ? "−" : "+"}
+                  </span>
+                </div>
+                {categoriesOpen && (
+                  <div className="add-org-filter-box">
+                    {categories.map((c) => (
+                      <label key={c.category_id} className="add-org-checkbox">
+                        <input
+                          type="checkbox"
+                          checked={selectedCategories.includes(c.category_id)}
+                          onChange={() => toggleCategory(c.category_id)}
+                        />
+                        {c.category}
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Regions */}
+              <div className="add-org-filter-section">
+                <div 
+                  className="add-org-filter-header"
+                  onClick={() => setRegionsOpen(!regionsOpen)}
+                >
+                  <h3 className="add-org-filter-title">Regions</h3>
+                  <span className="add-org-toggle-icon">
+                    {regionsOpen ? "−" : "+"}
+                  </span>
+                </div>
+                {regionsOpen && (
+                  <div className="add-org-filter-box">
+                    {regions.map((r) => (
+                      <label key={r.region_id} className="add-org-checkbox">
+                        <input
+                          type="checkbox"
+                          checked={selectedRegions.includes(r.region_id)}
+                          onChange={() => toggleRegion(r.region_id)}
+                        />
+                        {r.region}
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Languages */}
+              <div className="add-org-filter-section">
+                <div 
+                  className="add-org-filter-header"
+                  onClick={() => setLanguagesOpen(!languagesOpen)}
+                >
+                  <h3 className="add-org-filter-title">Languages</h3>
+                  <span className="add-org-toggle-icon">
+                    {languagesOpen ? "−" : "+"}
+                  </span>
+                </div>
+                {languagesOpen && (
+                  <div className="add-org-filter-box">
+                    {languages.map((l) => (
+                      <label key={l.language_id} className="add-org-checkbox">
+                        <input
+                          type="checkbox"
+                          checked={selectedLanguages.includes(l.language_id)}
+                          onChange={() => toggleLanguage(l.language_id)}
+                        />
+                        {l.language}
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
             <button type="submit" className="add-org-submit">
