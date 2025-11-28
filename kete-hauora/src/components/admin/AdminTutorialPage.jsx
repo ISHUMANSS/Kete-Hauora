@@ -113,9 +113,7 @@ function AdminTutorialPage() {
               width: "100%",
             }}
           >
-            <iframe
-              
-            />
+            
           </div>
         </section>
       </div>
