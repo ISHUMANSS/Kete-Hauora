@@ -76,6 +76,11 @@ const SuperAdminDashboard = () => {
             <p>View, and assign Organisations.</p>
           </Link>
 
+          <Link to="/admin-tutorial" className='dashboard-card'>
+            <h2>Tutoral</h2>
+            <p>A tutoral video explainging how to use the admin</p>
+          </Link>
+
           <Link to="/manageCategories" className='dashboard-card'>
             <h2>Manage Categories</h2>
             <p>Create, edit, and assign Categories to services.</p>
@@ -90,6 +95,8 @@ const SuperAdminDashboard = () => {
             <h2>Manage Regions</h2>
             <p>Create, edit, and assign Regions to services.</p>
           </Link>
+
+          
 
         </div>
       </div>

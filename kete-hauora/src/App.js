@@ -30,6 +30,7 @@ import ContactPage from "./components/contact/Contact.jsx";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import ScrollToTop from "./scrolltotop.js";
+import AdminTutorialPage from "./components/admin/AdminTutorialPage.jsx";
 
 // Wrapper component to conditionally show Navbar
 function AppLayout({ children }) {
@@ -74,6 +75,9 @@ function App() {
               element={<SuperAdminDashboard />}
             />
             <Route path="/provider-dashboard" element={<ProviderDashboard />} />
+
+            <Route path="/admin-tutorial" element={<AdminTutorialPage />} />
+
 
             {/*manage filters*/}
             <Route path="/managecategories" element={<ManageCategories />} />

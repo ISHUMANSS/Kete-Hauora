@@ -16,6 +16,13 @@ function ManageAccounts() {
   const [users, setUsers] = useState([]);
   const [orgs, setOrgs] = useState([]);
   const [assignments, setAssignments] = useState({});
+  
+  const [searchTerm, setSearchTerm] = useState("");
+  
+  // Section collapse states
+  const [adminsOpen, setAdminsOpen] = useState(true);
+  const [assignedOpen, setAssignedOpen] = useState(false);
+  const [unassignedOpen, setUnassignedOpen] = useState(false);
 
   //get current user role
   useEffect(() => {
@@ -161,14 +168,25 @@ function ManageAccounts() {
   };
 
   //delete a user
+  //delete user will not be implemented as we can't delete from the frount end so no users can be deleted
   const handleDeleteUser = async (userId) => {
       return 0;
   }
 
+  // Filter and categorize users
+  const admins = users.filter(user => user.role_id === 1);
+  const serviceProviders = users.filter(user => user.role_id === 2);
+  
+  const assignedProviders = serviceProviders.filter(user => assignments[user.id]);
+  const unassignedProviders = serviceProviders.filter(user => !assignments[user.id]);
 
+  // Filter unassigned providers by search term
+  const filteredUnassigned = unassignedProviders.filter(user => 
+    user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   if (loading) return <p>Loading...</p>;
-  if (roleId !== 1) return <p>Only super admins can access this page.</p>;
+  if (roleId !== 1) return <p>You do not Have access to this page</p>;
 
   return (
     <>
@@ -180,74 +198,186 @@ function ManageAccounts() {
 
         <h1>Manage Accounts</h1>
 
-        <p style={{ marginBottom: "1.5rem", color: "#333", fontSize: "1rem" }}>
+        <p className="info-text">
           This page allows super admins to manage all user accounts. You can view each 
           user's email and role, change their role between Admin and Service Provider, 
           and assign a specific organisation to service providers. Changes are saved 
           automatically and take effect immediately. Only update accounts you are sure 
           are correct to Admins, as this gives them full control over the site.  
-          <br></br>
-          <br></br>
+          <br/><br/>
           Note: Due to current limitations, service providers have a restricted dashboard. 
-          They can only update details about their assigned service and cannot assign 
-          filters beyond the cost filter at this time.
+          They can update their services listings, manage filters assigned to their service, and delete their service.
         </p>
 
+        {/* ADMINS SECTION */}
+        <section className="accounts-section">
+          <div className="section-header-clickable" onClick={() => setAdminsOpen(!adminsOpen)}>
+            <h2 className="section-title">
+              <span className="collapse-icon">{adminsOpen ? '▼' : '▶'}</span>
+              Administrators ({admins.length})
+            </h2>
+          </div>
+          {adminsOpen && admins.length > 0 && (
+            <table className="accounts-table">
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Access Level</th>
+                </tr>
+              </thead>
+              <tbody>
+                {admins.map((user) => (
+                  <tr key={user.id}>
+                    <td>{user.email}</td>
+                    <td>
+                      <select
+                        value={user.role_id}
+                        onChange={(e) =>
+                          handleRoleChange(user.id, parseInt(e.target.value))
+                        }
+                        disabled={user.id === currentUser?.id}
+                      >
+                        <option value={1}>Admin</option>
+                        <option value={2}>Service Provider</option>
+                      </select>
+                    </td>
+                    <td>
+                      <span className="full-access">Full Access</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </section>
 
-        <table className="accounts-table">
-          <thead>
-            <tr>
-              <th style={{ border: "1px solid #ccc", padding: "8px" }}>
-                Email
-              </th>
-              <th style={{ border: "1px solid #ccc", padding: "8px" }}>Role</th>
-              <th style={{ border: "1px solid #ccc", padding: "8px" }}>
-                Assigned Organisation
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user.id}>
-                <td style={{ border: "1px solid #ccc", padding: "8px" }}>
-                  {user.email}
-                </td>
-                <td style={{ border: "1px solid #ccc", padding: "8px" }}>
-                  <select
-                    value={user.role_id}
-                    onChange={(e) =>
-                      handleRoleChange(user.id, parseInt(e.target.value))
-                    }
-                    disabled={user.id === currentUser?.id}
-                  >
-                    <option value={1}>Admin</option>
-                    <option value={2}>Service Provider</option>
-                  </select>
-                </td>
+        {/* ASSIGNED SERVICE PROVIDERS SECTION */}
+        <section className="accounts-section">
+          <div className="section-header-clickable" onClick={() => setAssignedOpen(!assignedOpen)}>
+            <h2 className="section-title">
+              <span className="collapse-icon">{assignedOpen ? '▼' : '▶'}</span>
+              Assigned Service Providers ({assignedProviders.length})
+            </h2>
+          </div>
+          {assignedOpen && assignedProviders.length > 0 && (
+            <table className="accounts-table">
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Assigned Organisation</th>
+                </tr>
+              </thead>
+              <tbody>
+                {assignedProviders.map((user) => (
+                  <tr key={user.id}>
+                    <td>{user.email}</td>
+                    <td>
+                      <select
+                        value={user.role_id}
+                        onChange={(e) =>
+                          handleRoleChange(user.id, parseInt(e.target.value))
+                        }
+                      >
+                        <option value={1}>Admin</option>
+                        <option value={2}>Service Provider</option>
+                      </select>
+                    </td>
+                    <td>
+                      <select
+                        value={assignments[user.id] || ""}
+                        onChange={(e) =>
+                          handleAssignOrg(user.id, e.target.value)
+                        }
+                      >
+                        <option value="">-- Select Organisation --</option>
+                        {orgs.map((org) => (
+                          <option key={org.service_id} value={org.service_id}>
+                            {org.company_name}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </section>
 
-                <td style={{ border: "1px solid #ccc", padding: "8px" }}>
-                  {user.role_id === 1 ? (
-                    <span style={{ color: "#888" }}>Full Access</span>
-                  ) : (
-                    <select
-                      value={assignments[user.id] || ""}
-                      onChange={(e) =>
-                        handleAssignOrg(user.id, parseInt(e.target.value))
-                      }
-                    >
-                      <option value="">-- Select Organisation --</option>
-                      {orgs.map((org) => (
-                        <option key={org.service_id} value={org.service_id}>
-                          {org.company_name}
-                        </option>
-                      ))}
-                    </select>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {/* UNASSIGNED SERVICE PROVIDERS SECTION */}
+        <section className="accounts-section">
+          <div className="section-header" style={{ cursor: 'default' }}>
+            <div className="section-header-clickable" onClick={() => setUnassignedOpen(!unassignedOpen)} style={{ flex: 1 }}>
+              <h2 className="section-title">
+                <span className="collapse-icon">{unassignedOpen ? '▼' : '▶'}</span>
+                Unassigned Service Providers ({unassignedProviders.length})
+              </h2>
+            </div>
+            {unassignedOpen && (
+              <input
+                type="text"
+                className="search-input"
+                placeholder="Search by email..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            )}
+          </div>
+          {unassignedOpen && (
+            <table className="accounts-table">
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Assign Organisation</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredUnassigned.length === 0 ? (
+                  <tr>
+                    <td colSpan="3" className="no-results">
+                      {searchTerm ? "No service providers found matching your search." : "No unassigned service providers."}
+                    </td>
+                  </tr>
+                ) : (
+                  filteredUnassigned.map((user) => (
+                    <tr key={user.id}>
+                      <td>{user.email}</td>
+                      <td>
+                        <select
+                          value={user.role_id}
+                          onChange={(e) =>
+                            handleRoleChange(user.id, parseInt(e.target.value))
+                          }
+                        >
+                          <option value={1}>Admin</option>
+                          <option value={2}>Service Provider</option>
+                        </select>
+                      </td>
+                      <td>
+                        <select
+                          value=""
+                          onChange={(e) =>
+                            handleAssignOrg(user.id, e.target.value)
+                          }
+                        >
+                          <option value="">-- Select Organisation --</option>
+                          {orgs.map((org) => (
+                            <option key={org.service_id} value={org.service_id}>
+                              {org.company_name}
+                            </option>
+                          ))}
+                        </select>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          )}
+        </section>
       </div>
     </>
   );
