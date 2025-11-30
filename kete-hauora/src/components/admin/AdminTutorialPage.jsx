@@ -80,7 +80,7 @@ function AdminTutorialPage() {
 
         {/* SECTION 2 - How to Manage Services */}
         <section className="about-section">
-          <h2>{t("Managing Service Providers")}</h2>
+          <h2>{t("Managing Services")}</h2>
           <p>{t("Use the Edit Organisation page to:")}</p>
           <ul>
             <li>{t("Edit organisation information")}</li>
@@ -105,16 +105,19 @@ function AdminTutorialPage() {
           <h2>{t("Admin Tutorial Video")}</h2>
           <p>{t("Watch this tutorial to understand all admin workflows.")}</p>
 
-          <div
-            style={{
-              position: "relative",
-              paddingBottom: "calc(47.864583333333336% + 41px)",
-              height: "0",
-              width: "100%",
-            }}
-          >
-            
+
+          <div style={{ position: 'relative', paddingBottom: 'calc(47.864583333333336% + 41px)', height: '0', width: '100%' }}>
+            <iframe
+              src="https://demo.arcade.software/XAWv1rhFL7FQOEmvqCkZ?embed&embed_mobile=tab&embed_desktop=inline&show_copy_link=true"
+              title="Admin Tutorial"
+              frameBorder="0"
+              loading="lazy"
+              allowFullScreen
+              allow="clipboard-write"
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', colorScheme: 'light' }}
+            />
           </div>
+
         </section>
       </div>
     </div>
