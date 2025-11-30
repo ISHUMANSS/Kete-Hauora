@@ -72,12 +72,12 @@ function RegisterPage() {
 
   //generates a strong random password
   const generatePassword = () => {
-    const length = 10;
+    const length = 12;
 
     const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const lower = "abcdefghijklmnopqrstuvwxyz";
     const numbers = "0123456789";
-    const special = "!@#$%^&*()_+[]{}<>?";
+    const special = "!@#$%^&*";
 
 
     //ensure required characters
@@ -98,6 +98,7 @@ function RegisterPage() {
       .join("");
 
     setPassword(password);
+    setShowPassword(true);
   };
 
   //copy to clipboard
