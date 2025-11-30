@@ -22,8 +22,9 @@
 }
 
 .back-button:hover {
-  color: var(--brand-white);
+  color: var(--brand-white) !important;
   text-decoration: underline;
+  
 }
 
 /* ===== Heading ===== */

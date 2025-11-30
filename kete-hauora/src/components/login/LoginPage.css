@@ -194,3 +194,42 @@ body {
     font-size: 14.5px;
   }
 }
+
+
+.password-tools {
+  display: flex;
+  justify-content: space-between; /* spreads the 2 buttons nicely */
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.small-btn {
+  flex: 1;
+  height: 40px;
+  border: none;
+  border-radius: 40px;
+  background: var(--brand-gray);
+  color: var(--brand-black);
+  font-family: var(--font-medium);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.small-btn:hover {
+  background: var(--brand-red);
+  color: var(--brand-white);
+}
+
+.password-tools {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.small-btn {
+  flex: 1;                 /* makes both buttons stretch evenly */
+  white-space: nowrap;     /* prevents text from breaking */
+}

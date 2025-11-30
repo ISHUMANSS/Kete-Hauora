@@ -70,6 +70,48 @@ function RegisterPage() {
   };
 
 
+  //generates a strong random password
+  const generatePassword = () => {
+    const length = 10;
+
+    const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const lower = "abcdefghijklmnopqrstuvwxyz";
+    const numbers = "0123456789";
+    const special = "!@#$%^&*()_+[]{}<>?";
+
+
+    //ensure required characters
+    let password =
+      upper[Math.floor(Math.random() * upper.length)] +
+      special[Math.floor(Math.random() * special.length)];
+
+    //fill the rest randomly
+    const all = upper + lower + numbers + special;
+    for (let i = 2; i < length; i++) {
+      password += all[Math.floor(Math.random() * all.length)];
+    }
+
+    //shuffle password to remove predictable positioning
+    password = password
+      .split("")
+      .sort(() => Math.random() - 0.5)
+      .join("");
+
+    setPassword(password);
+  };
+
+  //copy to clipboard
+  const copyPassword = async () => {
+    try {
+      await navigator.clipboard.writeText(password);
+      alert("Password copied to clipboard!");
+    } catch (err) {
+      alert("Failed to copy password.");
+    }
+  };
+
+
+
   return (
     <div className="login">
       <div className="wrapper">
@@ -85,22 +127,34 @@ function RegisterPage() {
             />
           </div>
 
-          <div className="input-box">
-            <input
-              type={showPassword ? "text" : "password"}
-              placeholder={t("Password")}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <button
-              type="button"
-              className="show-password-btn"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? t("Hide") : t("Show")}
-            </button>
-          </div>
+         <div className="input-box password-box">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder={t("Password")}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+
+          <button
+            type="button"
+            className="show-password-btn"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? t("Hide") : t("Show")}
+          </button>
+        </div>
+
+        <div className="password-tools">
+          <button type="button" className="btn small-btn" onClick={generatePassword}>
+            Generate Password
+          </button>
+
+          <button type="button" className="btn small-btn" onClick={copyPassword}>
+            Copy
+          </button>
+        </div>
+
 
           <button type="submit" className="btn">
             {t("Register")}
