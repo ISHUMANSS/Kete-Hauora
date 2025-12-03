@@ -43,6 +43,9 @@ function EditOrganisationForm() {
   const [languagesOpen, setLanguagesOpen] = useState(false);
 
 
+  //edit logo file
+  const [logoFile, setLogoFile] = useState(null);
+
 
   const fieldDescriptions = {
     company_name: "The official name of the organisation or service provider.",
@@ -57,7 +60,8 @@ function EditOrganisationForm() {
     services_offered: "Enter each service on a new line — each line becomes a bullet point on the service page.",
     referral: "State whether clients can self-refer or if a referral is required.",
     other_notes: "Add any additional details about the organisation.",
-    cost_tf: "Used for filtering services by type — select whether the service is Free, Paid, or Other."
+    cost_tf: "Used for filtering services by type — select whether the service is Free, Paid, or Other.",
+
   };
 
   // Get user role
@@ -240,13 +244,40 @@ function EditOrganisationForm() {
   };
 
   //allow for edits in the service
-  const handleUpdate = async (e) => {
+ const handleUpdate = async (e) => {
     e.preventDefault();
     if (!selectedOrg) return toast.warn("No organisation selected.");
 
+    let newLogoPath = selectedOrg.company_logo_path;
+
+    // 1. Upload logo if selected
+    if (logoFile) {
+      const fileExt = logoFile.name.split(".").pop();
+      const fileName = `logo_${selectedOrg.service_id}.${fileExt}`;
+      const filePath = `logos/${selectedOrg.service_id}/${fileName}`;
+
+      // Upload to Supabase storage
+      const { error: uploadError } = await supabase.storage
+        .from("Pictures")
+        .upload(filePath, logoFile, {
+          upsert: true,
+        });
+
+      if (uploadError) {
+        toast.error("Logo upload failed: " + uploadError.message);
+        return;
+      }
+
+      newLogoPath = filePath; // Save new file path
+    }
+
+    // 2. Update organisation in DB
     const { error } = await supabase
       .from("services")
-      .update(orgData)
+      .update({
+        ...orgData,
+        company_logo_path: newLogoPath,
+      })
       .eq("service_id", selectedOrg.service_id);
 
     if (error) {
@@ -254,12 +285,12 @@ function EditOrganisationForm() {
       return;
     }
 
-    //update filter relationships
+    // 3. Update filters
     await updateFilters(selectedOrg.service_id);
 
     toast.success("Organisation updated!");
-        
   };
+
 
   async function updateFilters(serviceId) {
     try {
@@ -578,6 +609,25 @@ function EditOrganisationForm() {
 
                 </div>
               )}
+
+              <label>Company Logo</label>
+              <p className="">Upload the Logo for your organisation this is what is on your organisation page. Needs to be less then 50 Megabytes.</p>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setLogoFile(e.target.files[0])}
+              />
+
+              {selectedOrg?.company_logo_path && (
+                <img
+                  src={supabase.storage
+                    .from("Pictures")
+                    .getPublicUrl(selectedOrg.company_logo_path).data.publicUrl}
+                  alt="Current Logo"
+                  style={{ width: "120px", height: "120px", objectFit: "contain" }}
+                />
+              )}
+
               
 
               <button className="edit-org-submit" type="submit">
