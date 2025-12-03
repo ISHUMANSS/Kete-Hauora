@@ -13,6 +13,8 @@ function Organisation() {
 
   const [serviceTranslation, setServiceTranslation] = useState(null);
 
+  
+
   useEffect(() => {
     const fetchService = async () => {
       try {
@@ -71,6 +73,12 @@ function Organisation() {
   if (loading) return <p>{t("Loading organisation...")}</p>;
   if (!service) return <p>{t("Organisation not found")}.</p>;
 
+
+
+  //set up so there is a fall back logo which can be used
+  const fallbackLocalLogo = `/services_logo/${service.company_name}.png`;
+
+
   return (
     <div className="organisation-page">
       {/*for if we want to add that sidebar of like related links that we have in the figma
@@ -89,14 +97,29 @@ function Organisation() {
         <header className="organisation-header">
           <img
             src={
-              service.company_logo
-                ? `/services_logo/${service.company_logo}`
-                : `/services_logo/Default.png`
+              service.company_logo_path
+                ? supabase.storage
+                    .from("Pictures")
+                    .getPublicUrl(service.company_logo_path).data.publicUrl
+                : fallbackLocalLogo
             }
             alt={`${service.company_name} logo`}
             className="organisation-logo"
-            onError={(e) => (e.target.src = "/services_logo/Default.png")} // fallback if not found
+            onError={(e) => {
+              
+
+              // First fallback: local stored image
+              if (e.target.src.includes("Pictures")) {
+                e.target.src = fallbackLocalLogo;
+                return;
+              }
+
+              // Final fallback: default logo
+              e.target.src = "/services_logo/Default.png";
+            }}
           />
+
+
           <h1>{service.company_name}</h1>
         </header>
 
