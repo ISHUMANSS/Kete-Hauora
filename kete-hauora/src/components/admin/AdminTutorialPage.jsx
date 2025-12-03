@@ -75,6 +75,7 @@ function AdminTutorialPage() {
             <li>{t("Manage all user accounts and roles")}</li>
             <li>{t("Update filters")}</li>
             <li>{t("Oversee content quality and consistency")}</li>
+            <li>Make sure images added are appropriate</li>
           </ul>
         </section>
 
@@ -86,6 +87,7 @@ function AdminTutorialPage() {
             <li>{t("Edit organisation information")}</li>
             <li>{t("Assign categories & update service details")}</li>
             <li>{t("Delete services")}</li>
+            <li>Make sure images added are appropriate</li>
           </ul>
         </section>
 
