@@ -611,7 +611,7 @@ function EditOrganisationForm() {
               )}
 
               <label>Company Logo</label>
-              <p className="">Upload the Logo for your organisation this is what is on your organisation page. Needs to be less then 50 Megabytes.</p>
+              <p className="">Upload the Logo for your organisation this is what is on your organisation page. Needs to be less then 50 Megabytes. The Image may take awhile to show up on the organisation page</p>
               <input
                 type="file"
                 accept="image/*"
