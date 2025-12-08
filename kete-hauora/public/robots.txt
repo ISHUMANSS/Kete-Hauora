@@ -1,3 +1,7 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: /
+
+Allow: /robots.txt
+Allow: /favicon.ico
+Allow: /assets/
+Allow: /static/

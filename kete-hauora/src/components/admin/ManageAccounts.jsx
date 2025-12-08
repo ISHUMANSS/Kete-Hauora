@@ -17,7 +17,10 @@ function ManageAccounts() {
   const [orgs, setOrgs] = useState([]);
   const [assignments, setAssignments] = useState({});
   
+  
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchAssigned, setSearchAssigned] = useState("");
+
   
   // Section collapse states
   const [adminsOpen, setAdminsOpen] = useState(true);
@@ -178,12 +181,19 @@ function ManageAccounts() {
   const serviceProviders = users.filter(user => user.role_id === 2);
   
   const assignedProviders = serviceProviders.filter(user => assignments[user.id]);
+
+  
+
   const unassignedProviders = serviceProviders.filter(user => !assignments[user.id]);
 
   // Filter unassigned providers by search term
   const filteredUnassigned = unassignedProviders.filter(user => 
     user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  const filteredAssigned = assignedProviders.filter(user =>
+    user.email.toLowerCase().includes(searchAssigned.toLowerCase())
+  );
+
 
   if (loading) return <p>Loading...</p>;
   if (roleId !== 1) return <p>You do not Have access to this page</p>;
@@ -254,12 +264,29 @@ function ManageAccounts() {
 
         {/* ASSIGNED SERVICE PROVIDERS SECTION */}
         <section className="accounts-section">
-          <div className="section-header-clickable" onClick={() => setAssignedOpen(!assignedOpen)}>
-            <h2 className="section-title">
-              <span className="collapse-icon">{assignedOpen ? '▼' : '▶'}</span>
-              Assigned Service Providers ({assignedProviders.length})
-            </h2>
+          <div className="section-header" style={{ cursor: "default" }}>
+            <div
+              className="section-header-clickable"
+              onClick={() => setAssignedOpen(!assignedOpen)}
+              style={{ flex: 1 }}
+            >
+              <h2 className="section-title">
+                <span className="collapse-icon">{assignedOpen ? "▼" : "▶"}</span>
+                Assigned Service Providers ({assignedProviders.length})
+              </h2>
+            </div>
+
+            {assignedOpen && (
+              <input
+                type="text"
+                className="search-input"
+                placeholder="Search by email..."
+                value={searchAssigned}
+                onChange={(e) => setSearchAssigned(e.target.value)}
+              />
+            )}
           </div>
+
           {assignedOpen && assignedProviders.length > 0 && (
             <table className="accounts-table">
               <thead>
@@ -269,8 +296,17 @@ function ManageAccounts() {
                   <th>Assigned Organisation</th>
                 </tr>
               </thead>
-              <tbody>
-                {assignedProviders.map((user) => (
+             <tbody>
+              {filteredAssigned.length === 0 ? (
+                <tr>
+                  <td colSpan="3" className="no-results">
+                    {searchAssigned
+                      ? "No assigned providers match your search."
+                      : "No assigned service providers."}
+                  </td>
+                </tr>
+              ) : (
+                filteredAssigned.map((user) => (
                   <tr key={user.id}>
                     <td>{user.email}</td>
                     <td>
@@ -287,9 +323,7 @@ function ManageAccounts() {
                     <td>
                       <select
                         value={assignments[user.id] || ""}
-                        onChange={(e) =>
-                          handleAssignOrg(user.id, e.target.value)
-                        }
+                        onChange={(e) => handleAssignOrg(user.id, e.target.value)}
                       >
                         <option value="">-- Select Organisation --</option>
                         {orgs.map((org) => (
@@ -300,8 +334,9 @@ function ManageAccounts() {
                       </select>
                     </td>
                   </tr>
-                ))}
-              </tbody>
+                ))
+              )}
+            </tbody>
             </table>
           )}
         </section>
