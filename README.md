@@ -69,13 +69,7 @@ This project is used by the following companies:
   - Regions
  
 
-## Demo
 
-Video comming soon
-
-
-## Screenshots / UI Preview
-coming soon
 ## Tech Stack
 
 **Client:** React, i18next  

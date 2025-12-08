@@ -31,6 +31,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import ScrollToTop from "./scrolltotop.js";
 import AdminTutorialPage from "./components/admin/AdminTutorialPage.jsx";
+import RecentlyUpdatedServices from "./components/admin/RecentlyUpdatedServices.jsx";
 
 // Wrapper component to conditionally show Navbar
 function AppLayout({ children }) {
@@ -77,6 +78,8 @@ function App() {
             <Route path="/provider-dashboard" element={<ProviderDashboard />} />
 
             <Route path="/admin-tutorial" element={<AdminTutorialPage />} />
+
+            <Route path="/recent-updates" element={<RecentlyUpdatedServices />} />
 
 
             {/*manage filters*/}

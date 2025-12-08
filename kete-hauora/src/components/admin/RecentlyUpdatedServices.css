@@ -1,0 +1,95 @@
+/* ===== Page Layout ===== */
+.recent-page {
+  background-color: var(--brand-offwhite);
+  min-height: 100vh;
+  font-family: var(--font-secondary);
+}
+
+/* ===== Container ===== */
+.recent-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 3rem;
+}
+
+.recent-container h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.recent-container p {
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+/* ===== Cards Grid ===== */
+.recent-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ===== Card ===== */
+.recent-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+  border-left: 6px solid var(--brand-red);
+}
+
+.recent-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+}
+
+/* ===== Card Title ===== */
+.recent-card h3 {
+  margin: 0 0 0.5rem 0;
+  color: var(--brand-black);
+  font-size: 1.3rem;
+}
+
+/* ===== Last Updated ===== */
+.recent-card p {
+  margin: 0;
+  color: #777;
+  font-size: 0.9rem;
+}
+
+/* ===== Header Row ===== */
+.header-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* Title next to back button */
+.header-text h1 {
+  margin: 0;
+}
+
+.header-text p {
+  margin: 0.25rem 0 0 0;
+  color: #555;
+}
+
+/* ===== Back Button ===== */
+.back-button {
+  background: none;
+  border: none;
+  color: var(--brand-red);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.25rem 0;
+  font-family: var(--font-secondary);
+  transition: color 0.2s ease;
+}
+
+.back-button:hover {
+  color: var(--brand-black);
+}
+

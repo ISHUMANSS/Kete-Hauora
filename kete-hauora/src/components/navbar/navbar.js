@@ -98,32 +98,33 @@ const Navbar = () => {
                 {t("About")}
               </Link>
             </li>
-            <li>
-              {!user ? (
-                // Login if not logged in
-                <li>
-                  <Link to="/login">
-                    <span className="login-icon material-symbols-outlined">
-                      person
-                    </span>
-                    {t("Login")}
-                  </Link>
-                </li>
-              ) : (
-                // Logout if logged in
-                <li>
-                  <button
-                    onClick={handleLogout}
-                    className="nav-link logout-btn"
-                  >
-                    <span className="material-symbols-outlined logout-icon">
-                      logout
-                    </span>
-                    {t("Logout")}
-                  </button>
-                </li>
-              )}
-            </li>
+
+            {/* FIX: Removed the outer <li> wrapper here */}
+            {!user ? (
+              // Login if not logged in
+              <li>
+                <Link to="/login">
+                  <span className="login-icon material-symbols-outlined">
+                    person
+                  </span>
+                  {t("Login")}
+                </Link>
+              </li>
+            ) : (
+              // Logout if logged in
+              <li>
+                <button
+                  onClick={handleLogout}
+                  className="nav-link logout-btn"
+                >
+                  <span className="material-symbols-outlined logout-icon">
+                    logout
+                  </span>
+                  {t("Logout")}
+                </button>
+              </li>
+            )}
+
             <li>
               <div className="language-dropdown">
                 <select
@@ -158,7 +159,7 @@ const Navbar = () => {
               </Link>
             </li>
             {user && profile?.role_id && (
-              <ul>
+              <li>
                 <button
                   onClick={handleDashboardRedirect}
                   className="nav-button dashboard-btn"
@@ -166,7 +167,7 @@ const Navbar = () => {
                   <span className="material-symbols-outlined">dashboard</span>
                   {t("Admin")}
                 </button>
-              </ul>
+              </li>
             )}
           </ul>
         </div>

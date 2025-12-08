@@ -96,6 +96,12 @@ const SuperAdminDashboard = () => {
             <p>Create, edit, and assign Regions to services.</p>
           </Link>
 
+          <Link to="/recent-updates" className="dashboard-card">
+            <h2>Recently Updated</h2>
+            <p>View the latest edited services.</p>
+          </Link>
+
+
           
 
         </div>
